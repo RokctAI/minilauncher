@@ -1,0 +1,117 @@
+plugins {
+    id "com.android.application"
+    id "kotlin-android"
+    id "dev.flutter.flutter-gradle-plugin"
+    id 'com.google.gms.google-services'
+}
+
+def localProperties = new Properties()
+def localPropertiesFile = rootProject.file('local.properties')
+if (localPropertiesFile.exists()) {
+    localPropertiesFile.withReader('UTF-8') { reader ->
+        localProperties.load(reader)
+    }
+}
+
+def keystoreProperties = new Properties ()
+def keystorePropertiesFile = rootProject.file ("key.properties")
+if (keystorePropertiesFile.exists()) {keystoreProperties.load(new FileInputStream(keystorePropertiesFile))}
+def flutterRoot = localProperties.getProperty('flutter.sdk')
+if (flutterRoot == null) {
+    throw new GradleException("Flutter SDK not found. Define location with flutter.sdk in the local.properties file.")
+}
+
+def dartDefines = [:]
+
+// 1. Load from .env/production.env in repo root (Missing piece from build_* crash)
+def envFile = rootProject.file("../.env/production.env")
+if (envFile.exists()) {
+    envFile.eachLine { line ->
+        def trimmed = line.trim()
+        if (trimmed && !trimmed.startsWith('#')) {
+            def parts = trimmed.split('=', 2)
+            if (parts.length == 2) {
+                dartDefines[parts[0].trim()] = parts[1].trim()
+            }
+        }
+    }
+}
+
+// 2. Load from flutter.dart-defines (CLI / IDE injection) - Highest priority
+if (project.hasProperty('flutter.dart-defines')) {
+    dartDefines = dartDefines + project.property('flutter.dart-defines')
+            .split(',')
+            .collectEntries { entry ->
+                def pair = new String(entry.decodeBase64(), 'UTF-8').split('=')
+                [(pair[0]): pair.length > 1 ? pair[1] : '']
+            }
+}
+
+android {
+    namespace "com.example.minimal_launcher"
+    compileSdkVersion flutter.compileSdkVersion
+    ndkVersion flutter.ndkVersion
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    kotlinOptions {
+        jvmTarget = '17'
+    }
+
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+    }
+
+    defaultConfig {
+        applicationId dartDefines.CUSTOMER_ANDROID_PACKAGE_NAME ?: "com.example.minimal_launcher"
+        minSdkVersion flutter.minSdkVersion
+        multiDexEnabled true
+        targetSdkVersion flutter.targetSdkVersion
+        versionCode flutter.versionCode
+        versionName flutter.versionName
+        // Synchronized with .env/production.env
+        resValue "string", "google_maps_api_key", dartDefines.GOOGLE_MAPS_API_KEY ?: ""
+        resValue "string", "facebook_app_id", dartDefines.FACEBOOK_APP_ID ?: ""
+        resValue "string", "facebook_client_token", dartDefines.FACEBOOK_CLIENT_TOKEN ?: ""
+        resValue "string", "fb_login_protocol_scheme", dartDefines.FB_LOGIN_PROTOCOL_SCHEME ?: ""
+        resValue "string", "deep_link_host", dartDefines.DEEP_LINK_URL ?: ""
+        resValue "string", "app_name", dartDefines.CUSTOMER_APP_NAME ?: ""
+    }
+
+    signingConfigs {
+        release {
+            keyAlias keystoreProperties["keyAlias"]
+            keyPassword keystoreProperties["keyPassword"]
+            storeFile keystoreProperties["storeFile"] ? file(keystoreProperties["storeFile"]) : null
+            storePassword keystoreProperties['storePassword']
+        }
+    }
+    buildTypes {
+        debug {
+            signingConfig signingConfigs.debug
+            minifyEnabled false
+            debuggable true
+        }
+
+        release {
+            // Use debug signing if release config is not fully provided to avoid breaking build
+            if (keystoreProperties['storeFile'] && keystoreProperties['storePassword'] && keystoreProperties['keyAlias'] && keystoreProperties['keyPassword']) {
+                signingConfig signingConfigs.release
+            } else {
+                signingConfig signingConfigs.debug
+            }
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+flutter {
+    source '../..'
+}
+
+dependencies {
+}
