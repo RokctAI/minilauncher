@@ -1,0 +1,17 @@
+name: Welcome Bot
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+permissions: write-all
+
+on:
+  pull_request:
+    types: [opened]
+  issues:
+    types: [opened]
+
+jobs:
+  welcome:
+    uses: RokctAI/shared-workflows/.github/workflows/universal-welcome.yml@main
+    permissions: write-all
+    secrets: inherit

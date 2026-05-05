@@ -1,0 +1,16 @@
+name: Security Scan
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+permissions: write-all
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  scan:
+    permissions: write-all
+    uses: RokctAI/shared-workflows/.github/workflows/universal-security.yml@main
+    secrets: inherit

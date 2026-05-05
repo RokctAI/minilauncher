@@ -1,0 +1,14 @@
+name: License Eye
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+permissions: write-all
+
+on:
+  pull_request:
+
+jobs:
+  license:
+    permissions: write-all
+    uses: RokctAI/shared-workflows/.github/workflows/universal-license.yml@main
+    secrets: inherit

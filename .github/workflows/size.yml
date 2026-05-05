@@ -1,0 +1,15 @@
+name: Size Labeler
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+permissions: write-all
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  size:
+    uses: RokctAI/shared-workflows/.github/workflows/universal-size.yml@main
+    permissions: write-all
+    secrets: inherit

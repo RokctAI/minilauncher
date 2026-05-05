@@ -1,0 +1,17 @@
+﻿name: Auto Merge
+permissions: write-all
+
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  merge:
+    uses: RokctAI/shared-workflows/.github/workflows/universal-merge.yml@main
+    permissions: write-all
+    with:
+      allowed_users: "Rendani Sinyage, RendaniSinyage, ROK, RokctBOT[bot]"
+    secrets: inherit
