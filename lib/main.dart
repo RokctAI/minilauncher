@@ -83,9 +83,9 @@ class _LauncherHomeState extends State<LauncherHome> {
         _isLoading = false;
       });
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Error loading apps: $e')),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('Error loading apps: $e')));
       }
     }
   }
@@ -119,23 +119,31 @@ class _LauncherHomeState extends State<LauncherHome> {
             ),
             Expanded(
               child: _isLoading
-                  ? const Center(child: CircularProgressIndicator(color: Colors.white))
+                  ? const Center(
+                      child: CircularProgressIndicator(color: Colors.white),
+                    )
                   : _filteredApps.isEmpty
-                      ? const Center(child: Text('No apps found', style: TextStyle(color: Colors.white54)))
-                      : ListView.builder(
-                          itemCount: _filteredApps.length,
-                          itemBuilder: (context, index) {
-                            final app = _filteredApps[index];
-                            return ListTile(
-                              title: Text(
-                                app.name,
-                                style: const TextStyle(color: Colors.white),
-                              ),
-                              onTap: () => InstalledApps.startApp(app.packageName),
-                              onLongPress: () => InstalledApps.openSettings(app.packageName),
-                            );
-                          },
-                        ),
+                  ? const Center(
+                      child: Text(
+                        'No apps found',
+                        style: TextStyle(color: Colors.white54),
+                      ),
+                    )
+                  : ListView.builder(
+                      itemCount: _filteredApps.length,
+                      itemBuilder: (context, index) {
+                        final app = _filteredApps[index];
+                        return ListTile(
+                          title: Text(
+                            app.name,
+                            style: const TextStyle(color: Colors.white),
+                          ),
+                          onTap: () => InstalledApps.startApp(app.packageName),
+                          onLongPress: () =>
+                              InstalledApps.openSettings(app.packageName),
+                        );
+                      },
+                    ),
             ),
           ],
         ),
