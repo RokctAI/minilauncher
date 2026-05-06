@@ -2,7 +2,6 @@ plugins {
     id "com.android.application"
     id "kotlin-android"
     id "dev.flutter.flutter-gradle-plugin"
-    id 'com.google.gms.google-services'
 }
 
 def localProperties = new Properties()
@@ -96,10 +95,16 @@ android {
         release {
             keyAlias keystoreProperties["keyAlias"]
             keyPassword keystoreProperties["keyPassword"]
-            storeFile keystoreProperties["storeFile"] ?file(keystoreProperties["storeFile"]) : null
+            storeFile keystoreProperties["storeFile"] ? file(keystoreProperties["storeFile"]) : null
             storePassword keystoreProperties['storePassword']
         }
     }
+
+    def useDebugSigningForRelease = !keystorePropertiesFile.exists() ||
+            !keystoreProperties.containsKey("keyAlias") ||
+            !keystoreProperties.containsKey("keyPassword") ||
+            !keystoreProperties.containsKey("storeFile") ||
+            !keystoreProperties.containsKey("storePassword")
     buildTypes {
         debug {
             signingConfig signingConfigs.debug
@@ -108,7 +113,7 @@ android {
         }
         
         release {
-            signingConfig signingConfigs.release
+            signingConfig useDebugSigningForRelease ? signingConfigs.debug : signingConfigs.release
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
