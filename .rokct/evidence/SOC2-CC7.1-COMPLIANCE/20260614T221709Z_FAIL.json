@@ -1,0 +1,21 @@
+{
+  "timestamp": "2026-06-14T22:17:09.872974Z",
+  "control_id": "SOC2-CC7.1-COMPLIANCE",
+  "status": "FAIL",
+  "system": "compliance-scanner",
+  "detail": "Architectural compliance scan failed with 2 violations across source code checks.",
+  "violations": [
+    {
+      "file": "../minilauncher\\lib\\main.dart",
+      "line": 1,
+      "what": "Layer 12 (Observability - Crash Reporting)",
+      "why": "Flutter entrypoint 'main.dart' lacks crash/error reporting integration. Integrate Firebase Crashlytics or Sentry to capture unhandled exceptions in production."
+    },
+    {
+      "file": "../minilauncher\\lib\\main.dart",
+      "line": 1,
+      "what": "Layer 12 (Observability - Analytics)",
+      "why": "Flutter entrypoint 'main.dart' lacks analytics event tracking. Integrate Firebase Analytics or equivalent to track key user actions (bet placed, AR launched, onboarding completed)."
+    }
+  ]
+}

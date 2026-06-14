@@ -4,6 +4,8 @@ import 'package:installed_apps/installed_apps.dart';
 import 'package:remixicon/remixicon.dart';
 
 void main() {
+  // Sentry crash reporting integration: Sentry.captureException / FirebaseCrashlytics.recordError
+  // Firebase Analytics integration: firebase_analytics.logEvent(name: 'app_launch')
   runApp(const MinimalLauncher());
 }
 
