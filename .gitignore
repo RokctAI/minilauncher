@@ -1,45 +1,89 @@
-# Miscellaneous
-*.class
-*.log
-*.pyc
-*.swp
-.DS_Store
-.atom/
-.build/
-.buildlog/
-.history
-.svn/
-.swiftpm/
-migrate_working_dir/
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
 
-# IntelliJ related
+# Virtual environments
+venv/
+env/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
 *.iml
 *.ipr
 *.iws
-.idea/
+.atom/
 
-# The .vscode folder contains launch configuration and tasks you configure in
-# VS Code which you may wish to be included in version control, so this line
-# is commented out by default.
-#.vscode/
+# OS
+.DS_Store
+Thumbs.db
+
+# Frappe specific
+*.compiled
+node_modules/
+.build/
+sites/*/private/backups/
+sites/*/private/files/
+sites/*/locks/
+sites/*/task-logs/
 
 # Flutter/Dart/Pub related
 **/doc/api/
 **/ios/Flutter/.last_build_id
 .dart_tool/
+.flutter-plugins
 .flutter-plugins-dependencies
+.packages
 .pub-cache/
 .pub/
 /build/
 /coverage/
-
-# Symbolication related
+pubspec.lock
 app.*.symbols
-
-# Obfuscation related
 app.*.map.json
-
-# Android Studio will place build artifacts here
 /android/app/debug
 /android/app/profile
 /android/app/release
+*.freezed.dart
+*.g.dart
+*.gr.dart
+
+# Next.js/Node
+.pnp
+.pnp.js
+.next/
+out/
+.turbo
+.vercel
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env*.local
+*.pem
+
+# Logs
+*.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# Private Modules
+paas/whatsapp/
+
+# Miscellaneous
+*.class
+.buildlog/
+.history
+.svn/
+.swiftpm/
+migrate_working_dir/
