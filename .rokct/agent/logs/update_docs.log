@@ -1,0 +1,14 @@
+2026-06-15 01:11:56,007 - INFO - Detected project type: flutter for C:\Users\sinya\Desktop\RokctAI\minilauncher
+2026-06-15 01:11:56,010 - INFO - Auto-creating missing documentation for: lib\main.dart
+2026-06-15 01:11:56,026 - DEBUG - Attempting to generate AI doc for function: main
+2026-06-15 01:11:56,026 - WARNING - Skipping AI doc for main - GROQ_API key is missing from environment.
+2026-06-15 01:11:56,028 - INFO - Auto-created missing doc: docs\api\lib_main.md <- lib\main.dart
+2026-06-16 13:14:04,102 - INFO - Detected project type: flutter for C:\Users\sinya\Desktop\RokctAI\minilauncher
+2026-06-16 13:16:46,092 - INFO - Detected project type: flutter for C:\Users\sinya\Desktop\RokctAI\minilauncher
+2026-06-16 13:20:32,668 - INFO - Detected project type: flutter for C:\Users\sinya\Desktop\RokctAI\minilauncher
+2026-06-16 13:25:42,279 - INFO - Detected project type: flutter for C:\Users\sinya\Desktop\RokctAI\minilauncher
+2026-06-16 13:32:32,357 - INFO - Detected project type: flutter for C:\Users\sinya\Desktop\RokctAI\minilauncher
+2026-06-16 14:28:14,374 - INFO - Detected project type: flutter for C:\Users\sinya\Desktop\RokctAI\minilauncher
+2026-06-16 15:04:22,803 - INFO - Detected project type: flutter for C:\Users\sinya\Desktop\RokctAI\minilauncher
+2026-06-16 20:15:21,133 - INFO - Detected project type: flutter for C:\Users\sinya\Desktop\RokctAI\minilauncher
+2026-06-17 13:10:37,449 - INFO - Detected project type: flutter for C:\Users\sinya\Desktop\RokctAI\minilauncher
