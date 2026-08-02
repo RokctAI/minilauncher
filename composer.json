@@ -1,0 +1,84 @@
+{
+  "name": "rokctapp_composer",
+  "version": "1.0.0",
+  "package_name": "launcher",
+  "description": "Configuration list of active SDKs for minilauncher",
+  "sdks": [
+    {
+      "name": "base_sdk",
+      "enabled": true,
+      "source": "git",
+      "git": "https://github.com/RokctAI/core",
+      "path": "../core/base/dart",
+      "ref": "main",
+      "_comment": "Shared kernel (replaces retired core_sdk); provides the app shell templates."
+    },
+    {
+      "name": "auth_sdk",
+      "enabled": true,
+      "source": "git",
+      "path": "../Users/auth/dart",
+      "git": "https://github.com/RokctAI/Users",
+      "ref": "main"
+    },
+    {
+      "name": "users_sdk",
+      "enabled": true,
+      "source": "git",
+      "path": "../Users/users/dart",
+      "git": "https://github.com/RokctAI/Users",
+      "ref": "main"
+    },
+    {
+      "name": "launch_sdk",
+      "enabled": true,
+      "source": "git",
+      "git": "https://github.com/RokctAI/core",
+      "path": "../core/launch/dart",
+      "ref": "main",
+      "home_sdk": true
+    },
+    {
+      "name": "comms_sdk",
+      "enabled": true,
+      "source": "git",
+      "git": "https://github.com/RokctAI/core",
+      "path": "../core/comms/dart",
+      "ref": "main"
+    },
+    {
+      "name": "processing_sdk",
+      "enabled": true,
+      "source": "git",
+      "git": "https://github.com/RokctAI/productivity",
+      "path": "../productivity/processing/dart",
+      "ref": "main"
+    },
+    {
+      "name": "productivity_sdk",
+      "enabled": true,
+      "source": "git",
+      "git": "https://github.com/RokctAI/productivity",
+      "path": "../productivity/productivity/dart",
+      "ref": "main",
+      "_comment": "Owns tasks (tasks_table, task_service, TasksRoute). The launcher's home is tasks-first, so this is the source for that screen and for productivity glance signals."
+    },
+    {
+      "name": "corporate_sdk",
+      "enabled": true,
+      "source": "git",
+      "git": "https://github.com/RokctAI/corporate",
+      "path": "../corporate/corporate/dart",
+      "ref": "main"
+    },
+    {
+      "name": "agent_sdk",
+      "enabled": false,
+      "source": "git",
+      "git": "https://github.com/RokctAI/agent",
+      "path": "../agent/agent/dart",
+      "ref": "main",
+      "_comment": "Disabled as per requirements"
+    }
+  ]
+}

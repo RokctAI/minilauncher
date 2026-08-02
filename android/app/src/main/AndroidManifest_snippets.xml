@@ -1,0 +1,13 @@
+<!-- Add this permission to your AndroidManifest.xml -->
+<uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" />
+
+<!-- Add this queries block to your AndroidManifest.xml -->
+<queries>
+    <intent>
+        <action android:name="android.intent.action.MAIN" />
+    </intent>
+</queries>
+
+<!-- Add these categories to your MainActivity intent-filter if you want the app to be a home screen replacement -->
+<category android:name="android.intent.category.HOME"/>
+<category android:name="android.intent.category.DEFAULT"/>

@@ -1,4 +1,4 @@
-name: minimal_launcher
+name: launcher
 description: "A new Flutter project."
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -29,6 +29,22 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  base_sdk:
+    path: .rokct/cache/base
+  auth_sdk:
+    path: .rokct/cache/auth
+  users_sdk:
+    path: .rokct/cache/users
+  launch_sdk:
+    path: .rokct/cache/launch
+  comms_sdk:
+    path: .rokct/cache/comms
+  processing_sdk:
+    path: .rokct/cache/processing
+  productivity_sdk:
+    path: .rokct/cache/productivity
+  corporate_sdk:
+    path: .rokct/cache/corporate
   flutter:
     sdk: flutter
 
@@ -36,7 +52,6 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
   installed_apps: ^2.1.1
-  remixicon: ^4.9.3
 
 dev_dependencies:
   flutter_test:
@@ -90,3 +105,12 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
+dependency_overrides:
+  sqlite3: 2.9.4
+  # base_sdk declares share_plus ^10.1.1; productivity_sdk declares ^12.0.1
+  # but its one call site (Share.share/Share.shareXFiles) is written against
+  # the v10-era API, so ^12 was never actually exercised. Pin to what the
+  # code uses, isolated to this app only - same pattern as supacharge's own
+  # override, and it leaves productivity_sdk's declared constraint (and every
+  # other app using it) untouched.
+  share_plus: ^10.1.1

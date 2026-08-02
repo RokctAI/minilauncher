@@ -1,0 +1,403 @@
+{
+  "packages": {
+    "base_sdk": {
+      "version": "1.0.0",
+      "files": {
+        "lib/main.dart": "f5e848904ee41bb875144d804527b92be579146211ea3943c383e1449da822c1",
+        "lib/presentation/app_widget.dart": "5497ece375fdf7fc26eee5265d76f35c64a26a221f023afcba281e02da6a2390",
+        "lib/presentation/routes/app_router.dart": "7e7c72675c4a414818d0bed611623aa3248fc2ae3d264fe8fbed6f64bfd7c82c",
+        "lib/presentation/routes/route_pages.dart": "fa862244b5c0344a8e25a061d4957e5af4792cdd9483b4bf63d041fa4fda105e",
+        "flutter_native_splash.yaml": "4ad3281b98011cf918b8f3598ffdd94a8e692585aba2388327f5112eade18fd4",
+        "android/app/proguard-rules.pro": "fc3566b41bcd16cae01ff6d6a82f490e6ff54219d95e009c533c2a2ef956638b",
+        "android/app/src/main/kotlin/com/foodyman/demo/JuvoApplication.kt": "3cd2ad598274750086ec837e1691e3aed181e184d81855c916794f30de7e2513",
+        "android/app/src/main/kotlin/com/foodyman/demo/MainActivity.kt": "bd85f19fdff8dbe1c79d7e59042a1c884dce8c1dabfd98c31aaff8b389e2089f",
+        "android/app/src/main/res/drawable/background.png": "a4f454aa54cf2739d2f07a9409655fe19e4d5a5111d06a4696edebb51421cbde",
+        "android/app/src/main/res/drawable/notification_icon.png": "86be118ded33c610ac5ea52acf3c3037cc7933b3c92800c9653fa0f5b4cba585",
+        "android/app/src/main/res/drawable-night/launch_background.xml": "1f2574697b632c88c5abf3d1e86ea7ae1e16213124d982304d567ce6aa89eb19",
+        "android/app/src/main/res/drawable-night-v21/launch_background.xml": "1f2574697b632c88c5abf3d1e86ea7ae1e16213124d982304d567ce6aa89eb19",
+        "android/app/src/main/res/drawable-v21/background.png": "a4f454aa54cf2739d2f07a9409655fe19e4d5a5111d06a4696edebb51421cbde",
+        "android/app/src/main/res/drawable-v21/notification_icon.png": "86be118ded33c610ac5ea52acf3c3037cc7933b3c92800c9653fa0f5b4cba585",
+        "android/app/src/main/res/font/montserrat_extrabolditalic.ttf": "d38bac61eda8d8c002b1a852f5368901a085fbe1d844b5e0a149b674e22e2cdd",
+        "android/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml": "6a7c66aeab4b039febf250b2abc7c87dfd2ab81bb0eda1495249c9f38a4af810",
+        "android/app/src/main/res/mipmap-hdpi/ic_launcher_background.png": "73b465c5a755e57287ed28cacf0fa85e7053de2adbc9da6fb0211ae2d238da7f",
+        "android/app/src/main/res/mipmap-hdpi/ic_launcher_foreground.png": "fcad07ce2d5782283b3eb76b405b354706f73517e64ce220d77769b6ecca221d",
+        "android/app/src/main/res/mipmap-hdpi/ic_launcher_monochrome.png": "bca944938ab4d6d9c0d393c9c0cd028cfc080699a2a011bed871698959404dbd",
+        "android/app/src/main/res/mipmap-mdpi/ic_launcher_background.png": "e199d725783d30c7352539cc5e1ec4d40c8a7a3915bf167b845df5dc668cad18",
+        "android/app/src/main/res/mipmap-mdpi/ic_launcher_foreground.png": "187ad885f786cd68e0b1644c0e8c8f93cda8cc0a9b69dab3f32dc67f3d05034b",
+        "android/app/src/main/res/mipmap-mdpi/ic_launcher_monochrome.png": "e550816e8d258940f44f16b4fd8d33833968fa283f22cbacfa4ae2fa3c1d5e4e",
+        "android/app/src/main/res/mipmap-xhdpi/ic_launcher_background.png": "f328be58bcaaae10582370fb6fd7b73cd489de803f40775978181a3cfad3638d",
+        "android/app/src/main/res/mipmap-xhdpi/ic_launcher_foreground.png": "753d9d243f90c3224b72dfc2e8f5e813f9f547c3bea03535ea0cd666217d5cae",
+        "android/app/src/main/res/mipmap-xhdpi/ic_launcher_monochrome.png": "e6699da3fe902c01565c2b8541465c72b000433bd00d32842c2496074ccfb6e3",
+        "android/app/src/main/res/mipmap-xxhdpi/ic_launcher_background.png": "78ec74a667d447540cc09adbbeaf7bc6b764c826eb869c4faf48c60c9c7bef7a",
+        "android/app/src/main/res/mipmap-xxhdpi/ic_launcher_foreground.png": "39dfa8084d6e9fe3a760e96b38fb367f739f15db0abf5fb163388824b279c3f6",
+        "android/app/src/main/res/mipmap-xxhdpi/ic_launcher_monochrome.png": "77829cb97eeb577a04ed868b5ab096d57d97021d759587e9ea8d52a11a689531",
+        "android/app/src/main/res/mipmap-xxxhdpi/ic_launcher_background.png": "851453c6866e6fc35860af1c74d0423eedc016bd857b97baff07cc273610fbbc",
+        "android/app/src/main/res/mipmap-xxxhdpi/ic_launcher_foreground.png": "dc11de7fba4524cb401fa17dd19624480e6a154b54d69a654b7e843c516eb6d7",
+        "android/app/src/main/res/mipmap-xxxhdpi/ic_launcher_monochrome.png": "186f631093d19c2318efcefb1e85f05e88c5df205977e76c40b968f5f5fc7129",
+        "android/app/src/main/res/raw/notification.wav": "e3e7b32ecf00872fa5da29d94b5738aaf9890981e39f640e083db9a522d961a6",
+        "android/app/src/main/res/values/colors.xml": "8a3ce334b1968aca7aa4d5bd6fc66dd0408dfa01e1a3fa6393874b6526346006",
+        "android/app/src/main/res/values/strings.xml": "62f9b1df702da6e36dd9820134622d097d1b7d896c9b13e9d38ba7d3a5ea3472",
+        "android/app/src/main/res/values-night-v31/styles.xml": "e7416984ac82e3826202bacd6c742c5d876ee9c791de1c45ec12d07b19dafbec",
+        "android/app/src/main/res/values-v31/styles.xml": "12bc27433db16ba2b1cfebe86d1a5ab986e03706d2d1af629484834fb3cc3362",
+        "ios/.gitignore": "2cf87264fbe93ba39021303fb16a17578cfb39287599618432b455c2918b28a8",
+        "ios/Podfile": "516163f9311d8c8a4ff8ac6cb9bc46b654b0f721e0151c92619ac9a55cca5fc6",
+        "ios/Podfile.lock": "02449b52e861681d97825fe15a753a430f0fb082a7968a5c190f113972e997ff",
+        "ios/Flutter/AppFrameworkInfo.plist": "5309426f22a74c9135d09de49b310ce7174be4d378af844b70b78c14fa872279",
+        "ios/Flutter/Debug.xcconfig": "0252d55e8f79bda3b6f336b9523c740fe59d4d1b806e6398a906132b1734b309",
+        "ios/Flutter/flutter_export_environment.sh": "c246934e1ba557a6061de3c7281d58b9a177aa4e9e332a2d48e343823ab5825f",
+        "ios/Flutter/Generated.xcconfig": "217ace9f1f9621ecd7ca1643e5d3bb99fa7652d9b2846e6bc374bfaa12b4bc35",
+        "ios/Flutter/Release.xcconfig": "f1a2e46792280a99f79c4c2775df5817c2ab803d2c0d928ccf4e3c59721faca2",
+        "ios/Flutter/ephemeral/flutter_lldbinit": "eaec5f5268e3a5024d9703046f4097701107d574d0de7a2d8d81f0bf4644a333",
+        "ios/Flutter/ephemeral/flutter_lldb_helper.py": "05cfe3977fdee593efad2049a4f62d374e55c69cedc8aabeee5566b37acb8384",
+        "ios/Runner/AppDelegate.swift": "651fe6e13bd4c725bb6721e2b034e4c949632188581b564de71b897e86a7ecee",
+        "ios/Runner/GeneratedPluginRegistrant.h": "a5f88cc6415d2e639d2cb549348b84e02a7fdd0261603b0063abef6fa11f075a",
+        "ios/Runner/GeneratedPluginRegistrant.m": "4fa8bbef9eff2b48d26a74dbcdbf4df1def3bd092fe849b187066deb6ea85ef2",
+        "ios/Runner/Info.plist": "a8ea28e13f6a93a33151c52c7ba8718214a70ef94264c3f9b15facefb56ac8b2",
+        "ios/Runner/Runner-Bridging-Header.h": "efe657d8b27f7f8595a0d416bffb33fe7d93bd2869d81f7353b556c439d7a1a7",
+        "ios/Runner/Runner.entitlements": "10f2c2931980464b961461ae5d8a0a9099c0acbb25350912907da42b80e471fd",
+        "ios/Runner/Assets.xcassets/AppIcon.appiconset/AppIcon-20@2x.png": "0606dc265dd1b6dd08df03a90b7b9b1659c6d0d8133724cfa792c65e7aa50bf9",
+        "ios/Runner/Assets.xcassets/AppIcon.appiconset/AppIcon-20@2x~ipad.png": "0606dc265dd1b6dd08df03a90b7b9b1659c6d0d8133724cfa792c65e7aa50bf9",
+        "ios/Runner/Assets.xcassets/AppIcon.appiconset/AppIcon-20@3x.png": "97f9b5dbb52449997d6cb644ac7adc0e42c2cda873e641c658c42dbe572893c9",
+        "ios/Runner/Assets.xcassets/AppIcon.appiconset/AppIcon-20~ipad.png": "a0bbc103b3bc015ccec3ac6806de68d48a278726eb6a6d59855c37950cd591c1",
+        "ios/Runner/Assets.xcassets/AppIcon.appiconset/AppIcon-29.png": "41b9440c36800caac47be04afac3135b699a6cb4ca432d6f22d0d0ed17cfa289",
+        "ios/Runner/Assets.xcassets/AppIcon.appiconset/AppIcon-29@2x.png": "c2c86a16df23add98a93d3ade928a8ad57e9cb1b755db309373067897f7f2a7e",
+        "ios/Runner/Assets.xcassets/AppIcon.appiconset/AppIcon-29@2x~ipad.png": "c2c86a16df23add98a93d3ade928a8ad57e9cb1b755db309373067897f7f2a7e",
+        "ios/Runner/Assets.xcassets/AppIcon.appiconset/AppIcon-29@3x.png": "02373e1f13fdb0d818636d08959f3287ee8e1042a3959a9c1a9d30a0e2ca6a89",
+        "ios/Runner/Assets.xcassets/AppIcon.appiconset/AppIcon-29~ipad.png": "41b9440c36800caac47be04afac3135b699a6cb4ca432d6f22d0d0ed17cfa289",
+        "ios/Runner/Assets.xcassets/AppIcon.appiconset/AppIcon-40@2x.png": "4edeb36d690a4fb40d1b923564b5220ad0c82cccee873d8c49cf7ccdf6f17287",
+        "ios/Runner/Assets.xcassets/AppIcon.appiconset/AppIcon-40@2x~ipad.png": "4edeb36d690a4fb40d1b923564b5220ad0c82cccee873d8c49cf7ccdf6f17287",
+        "ios/Runner/Assets.xcassets/AppIcon.appiconset/AppIcon-40@3x.png": "f0d45eec5d5654768f5351247e6d10a5309365a4948d1aae1698294af30b2dcc",
+        "ios/Runner/Assets.xcassets/AppIcon.appiconset/AppIcon-40~ipad.png": "0606dc265dd1b6dd08df03a90b7b9b1659c6d0d8133724cfa792c65e7aa50bf9",
+        "ios/Runner/Assets.xcassets/AppIcon.appiconset/AppIcon-60@2x~car.png": "f0d45eec5d5654768f5351247e6d10a5309365a4948d1aae1698294af30b2dcc",
+        "ios/Runner/Assets.xcassets/AppIcon.appiconset/AppIcon-60@3x~car.png": "b6b30212ca33e3d3a0f8293f5d143b04cc4cea9776a6ca6a9f5e429ec88d5273",
+        "ios/Runner/Assets.xcassets/AppIcon.appiconset/AppIcon-83.5@2x~ipad.png": "59f3f4d2a51a421873b9950137a8419b45d54d0e0658dd86d5c4736f507ff1f1",
+        "ios/Runner/Assets.xcassets/AppIcon.appiconset/AppIcon@2x.png": "f0d45eec5d5654768f5351247e6d10a5309365a4948d1aae1698294af30b2dcc",
+        "ios/Runner/Assets.xcassets/AppIcon.appiconset/AppIcon@2x~ipad.png": "0b7dac7382a61ee5763a64cd3ebe31c9fb47ec7d0324c5ad6519225eb5ec1158",
+        "ios/Runner/Assets.xcassets/AppIcon.appiconset/AppIcon@3x.png": "b6b30212ca33e3d3a0f8293f5d143b04cc4cea9776a6ca6a9f5e429ec88d5273",
+        "ios/Runner/Assets.xcassets/AppIcon.appiconset/AppIcon~ios-marketing.png": "904d4c9fdf1e5cfd99f8374a234126cb688b5561227097c168b799e774e01f85",
+        "ios/Runner/Assets.xcassets/AppIcon.appiconset/AppIcon~ipad.png": "4d4be6287e85f6be6fba34ac40a159c8a2e6e12c9d3e2b2f65fc9a50a5209488",
+        "ios/Runner/Assets.xcassets/AppIcon.appiconset/Contents.json": "c9633a45a5d56d293906c90638b97bae35bbbe166ed5cc97f72011d4378f6d76",
+        "ios/Runner/Assets.xcassets/LaunchBackground.imageset/background.png": "a4f454aa54cf2739d2f07a9409655fe19e4d5a5111d06a4696edebb51421cbde",
+        "ios/Runner/Assets.xcassets/LaunchBackground.imageset/Contents.json": "6616e2b3803bf4c50550837a6c054c432649bb8f1b3cb9680d574a53cef39e9b",
+        "ios/Runner/Assets.xcassets/LaunchImage.imageset/Contents.json": "c2f13dc361d694bd1ca94caba655f3446a031e74f2d70c5f4d6fd813d9a72365",
+        "ios/Runner/Assets.xcassets/LaunchImage.imageset/LaunchImage.png": "edf35b0f1e15b7d24d7448b6b508bb0ffbfedec2ed7e43d47c3c9ec2f88ebcd2",
+        "ios/Runner/Assets.xcassets/LaunchImage.imageset/LaunchImage@2x.png": "edf35b0f1e15b7d24d7448b6b508bb0ffbfedec2ed7e43d47c3c9ec2f88ebcd2",
+        "ios/Runner/Assets.xcassets/LaunchImage.imageset/LaunchImage@3x.png": "edf35b0f1e15b7d24d7448b6b508bb0ffbfedec2ed7e43d47c3c9ec2f88ebcd2",
+        "ios/Runner/Assets.xcassets/LaunchImage.imageset/README.md": "853ac958e2416fe2540f6f61165283a3618b71a7ba5f85f65ac41c2158dfcd21",
+        "ios/Runner/Base.lproj/LaunchScreen.storyboard": "af1c0da8f8d4214f9f5996a2ca5c150baf31f814824bc2f8b340e68cecdc724c",
+        "ios/Runner/Base.lproj/Main.storyboard": "dcea4686c02065e56217fd19fcfb73d7509b41872e7486126149d47a18559363",
+        "ios/Runner.xcodeproj/project.pbxproj": "914a229881fdbdccbc7bea9462b87b71e5007db950757c34f8ea74da246b86fc",
+        "ios/Runner.xcodeproj/project.xcworkspace/contents.xcworkspacedata": "ac28b35c2b940210bec0fff8e424b07fd0efe9112ab178a10533583f251a386c",
+        "ios/Runner.xcodeproj/project.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist": "d557c2c32fc6258ec28981fa45dc847b76c9968beb90a2e26d13ef9c4ea45c30",
+        "ios/Runner.xcodeproj/project.xcworkspace/xcshareddata/WorkspaceSettings.xcsettings": "dd64c0308ab2971c456871b990b24a008bdc3ece09833e8dbe9675e33a496e74",
+        "ios/Runner.xcodeproj/xcshareddata/xcschemes/Runner.xcscheme": "ecd51439b9475fb0ae274ae59b1042df511d135e23b53a07ec5563dc59177676",
+        "ios/Runner.xcworkspace/contents.xcworkspacedata": "505cf76cad37d19ae93e07254f2235ffd0095362bcbaa253c463d79896f6b8e0",
+        "ios/Runner.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist": "d557c2c32fc6258ec28981fa45dc847b76c9968beb90a2e26d13ef9c4ea45c30",
+        "ios/Runner.xcworkspace/xcshareddata/WorkspaceSettings.xcsettings": "dd64c0308ab2971c456871b990b24a008bdc3ece09833e8dbe9675e33a496e74",
+        "assets/notification.wav": "f4ab5f12b8f99cd2ce06168f1173e50ecf758bbe859871c838e867e08e0a0c6a",
+        "assets/images/app_logo.jpeg": "e6c18016386428e0a51e2ca9009231e9bc21668535f742db5186870142300f27",
+        "assets/images/app_logo.png": "7accc2b8b2f4d1414fc21b3fb3c9e018e10439fea02339efcd0660e5846369c9",
+        "assets/images/avatar.png": "9b2339a53070510af0b9e4ffe255476dea489d4106d2b2b08c4b6d58b0beed9a",
+        "assets/images/avatarD.png": "7f86f0aef4654572c53c7eb68c81baf1cdefc13f830a085a727145c61d82247c",
+        "assets/images/badge.png": "f8ce80699faf6cf3079cb4fe7c32bc17fbd6d0bd52b1153b6097801b18733095",
+        "assets/images/blackBurger.png": "f5d10fc0da5cc5644dbdd0aaef517d51f1c20ee0f5eca7f2888c94c7fce58320",
+        "assets/images/burger.png": "2b5bee0c749ec4cf66f2c7f46994ab8565db9c63d623185b5ef3858cd37c7ac5",
+        "assets/images/card.png": "c490bd23f7566c1d56700cdcf4ec8c095be829237d8ca5845585c3bfe773ad79",
+        "assets/images/cardBg.png": "539b76b460c9376e04d1794a2af17fd5894ec9272761dc0d58fe6412c0c1156d",
+        "assets/images/customer.png": "873ddee9717c4eab9947c9309ab9fb2796fcf0521a12fc03473047d34bdf2f4f",
+        "assets/images/darkBg.jpeg": "0ab4bb60227c1beeb66748646e119a9d695a7185a2e6b5de13cb3770eb3fbf61",
+        "assets/images/delivery.png": "bfba72635a86d7b69bca1774302e2f07cfe297b82fdcc7c45d1eae0915fbf5d1",
+        "assets/images/delivery_banner.png": "5cd18fbd0ef827a5ce393b180facb13696990b36313b9cf47634e228d9cc1afd",
+        "assets/images/desert.png": "38bf8254a3c5642db5c72c35ebe8506f066c69d951b546a2c5ac7868a595b3cb",
+        "assets/images/discount_offer_icon.png": "e80fc19b82b9253bfb4aa70b752f6181d7d3cd853381cba7a075f373b2c014ec",
+        "assets/images/door.png": "c1ab409142c79303f40756d35e728ee7c91b6e8c548da0d6fb5ccf47c90c39f7",
+        "assets/images/door_to_door_3.png": "24203432faa71a4f04f7b32c203911ed9dc63faad9f9ebe64db5ce8c2b501176",
+        "assets/images/fast.png": "76bdf5d241ba5b8c515233349174e5cbbe0984a9e52fb5834bbef008b4b3ddfc",
+        "assets/images/free_delivery.png": "c4f5593b1a087e908fbda83524344bcc9bed993959702f05f8e16ac171290ed5",
+        "assets/images/iceCream.png": "ecdea056dbd2cd147603cf0df41ed8e44c129f58413e952fa9720ee5352378a4",
+        "assets/images/kfc.png": "55cccbc09b1160cf55e178d80312b7672b924db0b88022888e8694d70eb79d14",
+        "assets/images/lightBg.jpeg": "e7938706396c1bec54bd8502a9d5718831232e236bbae2aa6304ea407ecd1655",
+        "assets/images/loginBg.png": "3ae7e2a906dd04469072c76596a22f8c331f913f5272caaf48ea8cd3edd94a1e",
+        "assets/images/logo.png": "c94a0b944700f35fadf980456d5c73aa9e40e3db9686c105755dfad3a0ad1b48",
+        "assets/images/marker.png": "873ddee9717c4eab9947c9309ab9fb2796fcf0521a12fc03473047d34bdf2f4f",
+        "assets/images/motto.png": "384dded7dce8f3d8d4bbebcd3e73474d245da94ae3f2eb96598261b27b518e07",
+        "assets/images/notFound.png": "bd8902d7a7b2b4f3d5701caf9ef252dc8765ab359f379c0dcb16f27ffe478adf",
+        "assets/images/onlySushi.png": "c0874badb3528de9775e23847bd6e3e595ad4a20250b6e5cf94869f51db7cf3a",
+        "assets/images/order.png": "08558741d26a73cef0e93745cb9a8a3630ba716444adbed02453e9ee4ca15eec",
+        "assets/images/other_icon.png": "8b1f6af8f88ffdc2c7256210b56c7939f9c9baa64b244c57b966b220d02b9574",
+        "assets/images/pepperone.png": "515dad3f0eb9b5776152cbf42a7f229e008c3b18b883e34d9afbf3760e21949b",
+        "assets/images/percent_offer.png": "264c5285016b25e854ecce8f756e710b64f854dea9d9d7d0f3a5a0f910fd60c3",
+        "assets/images/person.png": "6feaae82919733fea31ee6b873c1bdfba02814e7c165a8e707751ffa8aa8265f",
+        "assets/images/pitsa.png": "70285e3bb75a6f11f0c3d2455c6e35191b6f426af1d5549f476755f392aae0c8",
+        "assets/images/salat.png": "bd5cda1d2daf75a4a4bf1f99084de199723a1b101f64d4c986a91e60605539d5",
+        "assets/images/save.png": "f6885a79bd859f5979043fec5843c4b5053679bf0fe66ed51c9933d1c65ce778",
+        "assets/images/set.png": "f944227f8cde814049a888a732bdbe255b2a32ec3a1629ea2a1127142bdef5a7",
+        "assets/images/splash.png": "15f17d2db026f6d02d4b639aa1ed7c8930a10952e09da8607c52f4c4443cc122",
+        "assets/images/splash1.png": "15f17d2db026f6d02d4b639aa1ed7c8930a10952e09da8607c52f4c4443cc122",
+        "assets/images/splash2.png": "15f17d2db026f6d02d4b639aa1ed7c8930a10952e09da8607c52f4c4443cc122",
+        "assets/images/sushi.png": "04c0d0b23a0ed5371000d641ccd7d56c01fdb4b4becbb8cf6ff67ad27dc81c84",
+        "assets/images/ui0.png": "49c443c4901c937ed91bcdfe784f71a9e0277c97c4086e9d416ce8bede8f64eb",
+        "assets/images/ui1.png": "cbcefd92c0f96e9c4f9315fff357cc63a8095d51ac53080f4490f7f8427ed9c7",
+        "assets/images/ui2.png": "e21a03c853cef2fafed356ff0a8de0a5e80c36a23381dbf32fd3ca3c9d6d87cd",
+        "assets/images/ui3.png": "f916a60c05da26d504525cba339bf8e77063fe8bf7f0277884b93fffc730fe8e",
+        "assets/images/visa.png": "1719f035b3e01fb0efd7c300c7fad77e14ec7eac4bf63a2b7a6606cfd6c1f197",
+        "assets/images/intro/1.jpg": "d482cee2e68f83fd2c87825fcb67a28be92566f583d05b4e5450da815b029900",
+        "assets/images/intro/2.jpg": "5975121e618a5369f39b04b82405f68de2cecf0e783e6b904a372a08acbf9a87",
+        "assets/images/intro/3.jpg": "bc885231aadb41f288c280ea3872813e869112d9572f16f35ce16c14061fd091",
+        "assets/images/intro/4.jpg": "192af6d2c18ac4eeeb8f42e0951d1378873f944d5418a8dd167e895478fa44b0",
+        "assets/images/intro/5.jpg": "1d2b22fc72cc0a123140381f6fa1775e37f365dde139097a867d384fb7d59a6f",
+        "assets/images/poi/delivery_man_marker.png": "f2f0607be0d11ea9b893484bad56ad10a0ff56c59cd358ab60aad3843640ca9d",
+        "assets/images/poi/rest.png": "4dcb7b16eff8a66fec429d56061e37a491c288a243daa1c5c1a54bbb8046401c",
+        "assets/images/poi/restaurant_marker.png": "8582c2f77294a26e4049783d10c41d6311bf6a1c8f0d102271a20afe3af6441d",
+        "assets/images/poi/shop.png": "86add41e1f6e6344daacf8273e6e86398a2c8827ace1e073b7118eb076cec686",
+        "assets/images/poi/spaza.png": "104c7499680d5269e5f6ef85999b9bdecfd8891c0fbf7de9563a3200b464c652",
+        "assets/images/water/header.jpg": "5975121e618a5369f39b04b82405f68de2cecf0e783e6b904a372a08acbf9a87",
+        "assets/images/water/logo.png": "64a371ee13fa88d3f56676a65c13be50659c02502d368406a47c86bd11661e36",
+        "assets/lottie/empty-box.json": "58b51b5917432d0e27b2c95595a53794108b7a69f34e6b09f97d2f671f0b5a11",
+        "assets/lottie/empty_review.json": "61be105237d863e0418f26d39d81a4d850c3f87ee106b0fcb613bd90395fa23e",
+        "assets/lottie/girl_empty.json": "2c722a958c3de59d17c3a0508ebe34238548ce1654e3ab1359c0b8d8f78ccda7",
+        "assets/lottie/noImage.json": "2d7023556f5e21720b90737225d0dda9a0a58302fddf518e05db0298c8a2f3fe",
+        "assets/lottie/not-found.json": "fadf69d42b9ac621bc3cf84bce1dd1014a92d69ec65115200da596c951768f37",
+        "assets/lottie/notification_empty.json": "599618bf4d373362635004039aa568b34a40a61b39a5fb44ab4c464cfefc25bd",
+        "assets/lottie/not_found_page.json": "642a7f0b9b2b79bfb35384da999e03b79bfb5104faf30dec6dc821e9f728ead8",
+        "assets/lottie/pin.json": "2a563b87238ecf9db3ff33ffcf2952b11de547d0fe9c87c7b2b79ab332574521",
+        "assets/lottie/processing.json": "8029c019a1c27afb13836a6423ea801e75edc6887b2ced0770f934b3d6756c5a",
+        "assets/lottie/sad_man.json": "0940dd4403f2867a42c9f68bd476d4ca53371e768126554475f0a5d3d12f2302",
+        "assets/svgs/adress.svg": "18d2d337a45f8be01835581bcef4cf00c131a66a906afda60708518fbd0e09ad",
+        "assets/svgs/allergy.svg": "2f524f964d9f50bef35fc9c12f343985826972b255d684d2dcede8fe4ac83aad",
+        "assets/svgs/avatar.svg": "ec7b438c42983b7e4a8439f2398126572115a21d7264d2e39638dc3d939ef18f",
+        "assets/svgs/badge.svg": "a368889e55404a293f70ab1776a34e96e9344a1d3a6c2cad9dc97f25c651e23a",
+        "assets/svgs/bag2.svg": "2d9ced8d815dd67ee76441deb2776373d00bd8f6e03321c0a89515405e53ec8a",
+        "assets/svgs/bag3.svg": "547dfb76aa50d02b4e0e522a3927a6342c0905ee67344f11e6df650d1ffcb0fd",
+        "assets/svgs/box.svg": "b5170767ead828721d1b04f091d8366b2e2c785575d14154e928fd6ba3000bab",
+        "assets/svgs/brand_logo_rounded.svg": "2981b65cf4846c6e20f316a0c0dca2fa8e3e5ee413b370021bfecae59c5f43b1",
+        "assets/svgs/burger.svg": "a4f66d692290f74ea908b666a1bca221d956be75ce8bfe2280af8a622a31deaa",
+        "assets/svgs/category2.svg": "669a3ced19fe53a310944f7ea737fd53e2cfb88b851d3038d445f531ac6fe12b",
+        "assets/svgs/category3.svg": "2dfece0898009a74c1fe743a01ce98b4b2de8fd8d59e0c77e89ce604735b5dfe",
+        "assets/svgs/contact.svg": "e276df172514ee9acba2b7f9cc29e61f2931d623aa3d7dcff89783f2a3b819ef",
+        "assets/svgs/delivery.svg": "f2171f340b8d3645cfc8eb63faeb5de0ebfcbfd61294dc5e57624761b78728b0",
+        "assets/svgs/delivery0.svg": "cb472e8c90de2c4b2edce2be64f37634218ff616ffad276f09e048de6ac1b5b3",
+        "assets/svgs/delivery2.svg": "b75e1e86fe0e6a05c6fe65d211f28d634d3a9e7e1ac180f4d17d0ca30a76cb68",
+        "assets/svgs/delivery_time.svg": "155687b9829537908283978c81e23ad8e19f2b21fe33fc9341438478913a4efb",
+        "assets/svgs/discount.svg": "ddeec5ca176301836ff4297f96222b339871a7242e04d4fd87f6bba5864a2c1b",
+        "assets/svgs/empty.svg": "3ea7851793b72652ed4a897656a81e1aa15640736f600f559f092203efc4ddf3",
+        "assets/svgs/filter.svg": "76f11faa4c666e3133b06b76a4cf4e5fbf0c175eb06276c2ca98aa36246f9637",
+        "assets/svgs/foodyman.svg": "f7607da59f79fb594b91e312c656936b2ce1cb9ed115747b1349df45b972c21b",
+        "assets/svgs/fosend2.svg": "a7200c0530d371e6484a0f1de84cbb5110bd001141c7e9e67c53bb6f786dd5f3",
+        "assets/svgs/fosend3.svg": "f35428531b4eb5c6a16d784a9300c295ce02b9db23ddb60feac9580cd53856e5",
+        "assets/svgs/halal.svg": "a5f13be47704f64ca235e689566b163e7d6850a25135f14049e65d120ae1893a",
+        "assets/svgs/home3.svg": "451c06b1fdc92e577123de631cfbba070173a5acb559b3928ab085479ff5891a",
+        "assets/svgs/homeSvg.svg": "f10f23da9ae4a35e557a2ed84d04d5a881fe2faa949f64d5b40bdc65d08e9ddf",
+        "assets/svgs/likeSvg.svg": "bc23e9a0bbe89755910d863a179165c88678856542cd9648ee88eb0d7dbbb64d",
+        "assets/svgs/logo.svg": "43e464e2903f371e9b66edc64a4a54604ee3483b8c5a1705ef52656f79caabdd",
+        "assets/svgs/meat.svg": "681fab360a533034954b93f532764e56b1f8aefb3bcbc1ad578e2b6eccdd93bb",
+        "assets/svgs/menu.svg": "0cf220ec7b8e0a371bb7cd88aad4e35425a3703e18ff53b7992da2cd3c1d77b8",
+        "assets/svgs/noHomeSvg.svg": "d0abbc8993f4827c070099a71425c24cee78ff76b8c94d5e68a4834cc821b673",
+        "assets/svgs/noLikeSvg.svg": "106b28dac06536cca996999a2abdf5a78df046c9e581a189d62f76056d651605",
+        "assets/svgs/noSearchSvg.svg": "7e996acabddb39f94a305f661744ea50a24a4e1c02e47751cbbc464a07efae53",
+        "assets/svgs/orderTime.svg": "51cb334c1cf2024fda90c50864277035a25659baf1c332c44055fb4787b8c94c",
+        "assets/svgs/pickUpFrom.svg": "25860f3efb042352025f17976acec7bb3c8713e3fd0acec39289e02aa819a364",
+        "assets/svgs/searchSvg.svg": "92df1abcf2ce2e14322b9a712e4b3a84a81975ffcf96330ce062433179274806",
+        "assets/svgs/servic.svg": "0e8fb77dbae2d3214d1165eadd7d02c10d94a1248e87f3d99f8abb79ea25e43f",
+        "assets/svgs/star.svg": "7b3861e52134939880276b874199eaa686fb57425f7c785ba4e466c3eca003ad",
+        "assets/svgs/ticket.svg": "6f72157b19ad788e4bc1994773ef599eb3b5557074c48f4497eefb61b0227838",
+        "assets/svgs/vegetarin.svg": "d59841ef8435aae18ffd43e0f3e2bf2398f7119976bd33e300bb7d6d3f1e3328",
+        "assets/svgs/water.svg": "91199f1bb45a8fe9082b2b046a0d1ad9e8f20fbc5abc6edc8521db20ab74241e",
+        "assets/temp/discount1.png": "3b74802989e5cd9eaf63021d133e076da6ddf7ba7e755e590f8ea0c1a3be57e7",
+        "assets/temp/discount2.png": "e33911a8a2e21c7515d9a997e123229b409cbe573e18770788ab91924b4a96c3",
+        "assets/temp/discount3.png": "a38173339243b409394fd1d5f880db834f21ae90345e51d6de86f1e6330594d0",
+        "assets/temp/discount4.png": "ebc2de2449dc817867ee4423933b1feafcc7e91288c3642228e430cacc9f6a31",
+        "assets/temp/discount5.png": "e60ed0f00b450ca4751d8c4f430e6e26f48267c03ad254074bfd24f6b02ecee0",
+        "assets/temp/discount6.png": "784e1ff8e0b7ec4b57bd72daf84960837251f7c011029a7332c85a0bc38642c1",
+        "lib/presentation/theme/app_style.dart": "a41cdea4c78180c66b26633ed79139d9e44555146b9a446184c36ac6b36a55ef",
+        "lib/presentation/theme/theme.dart": "6143f7136017a24429407efe92b70f34edcabab90801d243d4bcd0c6f4be0d43"
+      },
+      "routes": [
+        {
+          "path": "/",
+          "page": "SplashRoute.page",
+          "type": "MaterialRoute",
+          "import": "package:${package}/presentation/routes/route_pages.dart"
+        },
+        {
+          "path": "/no-connection",
+          "page": "NoConnectionRoute.page",
+          "type": "MaterialRoute",
+          "import": "package:${package}/presentation/routes/route_pages.dart"
+        },
+        {
+          "path": "/closed",
+          "page": "ClosedRoute.page",
+          "type": "MaterialRoute",
+          "import": "package:${package}/presentation/routes/route_pages.dart"
+        },
+        {
+          "path": "/ui-type",
+          "page": "UiTypeRoute.page",
+          "type": "MaterialRoute",
+          "import": "package:${package}/presentation/routes/route_pages.dart"
+        }
+      ],
+      "app_routes": [
+        {
+          "method": "replaceSplashRoute",
+          "body": "context.router.replace(SplashRoute());"
+        },
+        {
+          "method": "replaceNoConnectionRoute",
+          "body": "context.router.replace(NoConnectionRoute());"
+        },
+        {
+          "method": "replaceClosedRoute",
+          "body": "context.router.replace(ClosedRoute());"
+        },
+        {
+          "method": "replaceUiTypeRoute",
+          "body": "context.router.replace(UiTypeRoute());"
+        }
+      ]
+    },
+    "auth_sdk": {
+      "version": "1.0.0",
+      "files": {
+        "lib/presentation/routes/auth_route_pages.dart": "4327f9a170df9889461a2332cdeca509b1abd9167af96fb98a4fe8c1b7d05c92"
+      },
+      "routes": [
+        {
+          "path": "/login",
+          "page": "LoginRoute.page",
+          "type": "MaterialRoute",
+          "import": "package:${package}/presentation/routes/auth_route_pages.dart"
+        },
+        {
+          "path": "/register",
+          "page": "RegisterRoute.page",
+          "type": "MaterialRoute",
+          "import": "package:${package}/presentation/routes/auth_route_pages.dart"
+        },
+        {
+          "path": "/register-confirmation",
+          "page": "RegisterConfirmationRoute.page",
+          "type": "MaterialRoute",
+          "import": "package:${package}/presentation/routes/auth_route_pages.dart"
+        },
+        {
+          "path": "/reset-password",
+          "page": "ResetPasswordRoute.page",
+          "type": "MaterialRoute",
+          "import": "package:${package}/presentation/routes/auth_route_pages.dart"
+        }
+      ],
+      "app_routes": [
+        {
+          "method": "replaceLoginRoute",
+          "body": "context.router.replace(LoginRoute());"
+        }
+      ],
+      "database": {
+        "tables": [
+          {
+            "class": "OfflineUsersTable",
+            "import": "package:auth_sdk/src/common/infrastructure/database/offline_user_table.dart"
+          }
+        ],
+        "migration": {
+          "version": 16,
+          "step": "if (from < 16) { await m.createTable(offlineUsersTable); }"
+        }
+      }
+    },
+    "users_sdk": {
+      "version": "1.0.0",
+      "files": {},
+      "routes": [],
+      "app_routes": []
+    },
+    "launch_sdk": {
+      "version": "1.0.0",
+      "files": {
+        "lib/presentation/pages/launch/home.dart": "00c8195dc50c2844319c5dcb2c5329a9ce17aa738e5bf1c92921c688e28f604c",
+        "lib/presentation/pages/launch/widgets/app_item.dart": "7c2397b14f119d0db8b7d18bc81deff57a9be05736db5ec15acd0411dfec91af",
+        "android/app/src/main/AndroidManifest_snippets.xml": "9a9d0b6c862061375ee6f30e6875f3175c6a1bc69dada3f24e0a6194f6ccb83d"
+      },
+      "routes": [
+        {
+          "path": "/launcher",
+          "page": "LauncherHomeRoute.page",
+          "type": "CupertinoRoute",
+          "import": "package:${package}/presentation/pages/launch/home.dart"
+        }
+      ],
+      "app_routes": []
+    },
+    "comms_sdk": {
+      "version": "1.0.0",
+      "files": {},
+      "routes": [],
+      "app_routes": []
+    },
+    "processing_sdk": {
+      "version": "1.0.0",
+      "files": {},
+      "routes": [],
+      "app_routes": []
+    },
+    "productivity_sdk": {
+      "version": "1.0.0",
+      "files": {
+        "lib/presentation/pages/tasks/tasks_page.dart": "d8111c14255ffc062e11954cf45d77eec36ffac193bbace00aad17a7483085e4"
+      },
+      "routes": [
+        {
+          "path": "/tasks",
+          "page": "TasksRoute.page",
+          "type": "CupertinoRoute",
+          "import": "package:${package}/presentation/pages/tasks/tasks_page.dart"
+        }
+      ],
+      "app_routes": [],
+      "database": {
+        "tables": [
+          {
+            "class": "TasksTable",
+            "import": "package:productivity_sdk/src/common/infrastructure/database/tasks_table.dart"
+          },
+          {
+            "class": "RecoveryProfilesTable",
+            "import": "package:productivity_sdk/src/common/infrastructure/database/recovery_tables.dart"
+          },
+          {
+            "class": "AvoidedHabitsTable",
+            "import": "package:productivity_sdk/src/common/infrastructure/database/recovery_tables.dart"
+          },
+          {
+            "class": "UrgeLogsTable",
+            "import": "package:productivity_sdk/src/common/infrastructure/database/recovery_tables.dart"
+          },
+          {
+            "class": "DailyRitualsTable",
+            "import": "package:productivity_sdk/src/common/infrastructure/database/recovery_tables.dart"
+          },
+          {
+            "class": "RitualLogsTable",
+            "import": "package:productivity_sdk/src/common/infrastructure/database/recovery_tables.dart"
+          },
+          {
+            "class": "ProcrastinationLogsTable",
+            "import": "package:productivity_sdk/src/common/infrastructure/database/recovery_tables.dart"
+          }
+        ],
+        "migration": {
+          "version": 14,
+          "step": "if (from < 13) { await m.createTable(tasksTable); } if (from < 14) { await m.createTable(recoveryProfilesTable); await m.createTable(avoidedHabitsTable); await m.createTable(urgeLogsTable); await m.createTable(dailyRitualsTable); await m.createTable(ritualLogsTable); await m.createTable(procrastinationLogsTable); }"
+        }
+      }
+    },
+    "corporate_sdk": {
+      "version": "1.0.0",
+      "files": {},
+      "routes": [],
+      "app_routes": []
+    }
+  }
+}
