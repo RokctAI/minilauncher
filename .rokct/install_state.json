@@ -3,14 +3,14 @@
     "base_sdk": {
       "version": "1.0.0",
       "files": {
-        "lib/main.dart": "f5e848904ee41bb875144d804527b92be579146211ea3943c383e1449da822c1",
-        "lib/presentation/app_widget.dart": "5497ece375fdf7fc26eee5265d76f35c64a26a221f023afcba281e02da6a2390",
-        "lib/presentation/routes/app_router.dart": "7e7c72675c4a414818d0bed611623aa3248fc2ae3d264fe8fbed6f64bfd7c82c",
-        "lib/presentation/routes/route_pages.dart": "fa862244b5c0344a8e25a061d4957e5af4792cdd9483b4bf63d041fa4fda105e",
+        "lib/main.dart": "fcc5ddf63a06906480b092cd67fe01ee3638777a5d2a2fb6748a7df4e966cf35",
+        "lib/presentation/app_widget.dart": "59993e8149f2e523a56ca758702879cd66e722327612ebcdadcdf5e549581e45",
+        "lib/presentation/routes/app_router.dart": "e08b822163e08ac9e330bd6a0bffc42dbfd149d076449012092ddcdd0d2d2979",
+        "lib/presentation/routes/route_pages.dart": "82dd7f21941054861f2e7b4f6c32fa227510fcc1535d06b1983c8a27aac8b9b7",
         "flutter_native_splash.yaml": "4ad3281b98011cf918b8f3598ffdd94a8e692585aba2388327f5112eade18fd4",
         "android/app/proguard-rules.pro": "fc3566b41bcd16cae01ff6d6a82f490e6ff54219d95e009c533c2a2ef956638b",
-        "android/app/src/main/kotlin/com/foodyman/demo/JuvoApplication.kt": "3cd2ad598274750086ec837e1691e3aed181e184d81855c916794f30de7e2513",
-        "android/app/src/main/kotlin/com/foodyman/demo/MainActivity.kt": "bd85f19fdff8dbe1c79d7e59042a1c884dce8c1dabfd98c31aaff8b389e2089f",
+        "android/app/src/main/kotlin/com/foodyman/demo/JuvoApplication.kt": "08d9f33ad23841a9b200ec08ac99e62e9b34acb06e4ab49983a16992ed2c28ca",
+        "android/app/src/main/kotlin/com/foodyman/demo/MainActivity.kt": "6fd7464a016f4a6ee3cb580f0acf182fc397afa4f5583a99caa56dae7e52b9a8",
         "android/app/src/main/res/drawable/background.png": "a4f454aa54cf2739d2f07a9409655fe19e4d5a5111d06a4696edebb51421cbde",
         "android/app/src/main/res/drawable/notification_icon.png": "86be118ded33c610ac5ea52acf3c3037cc7933b3c92800c9653fa0f5b4cba585",
         "android/app/src/main/res/drawable-night/launch_background.xml": "1f2574697b632c88c5abf3d1e86ea7ae1e16213124d982304d567ce6aa89eb19",
@@ -39,22 +39,22 @@
         "android/app/src/main/res/values/strings.xml": "62f9b1df702da6e36dd9820134622d097d1b7d896c9b13e9d38ba7d3a5ea3472",
         "android/app/src/main/res/values-night-v31/styles.xml": "e7416984ac82e3826202bacd6c742c5d876ee9c791de1c45ec12d07b19dafbec",
         "android/app/src/main/res/values-v31/styles.xml": "12bc27433db16ba2b1cfebe86d1a5ab986e03706d2d1af629484834fb3cc3362",
-        "ios/.gitignore": "2cf87264fbe93ba39021303fb16a17578cfb39287599618432b455c2918b28a8",
-        "ios/Podfile": "516163f9311d8c8a4ff8ac6cb9bc46b654b0f721e0151c92619ac9a55cca5fc6",
-        "ios/Podfile.lock": "02449b52e861681d97825fe15a753a430f0fb082a7968a5c190f113972e997ff",
-        "ios/Flutter/AppFrameworkInfo.plist": "5309426f22a74c9135d09de49b310ce7174be4d378af844b70b78c14fa872279",
-        "ios/Flutter/Debug.xcconfig": "0252d55e8f79bda3b6f336b9523c740fe59d4d1b806e6398a906132b1734b309",
+        "ios/.gitignore": "83a3f5f8be2050c5003fe361e2086d79ee0cfe7d3fc3be82504a940e897b9439",
+        "ios/Podfile": "839b5d462e0fb36812235f1ba15da6b763b049caa59adb066f16ffad7223159d",
+        "ios/Podfile.lock": "b6fc80acd78f6b7324f179314fe33d48f3b8b96669ac72246b478544900f4f2c",
+        "ios/Flutter/AppFrameworkInfo.plist": "4844be22b72d16d6f6013ce5a2240728c730ef1fef9cf43a5c55198b18614802",
+        "ios/Flutter/Debug.xcconfig": "690b8a8b1ae15ddd29b241429963e971bbc6720ab22f154cf8cf6b085b6d4925",
         "ios/Flutter/flutter_export_environment.sh": "c246934e1ba557a6061de3c7281d58b9a177aa4e9e332a2d48e343823ab5825f",
         "ios/Flutter/Generated.xcconfig": "217ace9f1f9621ecd7ca1643e5d3bb99fa7652d9b2846e6bc374bfaa12b4bc35",
-        "ios/Flutter/Release.xcconfig": "f1a2e46792280a99f79c4c2775df5817c2ab803d2c0d928ccf4e3c59721faca2",
+        "ios/Flutter/Release.xcconfig": "75abb819a9de1e0e41c835e7307bc64a506cac25a9a5c0b0d8253fa1c3d5d422",
         "ios/Flutter/ephemeral/flutter_lldbinit": "eaec5f5268e3a5024d9703046f4097701107d574d0de7a2d8d81f0bf4644a333",
         "ios/Flutter/ephemeral/flutter_lldb_helper.py": "05cfe3977fdee593efad2049a4f62d374e55c69cedc8aabeee5566b37acb8384",
-        "ios/Runner/AppDelegate.swift": "651fe6e13bd4c725bb6721e2b034e4c949632188581b564de71b897e86a7ecee",
+        "ios/Runner/AppDelegate.swift": "d00902a0dbdc2164257beecc44c5e08ede94aa28937ead23a434d1e4f99efe15",
         "ios/Runner/GeneratedPluginRegistrant.h": "a5f88cc6415d2e639d2cb549348b84e02a7fdd0261603b0063abef6fa11f075a",
         "ios/Runner/GeneratedPluginRegistrant.m": "4fa8bbef9eff2b48d26a74dbcdbf4df1def3bd092fe849b187066deb6ea85ef2",
-        "ios/Runner/Info.plist": "a8ea28e13f6a93a33151c52c7ba8718214a70ef94264c3f9b15facefb56ac8b2",
-        "ios/Runner/Runner-Bridging-Header.h": "efe657d8b27f7f8595a0d416bffb33fe7d93bd2869d81f7353b556c439d7a1a7",
-        "ios/Runner/Runner.entitlements": "10f2c2931980464b961461ae5d8a0a9099c0acbb25350912907da42b80e471fd",
+        "ios/Runner/Info.plist": "aab27191478f52fc2b2346cc75c4110c96ea6340c3d9b48e46555ad2bc71cdf5",
+        "ios/Runner/Runner-Bridging-Header.h": "1a8d11d01d1cc92c650c9c9ed35299240052d4683a15a719a2315ef44185e074",
+        "ios/Runner/Runner.entitlements": "80bc580166a408584599361f0b540d0057c80a5a9cc87353d0ecaa75a3078e26",
         "ios/Runner/Assets.xcassets/AppIcon.appiconset/AppIcon-20@2x.png": "0606dc265dd1b6dd08df03a90b7b9b1659c6d0d8133724cfa792c65e7aa50bf9",
         "ios/Runner/Assets.xcassets/AppIcon.appiconset/AppIcon-20@2x~ipad.png": "0606dc265dd1b6dd08df03a90b7b9b1659c6d0d8133724cfa792c65e7aa50bf9",
         "ios/Runner/Assets.xcassets/AppIcon.appiconset/AppIcon-20@3x.png": "97f9b5dbb52449997d6cb644ac7adc0e42c2cda873e641c658c42dbe572893c9",
@@ -76,24 +76,24 @@
         "ios/Runner/Assets.xcassets/AppIcon.appiconset/AppIcon@3x.png": "b6b30212ca33e3d3a0f8293f5d143b04cc4cea9776a6ca6a9f5e429ec88d5273",
         "ios/Runner/Assets.xcassets/AppIcon.appiconset/AppIcon~ios-marketing.png": "904d4c9fdf1e5cfd99f8374a234126cb688b5561227097c168b799e774e01f85",
         "ios/Runner/Assets.xcassets/AppIcon.appiconset/AppIcon~ipad.png": "4d4be6287e85f6be6fba34ac40a159c8a2e6e12c9d3e2b2f65fc9a50a5209488",
-        "ios/Runner/Assets.xcassets/AppIcon.appiconset/Contents.json": "c9633a45a5d56d293906c90638b97bae35bbbe166ed5cc97f72011d4378f6d76",
+        "ios/Runner/Assets.xcassets/AppIcon.appiconset/Contents.json": "e30deaa1fc4f632b2d75ee85989cda641f45056e6e997ed40dfd4246d33a5c62",
         "ios/Runner/Assets.xcassets/LaunchBackground.imageset/background.png": "a4f454aa54cf2739d2f07a9409655fe19e4d5a5111d06a4696edebb51421cbde",
-        "ios/Runner/Assets.xcassets/LaunchBackground.imageset/Contents.json": "6616e2b3803bf4c50550837a6c054c432649bb8f1b3cb9680d574a53cef39e9b",
-        "ios/Runner/Assets.xcassets/LaunchImage.imageset/Contents.json": "c2f13dc361d694bd1ca94caba655f3446a031e74f2d70c5f4d6fd813d9a72365",
+        "ios/Runner/Assets.xcassets/LaunchBackground.imageset/Contents.json": "8acdea4656c6df21249f0a3532e3f2a4de6ad3686caa0a1861c87b0727a09593",
+        "ios/Runner/Assets.xcassets/LaunchImage.imageset/Contents.json": "0305caab0a081d319e4f70c23635d7e56189d42bcc05180d3212aa1e9ad29664",
         "ios/Runner/Assets.xcassets/LaunchImage.imageset/LaunchImage.png": "edf35b0f1e15b7d24d7448b6b508bb0ffbfedec2ed7e43d47c3c9ec2f88ebcd2",
         "ios/Runner/Assets.xcassets/LaunchImage.imageset/LaunchImage@2x.png": "edf35b0f1e15b7d24d7448b6b508bb0ffbfedec2ed7e43d47c3c9ec2f88ebcd2",
         "ios/Runner/Assets.xcassets/LaunchImage.imageset/LaunchImage@3x.png": "edf35b0f1e15b7d24d7448b6b508bb0ffbfedec2ed7e43d47c3c9ec2f88ebcd2",
-        "ios/Runner/Assets.xcassets/LaunchImage.imageset/README.md": "853ac958e2416fe2540f6f61165283a3618b71a7ba5f85f65ac41c2158dfcd21",
-        "ios/Runner/Base.lproj/LaunchScreen.storyboard": "af1c0da8f8d4214f9f5996a2ca5c150baf31f814824bc2f8b340e68cecdc724c",
-        "ios/Runner/Base.lproj/Main.storyboard": "dcea4686c02065e56217fd19fcfb73d7509b41872e7486126149d47a18559363",
-        "ios/Runner.xcodeproj/project.pbxproj": "914a229881fdbdccbc7bea9462b87b71e5007db950757c34f8ea74da246b86fc",
-        "ios/Runner.xcodeproj/project.xcworkspace/contents.xcworkspacedata": "ac28b35c2b940210bec0fff8e424b07fd0efe9112ab178a10533583f251a386c",
-        "ios/Runner.xcodeproj/project.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist": "d557c2c32fc6258ec28981fa45dc847b76c9968beb90a2e26d13ef9c4ea45c30",
-        "ios/Runner.xcodeproj/project.xcworkspace/xcshareddata/WorkspaceSettings.xcsettings": "dd64c0308ab2971c456871b990b24a008bdc3ece09833e8dbe9675e33a496e74",
-        "ios/Runner.xcodeproj/xcshareddata/xcschemes/Runner.xcscheme": "ecd51439b9475fb0ae274ae59b1042df511d135e23b53a07ec5563dc59177676",
-        "ios/Runner.xcworkspace/contents.xcworkspacedata": "505cf76cad37d19ae93e07254f2235ffd0095362bcbaa253c463d79896f6b8e0",
-        "ios/Runner.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist": "d557c2c32fc6258ec28981fa45dc847b76c9968beb90a2e26d13ef9c4ea45c30",
-        "ios/Runner.xcworkspace/xcshareddata/WorkspaceSettings.xcsettings": "dd64c0308ab2971c456871b990b24a008bdc3ece09833e8dbe9675e33a496e74",
+        "ios/Runner/Assets.xcassets/LaunchImage.imageset/README.md": "3d1343789d0d811a4530862df37d3fead7066ac40a466ac4225bd56fabe3695b",
+        "ios/Runner/Base.lproj/LaunchScreen.storyboard": "3b6690c594d05ea86c078b478363498b2375b25610690025efb7389911d7dec5",
+        "ios/Runner/Base.lproj/Main.storyboard": "fd367b6c43006d61b730f674970dd48b9f662c8f2264e52ffc1558102a2c9f2d",
+        "ios/Runner.xcodeproj/project.pbxproj": "f1406a4f681c7f1f245db3d7b1b21cabe64677934555bc8814fb1006bc8541af",
+        "ios/Runner.xcodeproj/project.xcworkspace/contents.xcworkspacedata": "7f3b00b5c3fdb45242d7b87e1e5c4e25d1fa8129a16c94295ecc4e8ea2235c5f",
+        "ios/Runner.xcodeproj/project.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist": "dfa0f9bb85b95ccba9c6811adadf8cb407fb5d52088e89db83ebc308ec448542",
+        "ios/Runner.xcodeproj/project.xcworkspace/xcshareddata/WorkspaceSettings.xcsettings": "11b247bc6796892d67c9a821d18604db4dd6a880981b34f38460b9866e6b247f",
+        "ios/Runner.xcodeproj/xcshareddata/xcschemes/Runner.xcscheme": "e3f54895b58046666249438ec61f298ba1601470d710751b775e5bc3e339c96a",
+        "ios/Runner.xcworkspace/contents.xcworkspacedata": "465e6de5660384eb6832e8078920ba6cd5305c445cb29a24a86a2fda4aa6b67e",
+        "ios/Runner.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist": "dfa0f9bb85b95ccba9c6811adadf8cb407fb5d52088e89db83ebc308ec448542",
+        "ios/Runner.xcworkspace/xcshareddata/WorkspaceSettings.xcsettings": "11b247bc6796892d67c9a821d18604db4dd6a880981b34f38460b9866e6b247f",
         "assets/notification.wav": "f4ab5f12b8f99cd2ce06168f1173e50ecf758bbe859871c838e867e08e0a0c6a",
         "assets/images/app_logo.jpeg": "e6c18016386428e0a51e2ca9009231e9bc21668535f742db5186870142300f27",
         "assets/images/app_logo.png": "7accc2b8b2f4d1414fc21b3fb3c9e018e10439fea02339efcd0660e5846369c9",
@@ -209,8 +209,8 @@
         "assets/temp/discount4.png": "ebc2de2449dc817867ee4423933b1feafcc7e91288c3642228e430cacc9f6a31",
         "assets/temp/discount5.png": "e60ed0f00b450ca4751d8c4f430e6e26f48267c03ad254074bfd24f6b02ecee0",
         "assets/temp/discount6.png": "784e1ff8e0b7ec4b57bd72daf84960837251f7c011029a7332c85a0bc38642c1",
-        "lib/presentation/theme/app_style.dart": "a41cdea4c78180c66b26633ed79139d9e44555146b9a446184c36ac6b36a55ef",
-        "lib/presentation/theme/theme.dart": "6143f7136017a24429407efe92b70f34edcabab90801d243d4bcd0c6f4be0d43"
+        "lib/presentation/theme/app_style.dart": "f202085343ef063bdfb3c285c6cda67eaac1e92e5d7fb32297783178eca55c63",
+        "lib/presentation/theme/theme.dart": "4fd8344adbba5f9720346b6406d4d06056752d7dec07b2318d2e0180955511a7"
       },
       "routes": [
         {
@@ -255,12 +255,13 @@
           "method": "replaceUiTypeRoute",
           "body": "context.router.replace(UiTypeRoute());"
         }
-      ]
+      ],
+      "onboarding_slides": []
     },
     "auth_sdk": {
       "version": "1.0.0",
       "files": {
-        "lib/presentation/routes/auth_route_pages.dart": "4327f9a170df9889461a2332cdeca509b1abd9167af96fb98a4fe8c1b7d05c92"
+        "lib/presentation/routes/auth_route_pages.dart": "aeac771f4cc14e9675404d86339a6db9c9c23360a5e23dfa18c317f167bcb890"
       },
       "routes": [
         {
@@ -292,6 +293,10 @@
         {
           "method": "replaceLoginRoute",
           "body": "context.router.replace(LoginRoute());"
+        },
+        {
+          "method": "replaceUiTypeRoute",
+          "body": "context.router.replace(UiTypeRoute());"
         }
       ],
       "database": {
@@ -305,19 +310,21 @@
           "version": 16,
           "step": "if (from < 16) { await m.createTable(offlineUsersTable); }"
         }
-      }
+      },
+      "onboarding_slides": []
     },
     "users_sdk": {
       "version": "1.0.0",
       "files": {},
       "routes": [],
-      "app_routes": []
+      "app_routes": [],
+      "onboarding_slides": []
     },
     "launch_sdk": {
       "version": "1.0.0",
       "files": {
-        "lib/presentation/pages/launch/home.dart": "00c8195dc50c2844319c5dcb2c5329a9ce17aa738e5bf1c92921c688e28f604c",
-        "lib/presentation/pages/launch/widgets/app_item.dart": "7c2397b14f119d0db8b7d18bc81deff57a9be05736db5ec15acd0411dfec91af",
+        "lib/presentation/pages/launch/home.dart": "204b2d49ed5a16bdc26aed7454f39a55a744eeaf80e867091f7b4fd0ab5263f9",
+        "lib/presentation/pages/launch/widgets/app_item.dart": "052afccb280ea32ff94be3df342ff87bc0c1b680f7f2f1e48b2c56225d1a4243",
         "android/app/src/main/AndroidManifest_snippets.xml": "9a9d0b6c862061375ee6f30e6875f3175c6a1bc69dada3f24e0a6194f6ccb83d"
       },
       "routes": [
@@ -328,24 +335,27 @@
           "import": "package:${package}/presentation/pages/launch/home.dart"
         }
       ],
-      "app_routes": []
+      "app_routes": [],
+      "onboarding_slides": []
     },
     "comms_sdk": {
       "version": "1.0.0",
       "files": {},
       "routes": [],
-      "app_routes": []
+      "app_routes": [],
+      "onboarding_slides": []
     },
     "processing_sdk": {
       "version": "1.0.0",
       "files": {},
       "routes": [],
-      "app_routes": []
+      "app_routes": [],
+      "onboarding_slides": []
     },
     "productivity_sdk": {
       "version": "1.0.0",
       "files": {
-        "lib/presentation/pages/tasks/tasks_page.dart": "d8111c14255ffc062e11954cf45d77eec36ffac193bbace00aad17a7483085e4"
+        "lib/presentation/pages/tasks/tasks_page.dart": "2c370be2c0377cc6162b3e68a69ddacb5d5d6f3c61839533c3fa73cb3b2405da"
       },
       "routes": [
         {
@@ -391,13 +401,15 @@
           "version": 14,
           "step": "if (from < 13) { await m.createTable(tasksTable); } if (from < 14) { await m.createTable(recoveryProfilesTable); await m.createTable(avoidedHabitsTable); await m.createTable(urgeLogsTable); await m.createTable(dailyRitualsTable); await m.createTable(ritualLogsTable); await m.createTable(procrastinationLogsTable); }"
         }
-      }
+      },
+      "onboarding_slides": []
     },
     "corporate_sdk": {
       "version": "1.0.0",
       "files": {},
       "routes": [],
-      "app_routes": []
+      "app_routes": [],
+      "onboarding_slides": []
     }
   }
 }
