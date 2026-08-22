@@ -11,8 +11,8 @@
       "git": "https://github.com/RokctAI/core",
       "path": "../core/base/dart",
       "ref": "main",
-      "sha256": "60c14d48989ded5e5f4bfc4a16f7706e6599cf2c6f69420d459522441292b363",
-      "_comment": "Shared kernel (replaces retired core_sdk); provides the app shell templates. sha256 pins base/dart/install.py as of RokctAI/core@4d5b45de30dfbd2f27211959440559269a10d74f (base_sdk 1.15.0); bump it whenever core changes that installer."
+      "sha256": "f2278305c3df1bbf65124c334f2b05270d54069e61b52ab1502848d36f62e946",
+      "_comment": "Shared kernel (replaces retired core_sdk); provides the app shell templates. sha256 pins base/dart/install.py as of RokctAI/core@717abff32d2e81f746e025403c07151e6efc18db (base_sdk 1.18.0); bump it whenever core changes that installer."
     },
     {
       "name": "auth_sdk",
