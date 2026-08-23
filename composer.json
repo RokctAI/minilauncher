@@ -11,8 +11,8 @@
       "git": "https://github.com/RokctAI/core",
       "path": "../core/base/dart",
       "ref": "main",
-      "sha256": "60c14d48989ded5e5f4bfc4a16f7706e6599cf2c6f69420d459522441292b363",
-      "_comment": "Shared kernel (replaces retired core_sdk); provides the app shell templates. sha256 pins base/dart/install.py as of RokctAI/core@4d5b45de30dfbd2f27211959440559269a10d74f (base_sdk 1.15.0); bump it whenever core changes that installer."
+      "sha256": "f2278305c3df1bbf65124c334f2b05270d54069e61b52ab1502848d36f62e946",
+      "_comment": "Shared kernel (replaces retired core_sdk); provides the app shell templates. sha256 pins base/dart/install.py as of RokctAI/core@717abff32d2e81f746e025403c07151e6efc18db (base_sdk 1.18.0); bump it whenever core changes that installer."
     },
     {
       "name": "auth_sdk",
@@ -21,7 +21,7 @@
       "path": "../Users/auth/dart",
       "git": "https://github.com/RokctAI/Users",
       "ref": "main",
-      "sha256": "721a64db369191db468221e4b66468cf7f9869c0884b9e79c322cbafcf06b237"
+      "sha256": "638ff6a945cdf8ab8713b6f7d3627dc6834cfa4400b473e801d8793a0e9038ea"
     },
     {
       "name": "users_sdk",
@@ -30,7 +30,7 @@
       "path": "../Users/users/dart",
       "git": "https://github.com/RokctAI/Users",
       "ref": "main",
-      "sha256": "3016b9fe6695eb2ee469fe0b26692174e163456db87d9a44fef4a1576cd96c4f"
+      "sha256": "c8d07afa7d8a526f3fb5570f639f89adbfe8cb0ff32c106ff5696a1f1e9dd38d"
     },
     {
       "name": "launch_sdk",
@@ -39,7 +39,7 @@
       "git": "https://github.com/RokctAI/core",
       "path": "../core/launch/dart",
       "ref": "main",
-      "sha256": "6dd58608f35536097d9c5842c46b88b5eed427110f27252d9d84a03e1cd6deb8",
+      "sha256": "75d3f0bb5e55199db521da9e3f6e5bb6b6f9f39580e9ec3966481308de080b2f",
       "home_sdk": true
     },
     {
@@ -49,7 +49,7 @@
       "git": "https://github.com/RokctAI/core",
       "path": "../core/comms/dart",
       "ref": "main",
-      "sha256": "f6656411a48da896b76f302b23d74686a7ca2893890374338b826d0eb371dc5b"
+      "sha256": "387afceb37a60acd984cf19571a183c1a31c19696e57de1b387dd202209fb9f9"
     },
     {
       "name": "processing_sdk",
@@ -58,7 +58,7 @@
       "git": "https://github.com/RokctAI/productivity",
       "path": "../productivity/processing/dart",
       "ref": "main",
-      "sha256": "2e0868ac8402b4f9fb3e7bf4131337a570e45aff68f272d2db0fcf0bbc583f0e"
+      "sha256": "677d3dac3ce3c1f31b8cfdc23152eaab95599c0df620585bc20068bce29123d2"
     },
     {
       "name": "productivity_sdk",
@@ -67,7 +67,7 @@
       "git": "https://github.com/RokctAI/productivity",
       "path": "../productivity/productivity/dart",
       "ref": "main",
-      "sha256": "c4ffcd158dedbb994b72d50d8792ff7e86345db8e8d0542afeb58f161b687ef3",
+      "sha256": "b120b6aad382eec86713b2c46fdc2c29ddc90c6624d75d58a815e1a189347019",
       "_comment": "Owns tasks (tasks_table, task_service, TasksRoute). The launcher's home is tasks-first, so this is the source for that screen and for productivity glance signals."
     },
     {
@@ -77,7 +77,7 @@
       "git": "https://github.com/RokctAI/corporate",
       "path": "../corporate/corporate/dart",
       "ref": "main",
-      "sha256": "fdba196fbe6828c10946d5a911c1d176e1f393cddbcaff310eb39b349e44fb6e"
+      "sha256": "27bbd0cac87c38bfac5663e622e442c16bb43eebd02a65f559d33149a3478688"
     },
     {
       "name": "agent_sdk",
