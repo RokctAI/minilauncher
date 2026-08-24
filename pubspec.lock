@@ -317,6 +317,13 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.7.15"
+  desktop_sdk:
+    dependency: "direct main"
+    description:
+      path: ".rokct/cache/desktop"
+      relative: true
+    source: path
+    version: "1.1.0"
   dio:
     dependency: transitive
     description:

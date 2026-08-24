@@ -45,6 +45,8 @@ dependencies:
     path: .rokct/cache/productivity
   corporate_sdk:
     path: .rokct/cache/corporate
+  desktop_sdk:
+    path: .rokct/cache/desktop
   flutter:
     sdk: flutter
 
