@@ -80,6 +80,16 @@
       "sha256": "27bbd0cac87c38bfac5663e622e442c16bb43eebd02a65f559d33149a3478688"
     },
     {
+      "name": "desktop_sdk",
+      "enabled": true,
+      "source": "git",
+      "git": "https://github.com/RokctAI/hardware",
+      "path": "../hardware/desktop/dart",
+      "ref": "main",
+      "sha256": "188774abbcb8de7dee95dba1444f2c1913a37241826453a987b283646ba756de",
+      "_comment": "TEMPORARY (desktop test wave for Ray) — revert candidate"
+    },
+    {
       "name": "agent_sdk",
       "enabled": false,
       "source": "git",
