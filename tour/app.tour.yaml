@@ -1,0 +1,93 @@
+# Guided-tour manifest for the Minilauncher app shell (minilauncher).
+#
+# This file is the ONLY place the tour carries Minilauncher branding: SDK
+# tour fragments (each SDK's templates/tour/<sdk>.tour.yaml) stay
+# brand-neutral and receive {app_name}/{app_tagline} by substitution at
+# merge time. The merge, capture and assembly all run in CI via
+# RokctAI/shared-workflows .github/workflows/universal-guided-tour.yml;
+# format documentation lives in that repo at scripts/tour/README.md.
+#
+# Composition note: this repo commits its own pinned composer.json and has
+# no .rokct/config/app_type, so the universal workflow skips its composer
+# manifest selection and composes from the committed file - the rest of the
+# pipeline is identical to the other shells.
+#
+# Session note: no composed SDK declares a session_policy for this shell,
+# so auth_sdk's fragment demo sign-in keeps the default demo landing
+# (base_sdk's UI-type screen); the launcher_home step below then routes to
+# the launcher itself (/launcher, launch_sdk manifest routes).
+#
+# Fragment order mirrors the composed SDKs that ship fragments today
+# (committed composer.json): auth (Users/auth). launch_sdk ships no
+# fragment yet - it stays listed so its steps slot in the moment one lands
+# (fragments none of the composed SDKs ship are skipped with a warning,
+# never a failure). users_sdk's fragment is deliberately NOT listed: this
+# compose routes no /profile screen, and the users fragment documents that
+# such apps should leave it out until /profile resolves.
+#
+# Video colours are intentionally NOT declared here: the assembler derives
+# brand/accent colours from the composed AppStyle when the manifest carries
+# no colour keys, so the video always matches the app's real theme.
+#
+# Outputs land in marketing/tour/ (screenshots + feature-guide.md required,
+# per-chapter videos best-effort).
+app:
+  name: Minilauncher
+  tagline: A minimal launcher that keeps your phone simple
+  # Committed app logo (transparent background), shown on the video end card.
+  logo: assets/images/logo.png
+video:
+  hook: "Your phone, without the noise."
+  offer: "Keep it simple."
+  # The auth chapter's key content is bottom sheets, so its phone hangs
+  # top-cropped from the top canvas edge (keeping the sheet fully
+  # visible); every other chapter keeps the default bottom-cropped
+  # WhatsApp-ad framing.
+  chapter_frame_anchor:
+    auth: top
+setup:
+  imports:
+    - "import 'package:base_sdk/src/models/response/languages_response.dart';"
+    - "import 'package:base_sdk/src/services/local_storage.dart';"
+  dart: |
+    // Pre-seed the language so the first-run language picker can never
+    // block the tour behind a non-dismissible modal (the backend may
+    // advertise several languages). LocalStorage.init() is idempotent -
+    // app.main() calls it again.
+    await LocalStorage.init();
+    if (LocalStorage.getLanguage() == null) {
+      await LocalStorage.setLanguageData(LanguageData(
+        id: 1,
+        title: 'English',
+        locale: 'en',
+        backward: false,
+        isDefault: true,
+        active: true,
+      ));
+      await LocalStorage.setLanguageSelected(true);
+      await LocalStorage.setLangLtr(false);
+    }
+tour:
+  # Splash settles onto the sign-in screen (demo builds show the demo hint).
+  - step:
+      key: welcome
+      title: "Welcome to Minilauncher"
+      caption: "{app_name} is *your phone, simplified* - and in this demo build, any sign-in details work."
+      action: wait
+      settle: 12
+  # auth_sdk captures the auth screens, then performs the demo sign-in
+  # (action only, no still); with no session policy declared the demo
+  # session lands on base_sdk's default demo landing.
+  - fragment: auth
+  # The launcher itself: launch_sdk's home screen (manifest route
+  # /launcher), the app grid this shell exists for.
+  - step:
+      key: launcher_home
+      title: "Your apps, one clean screen"
+      caption: "Everything you need and *nothing you don't* - your apps on one calm screen."
+      action: route
+      route: /launcher
+      settle: 8
+  # launch_sdk has not shipped its fragment yet; keeping the slot means its
+  # steps join the tour the moment templates/tour/launch.tour.yaml lands.
+  - fragment: launch
