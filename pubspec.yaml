@@ -31,6 +31,8 @@ environment:
 dependencies:
   base_sdk:
     path: .rokct/cache/base
+  telemetry_sdk:
+    path: .rokct/cache/telemetry
   auth_sdk:
     path: .rokct/cache/auth
   users_sdk:
