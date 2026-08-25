@@ -1,4 +1,4 @@
-# 🪟 Windows Build Errors
+# 🤖 Android Build Errors
 
 The following syntax errors were found during the build process:
 
