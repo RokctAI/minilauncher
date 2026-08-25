@@ -36,9 +36,9 @@ import zipfile
 # Every fetch below is pinned to this commit, so what this script downloads is
 # immutable; the executable targets are additionally SHA-256 verified against
 # EXPECTED_SHA256 before they are written anywhere.
-PROTOCOL_REF = "26345551e9a8431b5572e7af151161e2180a195b"
+PROTOCOL_REF = "0ad5de7353bf3997cde17cb0cec70736b8bd4a49"
 EXPECTED_SHA256 = {
-    "profiles/web/initiate.py": "55064a1023be352bb595baa03e7535492015ce8191e6aa86a21b80d7be9fdd75",
+    "profiles/web/initiate.py": "df582d290428e8ab03b4ea51b9c284de2f0947c64f57eba8c85f18ddfcdf933f",
     "workflows/maintenance.yml": "df37cf18061299ce6d413f3f9f5017882a7bd044e56e15bad24a13b03cff473d",
 }
 GITHUB_ZIP_BASE = (
@@ -206,11 +206,17 @@ def copy_versioned(src_rel, dst_abs):
     print(f"[init] Copied {src_rel} -> {dst_abs}")
 
 
-def copy_dir(src, dst):
+def copy_dir(src, dst, include_rok=False):
+    """Sync a protocol directory into the consumer checkout.
+
+    include_rok only affects the remote fallback below: when the protocol is
+    checked out locally, `.rok` is already present at PROTOCOL_DIR and the
+    local branch has always skipped it (copying it into .rokct/skills/ would
+    just duplicate the tree inside the protocol repo itself)."""
     if not os.path.isdir(src):
         # Remote mode - derive path from src
         rel_src = src.replace(PROTOCOL_DIR + os.sep, "") if PROTOCOL_DIR in src else src
-        fetch_dir_from_github(rel_src, dst)
+        fetch_dir_from_github(rel_src, dst, include_rok=include_rok)
         return
     os.makedirs(dst, exist_ok=True)
     for item in os.listdir(src):
@@ -226,7 +232,7 @@ def copy_dir(src, dst):
         s = os.path.join(src, item)
         d = os.path.join(dst, item)
         if os.path.isdir(s):
-            copy_dir(s, d)
+            copy_dir(s, d, include_rok=include_rok)
         else:
             copy_versioned(os.path.relpath(s, PROTOCOL_DIR), d)
     print(f"[init] Synced directory {src} -> {dst}")
@@ -247,7 +253,31 @@ def safe_extract_path(dst, rel):
     return dest
 
 
-def fetch_dir_from_github(rel_src, dst):
+# Files only ever skipped when the whole workflows/ directory is fetched -
+# they are installed separately (or deliberately not installed at all).
+WORKFLOW_ONLY_SKIPS = ("sync_workspace.py", "sync_workspace.yml", "maintenance.yml")
+
+
+def skip_fetched_entry(rel_src, rel, include_rok):
+    """Whether a zip entry at `rel` (relative to the fetched `rel_src`) must
+    not be extracted.
+
+    `.rok/` is RokctAI-only tooling. Excluding it here - during extraction,
+    rather than deleting it after the fact - means it is never created on a
+    non-org machine's disk at all, not even transiently inside a staging
+    directory, and nothing is left behind if the run dies mid-loop. Callers
+    that legitimately provision org tooling opt in with include_rok=True; the
+    default is the safe one, so a new caller cannot leak it by omission.
+
+    Fetching workflows/.rok is unaffected either way: that call names the
+    directory itself as rel_src, so its contents are top-level entries rather
+    than ".rok/..." paths."""
+    if not include_rok and ".rok" in rel.split("/"):
+        return True
+    return rel_src == "workflows" and rel in WORKFLOW_ONLY_SKIPS
+
+
+def fetch_dir_from_github(rel_src, dst, include_rok=False):
     # Zip entries always use forward slashes; on Windows callers pass
     # os.sep-separated paths (e.g. copy_dir strips PROTOCOL_DIR + os.sep,
     # leaving "core\\skills"), which would match no entries and silently
@@ -262,11 +292,7 @@ def fetch_dir_from_github(rel_src, dst):
         for name in z.namelist():
             if name.startswith(prefix) and not name.endswith("/"):
                 rel = name[len(prefix) :]
-                if rel_src == "workflows" and (
-                    rel
-                    in ("sync_workspace.py", "sync_workspace.yml", "maintenance.yml")
-                    or rel.startswith(".rok/")
-                ):
+                if skip_fetched_entry(rel_src, rel, include_rok):
                     continue
                 data = z.read(name)
                 verify_pinned(f"{rel_src}/{rel}", data)
@@ -325,6 +351,29 @@ def select_rok_workflows(src_dir, repo_name):
     return pairs
 
 
+def ensure_rokct_gitignore():
+    """Write .rokct/.gitignore before anything is staged under .rokct/.
+
+    `skills/` and `tmp/` are provisioned, session-ephemeral trees that must
+    never be committed. This used to run at the end of main(), which left a
+    window on a first-ever run where those directories existed on disk while
+    still untracked-and-not-ignored - long enough for a `git add -A` to stage
+    them."""
+    gitignore_path = os.path.join(ROKCT_DIR, ".gitignore")
+    required_ignores = ("skills/", "tmp/")
+    if not os.path.exists(gitignore_path):
+        with open(gitignore_path, "w", encoding="utf-8") as f:
+            f.write("\n".join(required_ignores) + "\n")
+        print(f"[init] Created {gitignore_path}")
+        return
+    txt = open(gitignore_path, "r", encoding="utf-8").read()
+    missing = [entry for entry in required_ignores if entry not in txt]
+    if missing:
+        with open(gitignore_path, "a", encoding="utf-8") as f:
+            f.write("\n".join(missing) + "\n")
+        print(f"[init] Updated {gitignore_path} (added: {', '.join(missing)})")
+
+
 def detect_repo_owner():
     try:
         url = subprocess.check_output(
@@ -342,6 +391,9 @@ def detect_repo_owner():
 def main():
     check_for_update()
     os.makedirs(ROKCT_DIR, exist_ok=True)
+    # First thing after .rokct/ exists: nothing below may stage into an
+    # unignored directory.
+    ensure_rokct_gitignore()
 
     core_templates_src = os.path.join(PROTOCOL_DIR, "core", "templates")
     for fname in [
@@ -366,18 +418,42 @@ def main():
 
     repo_owner = detect_repo_owner()
     if repo_owner:
+        # RokctAI repos provision the org toolchain too: SDK_ECOSYSTEM.md's
+        # compose flow runs .rokct/skills/.rok/flutter/scripts/compose.py, and
+        # .rokct/skills/ is git-ignored and wiped by end_protocol.py.
         copy_dir(
             os.path.join(PROTOCOL_DIR, "core", "skills"),
             os.path.join(ROKCT_DIR, "skills"),
+            include_rok=True,
         )
     else:
         core_skills_dir = os.path.join(PROTOCOL_DIR, "core", "skills")
         dst = os.path.join(ROKCT_DIR, "skills")
-        os.makedirs(dst, exist_ok=True)
-        for item in os.listdir(core_skills_dir):
-            s = os.path.join(core_skills_dir, item)
-            if os.path.isdir(s) and item != ".rok":
-                copy_dir(s, os.path.join(dst, item))
+        # Standalone bootstrap: nothing is checked out locally, so stage
+        # core/skills from the pinned release zip first - the same remote
+        # fallback copy_dir() takes for the RokctAI branch above, minus .rok,
+        # which the fetch never extracts on this path (include_rok defaults to
+        # False) so it never touches a non-org machine's disk. Walking the
+        # staged copy keeps the non-org selection below (skill directories
+        # only) identical to the local-checkout case, instead of dying on
+        # os.listdir() of a directory that was never fetched.
+        temp_core_skills = os.path.join(ROKCT_DIR, "tmp", "core_skills")
+        staged = not os.path.isdir(core_skills_dir)
+        try:
+            if staged:
+                fetch_dir_from_github("core/skills", temp_core_skills)
+                core_skills_dir = temp_core_skills
+            os.makedirs(dst, exist_ok=True)
+            for item in os.listdir(core_skills_dir):
+                s = os.path.join(core_skills_dir, item)
+                if os.path.isdir(s) and item != ".rok":
+                    copy_dir(s, os.path.join(dst, item))
+        finally:
+            # finally, not a trailing statement: an aborted fetch, a failed
+            # copy or a Ctrl-C must not leave the staging tree behind.
+            if staged and os.path.isdir(temp_core_skills):
+                shutil.rmtree(temp_core_skills)
+                print("[init] Cleaned up temporary core/skills directory")
 
     copy_versioned(
         os.path.join("profiles", "web", "rules.md"),
@@ -395,45 +471,38 @@ def main():
     repo_owner = detect_repo_owner()
     if repo_owner and not os.environ.get("CI"):
         rok_workflows_src = os.path.join(PROTOCOL_DIR, "workflows", ".rok")
-        temp_rok_workflows = os.path.join(ROKCT_DIR, "workflows", ".rok")
-        if not os.path.isdir(rok_workflows_src):
-            fetch_dir_from_github("workflows/.rok", temp_rok_workflows)
-            src_dir = temp_rok_workflows
-        else:
-            src_dir = rok_workflows_src
+        # Staged under the git-ignored .rokct/tmp/ rather than
+        # .rokct/workflows/.rok: the latter sits in a tracked directory, so a
+        # run that died before the cleanup left org-only workflow sources
+        # committable.
+        temp_rok_workflows = os.path.join(ROKCT_DIR, "tmp", "rok_workflows")
+        staged_rok = not os.path.isdir(rok_workflows_src)
+        try:
+            if staged_rok:
+                fetch_dir_from_github("workflows/.rok", temp_rok_workflows)
+                src_dir = temp_rok_workflows
+            else:
+                src_dir = rok_workflows_src
 
-        if os.path.isdir(src_dir):
-            dst_workflows = os.path.join(PROJECT_ROOT, ".github", "workflows")
-            os.makedirs(dst_workflows, exist_ok=True)
-            for src_name, dst_name in select_rok_workflows(src_dir, repo_owner):
-                shutil.copy2(
-                    os.path.join(src_dir, src_name),
-                    os.path.join(dst_workflows, dst_name),
-                )
-                suffix = f" (from {src_name})" if src_name != dst_name else ""
-                print(f"[init] Deployed Protocol workflow: {dst_name}{suffix}")
-            if src_dir == temp_rok_workflows and os.path.isdir(temp_rok_workflows):
+            if os.path.isdir(src_dir):
+                dst_workflows = os.path.join(PROJECT_ROOT, ".github", "workflows")
+                os.makedirs(dst_workflows, exist_ok=True)
+                for src_name, dst_name in select_rok_workflows(src_dir, repo_owner):
+                    shutil.copy2(
+                        os.path.join(src_dir, src_name),
+                        os.path.join(dst_workflows, dst_name),
+                    )
+                    suffix = f" (from {src_name})" if src_name != dst_name else ""
+                    print(f"[init] Deployed Protocol workflow: {dst_name}{suffix}")
+        finally:
+            if staged_rok and os.path.isdir(temp_rok_workflows):
                 shutil.rmtree(temp_rok_workflows)
                 print("[init] Cleaned up temporary workflows/.rok directory")
     else:
         # Ensure no Protocol-only workflows exist in non-RokctAI repos
         pass
 
-    gitignore_path = os.path.join(ROKCT_DIR, ".gitignore")
-    required_ignores = ("skills/", "tmp/")
-    if not os.path.exists(gitignore_path):
-        with open(gitignore_path, "w", encoding="utf-8") as f:
-            f.write("\n".join(required_ignores) + "\n")
-        print(f"[init] Created {gitignore_path}")
-    else:
-        txt = open(gitignore_path, "r", encoding="utf-8").read()
-        missing = [entry for entry in required_ignores if entry not in txt]
-        if missing:
-            with open(gitignore_path, "a", encoding="utf-8") as f:
-                f.write("\n".join(missing) + "\n")
-            print(f"[init] Updated {gitignore_path} (added: {', '.join(missing)})")
-
-    # Fleet standard, mirroring the .gitignore ensure above: force LF for
+    # Fleet standard, mirroring ensure_rokct_gitignore(): force LF for
     # Python files so composer.json sha256 pins (computed from the committed
     # LF blobs) verify on Windows runners, where autocrlf checkouts otherwise
     # materialize *.py with CRLF endings and change the on-disk hash.
@@ -463,7 +532,12 @@ def main():
     if email:
         prefix = email.split("@")[0].replace(".", "").lower()
         domain = email.split("@")[1].lower()
-        domain_hash = hashlib.md5(domain.encode()).hexdigest()[:6]
+        # Non-security use: short fingerprint of the email domain to build a
+        # human-readable safe identity. usedforsecurity=False documents intent
+        # and clears bandit B324 (CWE-327) without changing the digest output.
+        domain_hash = hashlib.md5(domain.encode(), usedforsecurity=False).hexdigest()[
+            :6
+        ]
         safe_id = f"{prefix}.{domain_hash}"
         mem = os.path.join(ROKCT_DIR, "memory.md")
         existing_mem_content = ""
