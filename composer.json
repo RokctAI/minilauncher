@@ -15,6 +15,16 @@
       "_comment": "Shared kernel (replaces retired core_sdk); provides the app shell templates. sha256 pins base/dart/install.py as of RokctAI/core@717abff32d2e81f746e025403c07151e6efc18db (base_sdk 1.18.0); bump it whenever core changes that installer."
     },
     {
+      "name": "telemetry_sdk",
+      "enabled": true,
+      "source": "git",
+      "git": "https://github.com/RokctAI/core",
+      "path": "../core/telemetry/dart",
+      "ref": "main",
+      "sha256": "5a0870e7697f1ac57fc0169561eab979e7e6ea5d478a4510a97ac7321f90ab34",
+      "_comment": "Telemetry seam owner package (core#98); sha256 pins telemetry/dart/install.py."
+    },
+    {
       "name": "auth_sdk",
       "enabled": true,
       "source": "git",
