@@ -1709,6 +1709,13 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.1.3"
+  telemetry_sdk:
+    dependency: "direct main"
+    description:
+      path: ".rokct/cache/telemetry"
+      relative: true
+    source: path
+    version: "1.0.0"
   term_glyph:
     dependency: transitive
     description:
