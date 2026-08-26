@@ -60,6 +60,18 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  # Guided-tour runner (integration_test/guided_tour_test.dart) - drives the
+  # demo build on the CI emulator for the marketing/tour screenshot pipeline.
+  integration_test:
+    sdk: flutter
+  # Codegen toolchain for the composed shell: universal-guided-tour runs
+  # `dart run build_runner build` before building, and the base_sdk-composed
+  # lib/routes/app_router.dart declares `part 'app_router.gr.dart'`
+  # (@AutoRouterConfig), so build_runner + auto_route_generator are required.
+  # Versions match the fleet standard for tour-running shells (paas_driver /
+  # supacharge).
+  freezed: ^3.2.3
+  build_runner: ^2.10.4
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -67,6 +79,11 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^6.0.0
+  # 9.x pins source_gen ^1.5/^2 which conflicts with freezed 3.x (source_gen
+  # >=3); 10.3.x is the first line on analyzer 8 (10.4+ moves to auto_route
+  # 11 / analyzer 10+, which drags freezed onto dev prereleases). Needs
+  # auto_route 10.x at runtime - arbitrated in dependency_overrides below.
+  auto_route_generator: '>=10.3.1 <10.4.0'
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -156,6 +173,11 @@ flutter:
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
 dependency_overrides:
+  # auto_route_generator 10.3.x needs auto_route 10.x, while the composed
+  # SDKs still pin ^9.2.0 (resolves 9.3.0+1 here). 10.1+ keeps the renamed
+  # 9.x APIs as deprecated aliases, so composed source compiles unchanged -
+  # same arbitration as paas_driver and supacharge.
+  auto_route: ^10.3.0
   sqlite3: 2.9.4
   # base_sdk declares share_plus ^10.1.1; productivity_sdk declares ^12.0.1
   # but its one call site (Share.share/Share.shareXFiles) is written against
