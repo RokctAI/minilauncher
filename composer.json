@@ -12,17 +12,8 @@
       "path": "../core/base/dart",
       "ref": "main",
       "sha256": "f2278305c3df1bbf65124c334f2b05270d54069e61b52ab1502848d36f62e946",
-      "_comment": "Shared kernel (replaces retired core_sdk); provides the app shell templates. sha256 pins base/dart/install.py as of RokctAI/core@717abff32d2e81f746e025403c07151e6efc18db (base_sdk 1.18.0); bump it whenever core changes that installer."
-    },
-    {
-      "name": "telemetry_sdk",
-      "enabled": true,
-      "source": "git",
-      "git": "https://github.com/RokctAI/core",
-      "path": "../core/telemetry/dart",
-      "ref": "main",
-      "sha256": "5a0870e7697f1ac57fc0169561eab979e7e6ea5d478a4510a97ac7321f90ab34",
-      "_comment": "Telemetry seam owner package (core#98); sha256 pins telemetry/dart/install.py."
+      "_sha256_comment": "SHA-256 of base/dart/install.py at core@4793dfa; required by the composer's unpinned-installer gate. Update when upstream install.py changes.",
+      "_comment": "Shared kernel (replaces retired core_sdk); provides the app shell templates."
     },
     {
       "name": "auth_sdk",
@@ -31,7 +22,8 @@
       "path": "../Users/auth/dart",
       "git": "https://github.com/RokctAI/Users",
       "ref": "main",
-      "sha256": "638ff6a945cdf8ab8713b6f7d3627dc6834cfa4400b473e801d8793a0e9038ea"
+      "sha256": "638ff6a945cdf8ab8713b6f7d3627dc6834cfa4400b473e801d8793a0e9038ea",
+      "_sha256_comment": "SHA-256 of auth/dart/install.py at Users@15d625c; required by the composer's unpinned-installer gate. Update when upstream install.py changes."
     },
     {
       "name": "users_sdk",
@@ -40,7 +32,8 @@
       "path": "../Users/users/dart",
       "git": "https://github.com/RokctAI/Users",
       "ref": "main",
-      "sha256": "c8d07afa7d8a526f3fb5570f639f89adbfe8cb0ff32c106ff5696a1f1e9dd38d"
+      "sha256": "c8d07afa7d8a526f3fb5570f639f89adbfe8cb0ff32c106ff5696a1f1e9dd38d",
+      "_sha256_comment": "SHA-256 of users/dart/install.py at Users@15d625c; required by the composer's unpinned-installer gate. Update when upstream install.py changes."
     },
     {
       "name": "launch_sdk",
@@ -50,6 +43,7 @@
       "path": "../core/launch/dart",
       "ref": "main",
       "sha256": "75d3f0bb5e55199db521da9e3f6e5bb6b6f9f39580e9ec3966481308de080b2f",
+      "_sha256_comment": "SHA-256 of launch/dart/install.py at core@4793dfa; required by the composer's unpinned-installer gate. Update when upstream install.py changes.",
       "home_sdk": true
     },
     {
@@ -59,7 +53,18 @@
       "git": "https://github.com/RokctAI/core",
       "path": "../core/comms/dart",
       "ref": "main",
-      "sha256": "387afceb37a60acd984cf19571a183c1a31c19696e57de1b387dd202209fb9f9"
+      "sha256": "387afceb37a60acd984cf19571a183c1a31c19696e57de1b387dd202209fb9f9",
+      "_sha256_comment": "SHA-256 of comms/dart/install.py at core@4793dfa; required by the composer's unpinned-installer gate. Update when upstream install.py changes."
+    },
+    {
+      "name": "telemetry_sdk",
+      "enabled": true,
+      "source": "git",
+      "git": "https://github.com/RokctAI/core",
+      "path": "../core/telemetry/dart",
+      "ref": "main",
+      "sha256": "5a0870e7697f1ac57fc0169561eab979e7e6ea5d478a4510a97ac7321f90ab34",
+      "_comment": "App telemetry: events flow through base_sdk's TelemetryClient.track gateway cmd, with telemetry_sdk owning delivery policy via the TelemetryClient.configure transport seam. Pin = sha256 of core telemetry/dart/install.py as bootstrapped, same value as radio.json's entry."
     },
     {
       "name": "processing_sdk",
@@ -68,7 +73,8 @@
       "git": "https://github.com/RokctAI/productivity",
       "path": "../productivity/processing/dart",
       "ref": "main",
-      "sha256": "677d3dac3ce3c1f31b8cfdc23152eaab95599c0df620585bc20068bce29123d2"
+      "sha256": "677d3dac3ce3c1f31b8cfdc23152eaab95599c0df620585bc20068bce29123d2",
+      "_sha256_comment": "SHA-256 of processing/dart/install.py at productivity@2b2eb33; required by the composer's unpinned-installer gate. Update when upstream install.py changes."
     },
     {
       "name": "productivity_sdk",
@@ -78,6 +84,7 @@
       "path": "../productivity/productivity/dart",
       "ref": "main",
       "sha256": "b120b6aad382eec86713b2c46fdc2c29ddc90c6624d75d58a815e1a189347019",
+      "_sha256_comment": "SHA-256 of productivity/dart/install.py at productivity@2b2eb33; required by the composer's unpinned-installer gate. Update when upstream install.py changes.",
       "_comment": "Owns tasks (tasks_table, task_service, TasksRoute). The launcher's home is tasks-first, so this is the source for that screen and for productivity glance signals."
     },
     {
@@ -87,7 +94,19 @@
       "git": "https://github.com/RokctAI/corporate",
       "path": "../corporate/corporate/dart",
       "ref": "main",
-      "sha256": "27bbd0cac87c38bfac5663e622e442c16bb43eebd02a65f559d33149a3478688"
+      "sha256": "27bbd0cac87c38bfac5663e622e442c16bb43eebd02a65f559d33149a3478688",
+      "_sha256_comment": "SHA-256 of corporate/dart/install.py at corporate@aa23ff0; required by the composer's unpinned-installer gate. Update when upstream install.py changes."
+    },
+    {
+      "name": "agent_sdk",
+      "enabled": false,
+      "source": "git",
+      "git": "https://github.com/RokctAI/agent",
+      "path": "../agent/agent/dart",
+      "ref": "main",
+      "sha256": "ea30e6fa45f6042e22e15d262f88eb5d02165adf6ef5365c93e3d656ee71a91e",
+      "_sha256_comment": "SHA-256 of agent/dart/install.py at agent@7c3dddb; required by the composer's unpinned-installer gate. Update when upstream install.py changes.",
+      "_comment": "Disabled as per requirements"
     },
     {
       "name": "desktop_sdk",
@@ -97,16 +116,17 @@
       "path": "../hardware/desktop/dart",
       "ref": "main",
       "sha256": "188774abbcb8de7dee95dba1444f2c1913a37241826453a987b283646ba756de",
-      "_comment": "TEMPORARY (desktop test wave for Ray) — revert candidate"
+      "_comment": "TEMPORARY (desktop testing convenience, revert candidate): added to every app profile so all composed apps pull desktop support and can be viewed/tested on desktop. Pin = sha256 of hardware desktop/dart/install.py at main head 84aa6ed, same value as supacharge.json's entry."
     },
     {
-      "name": "agent_sdk",
-      "enabled": false,
+      "name": "hms_sdk",
+      "enabled": true,
       "source": "git",
-      "git": "https://github.com/RokctAI/agent",
-      "path": "../agent/agent/dart",
+      "git": "https://github.com/RokctAI/hardware",
+      "path": "../hardware/hms/dart",
       "ref": "main",
-      "_comment": "Disabled as per requirements"
+      "sha256": "197261eff5adae8a5bcbb42ce2dd1f7b16ad15716c4ff4268f9b9a77b3e9517c",
+      "_comment": "Huawei Mobile Services support, built like desktop_sdk (SDK module, not productFlavors). Dart-side: DeviceServices ({gms, hms, neither} detection, cached, fail-open to gms) and an order-30 boot hook that, ONLY on GMS-free HMS-capable devices, boots Push Kit and registers the HMS push token through the same api.user.register_device_token gateway cmd the FCM token uses (provider 'hms'). No installs - the BUILD_HMS-gated AGConnect Gradle wiring lives statically in core's android template, default-off. Strict no-op in every plain GMS build."
     }
   ]
 }

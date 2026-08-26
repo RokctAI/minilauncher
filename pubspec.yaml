@@ -31,8 +31,6 @@ environment:
 dependencies:
   base_sdk:
     path: .rokct/cache/base
-  telemetry_sdk:
-    path: .rokct/cache/telemetry
   auth_sdk:
     path: .rokct/cache/auth
   users_sdk:
@@ -41,6 +39,8 @@ dependencies:
     path: .rokct/cache/launch
   comms_sdk:
     path: .rokct/cache/comms
+  telemetry_sdk:
+    path: .rokct/cache/telemetry
   processing_sdk:
     path: .rokct/cache/processing
   productivity_sdk:
@@ -49,6 +49,8 @@ dependencies:
     path: .rokct/cache/corporate
   desktop_sdk:
     path: .rokct/cache/desktop
+  hms_sdk:
+    path: .rokct/cache/hms
   flutter:
     sdk: flutter
 
