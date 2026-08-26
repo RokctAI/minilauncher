@@ -180,6 +180,11 @@ dependency_overrides:
   # 9.x APIs as deprecated aliases, so composed source compiles unchanged -
   # same arbitration as paas_driver and supacharge.
   auto_route: ^10.3.0
+  # drift must stay on a release whose sqlite3 constraint admits the pinned
+  # sqlite3 2.9.4 below (2.34.x moved to sqlite3 ^3.x and fails to compile
+  # against it). Mirrors paas_driver's and supacharge's arbitration of the
+  # same conflict.
+  drift: 2.31.0
   sqlite3: 2.9.4
   # base_sdk declares share_plus ^10.1.1; productivity_sdk declares ^12.0.1
   # but its one call site (Share.share/Share.shareXFiles) is written against
