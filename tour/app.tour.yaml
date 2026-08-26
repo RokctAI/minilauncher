@@ -76,7 +76,7 @@ tour:
   - step:
       key: welcome
       title: "Welcome to Minilauncher"
-      caption: "{app_name} is *your phone, simplified* - and in this demo build, any sign-in details work."
+      caption: "{app_name} is *your phone, simplified* - sign in to get started."
       action: wait
       settle: 12
   # auth_sdk captures the auth screens, then performs the demo sign-in
