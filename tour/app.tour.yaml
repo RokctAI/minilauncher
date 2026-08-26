@@ -45,6 +45,10 @@ video:
   # WhatsApp-ad framing.
   chapter_frame_anchor:
     auth: top
+store:
+  # Play feature graphic: the hero screenshot is the app's HOME step -
+  # the launcher app grid at /launcher, the screen this shell exists for.
+  feature_step: launcher_home
 setup:
   imports:
     - "import 'package:base_sdk/src/models/response/languages_response.dart';"
