@@ -23,43 +23,40 @@ import os
 import hashlib
 import shutil
 import urllib.request
+from pathlib import Path
 
-PROTOCOL_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-PROJECT_ROOT = os.getcwd()
-ROKCT_DIR = os.path.join(PROJECT_ROOT, ".rokct")
+BASE = Path(__file__).resolve().parent.parent
+PROJECT_ROOT = Path.cwd()
+ROKCT_DIR = PROJECT_ROOT / ".rokct"
 # Pinned by tools/gen_protocol_lock.py - do not edit these constants by hand.
 # Manifest fetches are data-only, but pinning keeps them immutable too.
-PROTOCOL_REF = "dd09984c0def9009c379db5993d00e4a37e34e1b"
+PROTOCOL_REF = "48bac4e33877de630148876f6f3e88c34ce208d7"
 GITHUB_RAW_BASE = (
     f"https://raw.githubusercontent.com/RokctAI/The-Rokct-Protocol/{PROTOCOL_REF}"
 )
 
 
-def dir_hash(d):
-    if not os.path.isdir(d):
+def dir_hash(d: Path):
+    if not d.is_dir():
         return None
     h = hashlib.sha256()
-    for root, dirs, files in os.walk(d):
-        dirs.sort()
-        for f in sorted(files):
-            p = os.path.join(root, f)
-            h.update(os.path.relpath(p, d).encode())
-            with open(p, "rb") as fh:
-                h.update(fh.read())
+    for path in sorted(p for p in d.rglob("*") if p.is_file()):
+        rel = path.relative_to(d)
+        h.update(str(rel).encode())
+        h.update(path.read_bytes())
     return h.hexdigest()[:16]
 
 
-def file_hash(path):
-    if not os.path.exists(path):
+def file_hash(path: Path):
+    if not path.exists():
         return None
-    with open(path, "rb") as f:
-        return hashlib.sha256(f.read()).hexdigest()
+    return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
 _PINNED_HASH_CACHE = {}
 
 
-def pinned_file_hash(rel):
+def pinned_file_hash(rel: str):
     """Full SHA-256 of the protocol's pinned copy of rel: the local checkout
     when available, else the raw file at PROTOCOL_REF (data-only fetch).
     Returns None when the pinned copy cannot be read - callers then keep the
@@ -69,8 +66,8 @@ def pinned_file_hash(rel):
     if rel in _PINNED_HASH_CACHE:
         return _PINNED_HASH_CACHE[rel]
     digest = None
-    p = os.path.join(PROTOCOL_DIR, rel)
-    if os.path.exists(p):
+    p = BASE / rel
+    if p.exists():
         digest = file_hash(p)
     else:
         url = f"{GITHUB_RAW_BASE}/{rel}"
@@ -86,51 +83,52 @@ def pinned_file_hash(rel):
     return digest
 
 
-def touch(path):
-    with open(path, "w", encoding="utf-8") as f:
-        f.write("")
+def touch(path: Path):
+    path.write_text("", encoding="utf-8")
 
 
 def main():
-    if not os.path.isdir(ROKCT_DIR):
+    if not ROKCT_DIR.is_dir():
         print("[end] .rokct/ not found, nothing to do")
         return
 
     pristine_skills = "86400b7a6e267879"
 
-    skills_dir = os.path.join(ROKCT_DIR, "skills")
-    if os.path.isdir(skills_dir):
+    skills_dir = ROKCT_DIR / "skills"
+    if skills_dir.is_dir():
         shutil.rmtree(skills_dir)
         print("[end] Deleted skills/ (unconditional cleanup)")
 
     # compose.py's wrapper fetches this into .rokct/ at runtime and deletes it
     # in its finally block; clean up any copy a crashed run left behind.
-    installer_base = os.path.join(ROKCT_DIR, "sdk_installer_base.py")
-    if os.path.isfile(installer_base):
-        os.remove(installer_base)
+    installer_base = ROKCT_DIR / "sdk_installer_base.py"
+    if installer_base.is_file():
+        installer_base.unlink()
         print("[end] Deleted sdk_installer_base.py (transient compose runtime fetch)")
 
-    workflows_dir = os.path.join(ROKCT_DIR, "workflows")
-    if os.path.isdir(workflows_dir):
-        for f in os.listdir(workflows_dir):
-            fpath = os.path.join(workflows_dir, f)
-            if os.path.isfile(fpath) and f != "init_protocol.md":
-                os.remove(fpath)
-                print(f"[end] Deleted workflow: {f}")
+    workflows_dir = ROKCT_DIR / "workflows"
+    if workflows_dir.is_dir():
+        for f in workflows_dir.iterdir():
+            if f.is_file() and f.name != "init_protocol.md":
+                f.unlink()
+                print(f"[end] Deleted workflow: {f.name}")
         print("[end] Cleaned workflows/ (kept init_protocol.md)")
 
-    for item in os.listdir(ROKCT_DIR):
-        item_path = os.path.join(ROKCT_DIR, item)
+    for item_path in ROKCT_DIR.iterdir():
         # install_state.json now lives at .rokct/cache/install_state.json
         # (cache/ is keep-whitelisted below); a legacy copy at .rokct/'s own
         # root is kept explicitly until the composer migrates it there.
-        if item in ("active_session.txt", "initiate.py", "install_state.json"):
-            print(f"[end] Kept {item} (protocol tool)")
+        if item_path.name in (
+            "active_session.txt",
+            "initiate.py",
+            "install_state.json",
+        ):
+            print(f"[end] Kept {item_path.name} (protocol tool)")
             continue
-        if item == ".sync_ready":
+        if item_path.name == ".sync_ready":
             continue
-        if os.path.isdir(item_path):
-            if item in (
+        if item_path.is_dir():
+            if item_path.name in (
                 "workflows",
                 "agent",
                 "evidence",
@@ -142,23 +140,23 @@ def main():
             ):
                 continue
             shutil.rmtree(item_path)
-            print(f"[end] Deleted directory: {item}")
+            print(f"[end] Deleted directory: {item_path.name}")
             continue
-        core_key = f"core/templates/{item}"
-        profile_rel = f"profiles/web/{item}"
-        if item == "profiles.md":
-            profile_rel = "profiles/web/rules.md"
+        core_key = f"core/templates/{item_path.name}"
+        local_rel = f"profiles/local/{item_path.name}"
+        if item_path.name == "profiles.md":
+            local_rel = "profiles/local/rules.md"
         item_digest = file_hash(item_path)
         if item_digest is not None and item_digest in (
             pinned_file_hash(core_key),
-            pinned_file_hash(profile_rel),
+            pinned_file_hash(local_rel),
         ):
-            os.remove(item_path)
-            print(f"[end] Deleted pristine {item}")
+            item_path.unlink()
+            print(f"[end] Deleted pristine {item_path.name}")
         else:
-            print(f"[end] Kept modified {item}")
+            print(f"[end] Kept modified {item_path.name}")
 
-    touch(os.path.join(ROKCT_DIR, ".sync_ready"))
+    touch(ROKCT_DIR / ".sync_ready")
     print(
         "[end] Created .sync_ready marker — CI will pick this up when active session ends"
     )
