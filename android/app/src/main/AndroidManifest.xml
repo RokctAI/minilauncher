@@ -1,4 +1,15 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <!-- HMS wave (hms_sdk): huawei_hmsavailability 6.13.0+300 declares
+         minSdk 26 in its Android library while the fleet ships minSdk 24
+         (flutter.minSdkVersion), which fails the manifest merge in every
+         composed app build. Override is safe: hms_sdk's Dart DeviceServices
+         wraps every HMS call in try/catch and fail-opens to GMS, so a device
+         below the library's expectations degrades gracefully at runtime
+         instead of failing. Inert when the HMS plugins are not in the build.
+         (huawei_push declares minSdk 21 and needs no override.) -->
+    <uses-sdk
+        tools:overrideLibrary="com.huawei.hms.flutter.hmsavailability"/>
     <!-- @sdk-android-permissions-start -->
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
     <uses-permission android:name="android.permission.VIBRATE"/>
