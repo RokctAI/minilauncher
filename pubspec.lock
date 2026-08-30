@@ -1645,7 +1645,7 @@ packages:
       path: ".rokct/cache/productivity"
       relative: true
     source: path
-    version: "1.0.0"
+    version: "1.0.2"
   pub_semver:
     dependency: transitive
     description:
