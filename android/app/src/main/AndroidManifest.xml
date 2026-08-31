@@ -22,10 +22,22 @@
         </intent>
     </queries>
 
+    <!-- Backup / device-transfer policy. allowBackup stays true so the app
+         still restores, but res/xml/data_extraction_rules.xml (API 31+) and
+         res/xml/backup_rules.xml (pre-31) exclude every credential-bearing
+         store: the offline sqlite database, the plain SharedPreferences file
+         and the flutter_secure_storage EncryptedSharedPreferences file (whose
+         Keystore master key is not backed up, so a restored copy is
+         undecryptable). tools:replace pins these against library manifests
+         that declare their own android:allowBackup. -->
     <application
         android:label="minimal_launcher"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        tools:replace="android:allowBackup,android:dataExtractionRules,android:fullBackupContent">
         <activity
             android:name=".MainActivity"
             android:exported="true"
