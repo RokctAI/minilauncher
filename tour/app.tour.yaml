@@ -18,12 +18,14 @@
 # the launcher itself (/launcher, launch_sdk manifest routes).
 #
 # Fragment order mirrors the composed SDKs that ship fragments today
-# (committed composer.json): auth (Users/auth). launch_sdk ships no
-# fragment yet - it stays listed so its steps slot in the moment one lands
-# (fragments none of the composed SDKs ship are skipped with a warning,
-# never a failure). users_sdk's fragment is deliberately NOT listed: this
-# compose routes no /profile screen, and the users fragment documents that
-# such apps should leave it out until /profile resolves.
+# (committed composer.json): auth (Users/auth), launch (core/launch - its
+# fragment complements the launcher_home step below with the theme flip
+# and app search), base (core/base - profile, UI-type picker and the two
+# status screens) and productivity (productivity/productivity - /tasks).
+# users_sdk's fragment is deliberately NOT listed: this compose routes no
+# /profile screen of users_sdk's own (base_sdk's /generic-profile serves
+# the account beat in the base chapter instead), and the users fragment
+# documents that such apps should leave it out until /profile resolves.
 #
 # Video colours are intentionally NOT declared here: the assembler derives
 # brand/accent colours from the composed AppStyle when the manifest carries
@@ -92,6 +94,17 @@ tour:
       action: route
       route: /launcher
       settle: 8
-  # launch_sdk has not shipped its fragment yet; keeping the slot means its
-  # steps join the tour the moment templates/tour/launch.tour.yaml lands.
+  # launch_sdk's fragment (templates/tour/launch.tour.yaml) - written to
+  # complement the launcher_home still above, not repeat it: it drives the
+  # launcher's real controls (theme flip, type-to-filter search) and ends
+  # by restoring the default look.
   - fragment: launch
+  # base_sdk's fragment: the generic profile (/generic-profile, rendered
+  # from the demo session), the UI-type picker and the two honest status
+  # screens (/no-connection, /maintenance).
+  - fragment: base
+  # productivity_sdk's fragment: the /tasks planner (local drift database,
+  # renders its add-a-task surface with no backend) - reached from the
+  # launcher glance card in normal use, so it closes the tour where the
+  # launcher naturally leads.
+  - fragment: productivity

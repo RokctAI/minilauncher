@@ -21,6 +21,7 @@ import 'package:base_sdk/src/services/app_helpers.dart';
 import 'package:base_sdk/src/services/local_storage.dart';
 import 'package:base_sdk/src/services/tr_keys.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:remixicon/remixicon.dart';
 
 typedef TourAction = Future<void> Function(
     WidgetTester tester, StackRouter router);
@@ -139,5 +140,52 @@ final List<TourStep> tourSteps = <TourStep>[
   }),
   TourStep('launcher_home', 8000, true, (WidgetTester tester, StackRouter router) async {
     router.replaceNamed('/launcher');
+  }),
+  TourStep('launch_dark_mode', 6000, true, (WidgetTester tester, StackRouter router) async {
+    // Make sure the launcher is on screen, then tap the theme toggle in
+    // the header. The icon is moon_line in light mode and sun_line in
+    // dark mode - tap whichever is present, tolerantly.
+    router.replaceNamed('/launcher');
+    await Future<void>.delayed(const Duration(seconds: 3));
+    final Finder moon = find.byIcon(RemixIcons.moon_line);
+    final Finder sun = find.byIcon(RemixIcons.sun_line);
+    if (moon.evaluate().isNotEmpty) {
+      await tester.tap(moon.first, warnIfMissed: false);
+    } else if (sun.evaluate().isNotEmpty) {
+      await tester.tap(sun.first, warnIfMissed: false);
+    }
+  }),
+  TourStep('launch_search', 6000, true, (WidgetTester tester, StackRouter router) async {
+    // Filter the app grid through the real search field. 'a' matches
+    // broadly, so the filtered grid stays visibly stocked.
+    final Finder searchField = find.byType(TextField);
+    if (searchField.evaluate().isNotEmpty) {
+      await tester.enterText(searchField.first, 'a');
+    }
+  }),
+  TourStep('launch_reset', 4000, false, (WidgetTester tester, StackRouter router) async {
+    final Finder searchField = find.byType(TextField);
+    if (searchField.evaluate().isNotEmpty) {
+      await tester.enterText(searchField.first, '');
+    }
+    final Finder sun = find.byIcon(RemixIcons.sun_line);
+    if (sun.evaluate().isNotEmpty) {
+      await tester.tap(sun.first, warnIfMissed: false);
+    }
+  }),
+  TourStep('base_profile', 7000, true, (WidgetTester tester, StackRouter router) async {
+    router.replaceNamed('/generic-profile');
+  }),
+  TourStep('base_ui_type', 6000, true, (WidgetTester tester, StackRouter router) async {
+    router.replaceNamed('/ui-type');
+  }),
+  TourStep('base_no_connection', 6000, true, (WidgetTester tester, StackRouter router) async {
+    router.replaceNamed('/no-connection');
+  }),
+  TourStep('base_maintenance', 6000, true, (WidgetTester tester, StackRouter router) async {
+    router.replaceNamed('/maintenance');
+  }),
+  TourStep('productivity_tasks', 7000, true, (WidgetTester tester, StackRouter router) async {
+    router.replaceNamed('/tasks');
   }),
 ];
