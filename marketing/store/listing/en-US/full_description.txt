@@ -1,0 +1,2 @@
+# Play listing full description, max 4000 characters.
+# Only LEADING comment/blank lines like these are stripped - everything after the first real line is pushed verbatim, blank lines and all.

@@ -1,0 +1,5 @@
+# Play phone screenshots: one marketing/tour/store/ filename per line (with or without .png).
+# This order IS the Play Store order; at most 8 are pushed; missing keys are skipped with a log.
+# While this file holds only comments, the first 8 stills in filename order are pushed.
+# Curate by listing your app's step keys here, e.g.:
+#   01-welcome

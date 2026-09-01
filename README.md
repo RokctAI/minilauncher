@@ -2,6 +2,39 @@
 
 A new Flutter project.
 
+<!-- @generated-tour-gallery-start -->
+## App tour
+
+Styled stills from the committed guided tour - regenerated on every
+tour run, so new screens appear here automatically.
+
+| Welcome | Auth Login | Auth Register |
+| :---: | :---: | :---: |
+| ![Welcome][s01] | ![Auth Login][s02] | ![Auth Register][s03] |
+| **Auth Reset Password** | **Launcher Home** | **Launch Dark Mode** |
+| ![Reset Password][s04] | ![Launcher Home][s05] | ![Launch Dark Mode][s06] |
+| **Launch Search** | **Base Profile** | **Base Ui Type** |
+| ![Launch Search][s07] | ![Base Profile][s08] | ![Base Ui Type][s09] |
+| **Base No Connection** | **Base Maintenance** | **Productivity Tasks** |
+| ![Base No Connection][s10] | ![Base Maintenance][s11] | ![Tasks][s12] |
+
+The full tour lives in the [feature guide](marketing/tour/feature-guide.md),
+with walkthrough videos alongside it in [`marketing/tour/`](marketing/tour).
+
+[s01]: marketing/tour/store/01-welcome.png
+[s02]: marketing/tour/store/02-auth_login.png
+[s03]: marketing/tour/store/03-auth_register.png
+[s04]: marketing/tour/store/04-auth_reset_password.png
+[s05]: marketing/tour/store/05-launcher_home.png
+[s06]: marketing/tour/store/06-launch_dark_mode.png
+[s07]: marketing/tour/store/07-launch_search.png
+[s08]: marketing/tour/store/08-base_profile.png
+[s09]: marketing/tour/store/09-base_ui_type.png
+[s10]: marketing/tour/store/10-base_no_connection.png
+[s11]: marketing/tour/store/11-base_maintenance.png
+[s12]: marketing/tour/store/12-productivity_tasks.png
+<!-- @generated-tour-gallery-end -->
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.
