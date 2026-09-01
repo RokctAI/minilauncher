@@ -12,7 +12,7 @@
       "path": "../core/base/dart",
       "ref": "main",
       "sha256": "909d60c5455993693ad4169653e961e99f683ecfa1c8f8f714f787fc2d39c740",
-      "_sha256_comment": "SHA-256 of base/dart/install.py at core@4793dfa; required by the composer's unpinned-installer gate. Update when upstream install.py changes.",
+      "_sha256_comment": "SHA-256 of base/dart/install.py at core@573d570; required by the composer's unpinned-installer gate. Update when upstream install.py changes.",
       "_comment": "Shared kernel (replaces retired core_sdk); provides the app shell templates."
     },
     {
@@ -43,7 +43,7 @@
       "path": "../core/launch/dart",
       "ref": "main",
       "sha256": "96d2d56d1ad5a1a0e92b0647f2c6c8ff6afeb088895611bc0c25c4d0b2417753",
-      "_sha256_comment": "SHA-256 of launch/dart/install.py at core@4793dfa; required by the composer's unpinned-installer gate. Update when upstream install.py changes.",
+      "_sha256_comment": "SHA-256 of launch/dart/install.py at core@573d570; required by the composer's unpinned-installer gate. Update when upstream install.py changes.",
       "home_sdk": true
     },
     {
@@ -54,7 +54,7 @@
       "path": "../core/comms/dart",
       "ref": "main",
       "sha256": "02b841bed985380ade9885a4c61b150db9e6c6eb635183018ac21b02e30126fb",
-      "_sha256_comment": "SHA-256 of comms/dart/install.py at core@4793dfa; required by the composer's unpinned-installer gate. Update when upstream install.py changes."
+      "_sha256_comment": "SHA-256 of comms/dart/install.py at core@573d570; required by the composer's unpinned-installer gate. Update when upstream install.py changes."
     },
     {
       "name": "telemetry_sdk",
