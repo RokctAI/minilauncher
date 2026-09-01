@@ -11,7 +11,7 @@
       "git": "https://github.com/RokctAI/core",
       "path": "../core/base/dart",
       "ref": "main",
-      "sha256": "0b16224307d995101bef3eb4fd327f35aa3d9b39fbb8086acdec614a2858d26b",
+      "sha256": "909d60c5455993693ad4169653e961e99f683ecfa1c8f8f714f787fc2d39c740",
       "_sha256_comment": "SHA-256 of base/dart/install.py at core@4793dfa; required by the composer's unpinned-installer gate. Update when upstream install.py changes.",
       "_comment": "Shared kernel (replaces retired core_sdk); provides the app shell templates."
     },
@@ -42,7 +42,7 @@
       "git": "https://github.com/RokctAI/core",
       "path": "../core/launch/dart",
       "ref": "main",
-      "sha256": "92c240252ad0650791c8acb86f4e3fcbaf0e0a5c3c5ed595e6e710ed5580d177",
+      "sha256": "96d2d56d1ad5a1a0e92b0647f2c6c8ff6afeb088895611bc0c25c4d0b2417753",
       "_sha256_comment": "SHA-256 of launch/dart/install.py at core@4793dfa; required by the composer's unpinned-installer gate. Update when upstream install.py changes.",
       "home_sdk": true
     },
@@ -53,7 +53,7 @@
       "git": "https://github.com/RokctAI/core",
       "path": "../core/comms/dart",
       "ref": "main",
-      "sha256": "45416a9f9a1bfe311cb069bf83452d1fec60ac6b6d41244d86d9e596dda6989a",
+      "sha256": "02b841bed985380ade9885a4c61b150db9e6c6eb635183018ac21b02e30126fb",
       "_sha256_comment": "SHA-256 of comms/dart/install.py at core@4793dfa; required by the composer's unpinned-installer gate. Update when upstream install.py changes."
     },
     {
@@ -63,7 +63,7 @@
       "git": "https://github.com/RokctAI/core",
       "path": "../core/telemetry/dart",
       "ref": "main",
-      "sha256": "d2b80744cdc9f24c7d49fcac40647a035b4d78ae4f1045102cf22b0ce810451e",
+      "sha256": "f4ebf13b33b28b668332407790e2aa6f5a0d79283a845200188b77f7f8035ba6",
       "_comment": "App telemetry: events flow through base_sdk's TelemetryClient.track gateway cmd, with telemetry_sdk owning delivery policy via the TelemetryClient.configure transport seam. Pin = sha256 of core telemetry/dart/install.py as bootstrapped, same value as radio.json's entry."
     },
     {
