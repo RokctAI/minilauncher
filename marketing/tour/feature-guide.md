@@ -42,41 +42,35 @@ Everything you need and nothing you don't - your apps on one calm screen.
 
 Flip the whole launcher between light and dark with a single tap.
 
-## 7. Find any app by typing
+## 7. Your account at a glance
 
-![Find any app by typing](screenshots/07-launch_search.png)
-
-Start typing and the grid narrows as you go - find any app in a keystroke.
-
-## 8. Your account at a glance
-
-![Your account at a glance](screenshots/08-base_profile.png)
+![Your account at a glance](screenshots/07-base_profile.png)
 
 Your name, role and details - your account in one clean card.
 
-## 9. Pick the look you like
+## 8. Pick the look you like
 
-![Pick the look you like](screenshots/09-base_ui_type.png)
+![Pick the look you like](screenshots/08-base_ui_type.png)
 
 Four home styles, one tap each - make Minilauncher look the way you want.
 
-## 10. Honest about connection
+## 9. Honest about connection
 
-![Honest about connection](screenshots/10-base_no_connection.png)
+![Honest about connection](screenshots/09-base_no_connection.png)
 
 Signal drops happen - Minilauncher says so clearly and gets you back with one
 tap.
 
-## 11. Honest about downtime
+## 10. Honest about downtime
 
-![Honest about downtime](screenshots/11-base_maintenance.png)
+![Honest about downtime](screenshots/10-base_maintenance.png)
 
 When we're improving things behind the scenes, you get a clear, friendly heads-
 up - never a blank screen.
 
-## 12. Plan your day in seconds
+## 11. Plan your day in seconds
 
-![Plan your day in seconds](screenshots/12-productivity_tasks.png)
+![Plan your day in seconds](screenshots/11-productivity_tasks.png)
 
 Capture to-dos with subtasks and categories - your day, planned before it
 starts.
