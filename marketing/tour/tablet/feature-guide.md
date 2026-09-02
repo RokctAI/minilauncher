@@ -48,29 +48,23 @@ Flip the whole launcher between light and dark with a single tap.
 
 Your name, role and details - your account in one clean card.
 
-## 8. Pick the look you like
+## 8. Honest about connection
 
-![Pick the look you like](screenshots/08-base_ui_type.png)
-
-Four home styles, one tap each - make Minilauncher look the way you want.
-
-## 9. Honest about connection
-
-![Honest about connection](screenshots/09-base_no_connection.png)
+![Honest about connection](screenshots/08-base_no_connection.png)
 
 Signal drops happen - Minilauncher says so clearly and gets you back with one
 tap.
 
-## 10. Honest about downtime
+## 9. Honest about downtime
 
-![Honest about downtime](screenshots/10-base_maintenance.png)
+![Honest about downtime](screenshots/09-base_maintenance.png)
 
 When we're improving things behind the scenes, you get a clear, friendly heads-
 up - never a blank screen.
 
-## 11. Plan your day in seconds
+## 10. Plan your day in seconds
 
-![Plan your day in seconds](screenshots/11-productivity_tasks.png)
+![Plan your day in seconds](screenshots/10-productivity_tasks.png)
 
 Capture to-dos with subtasks and categories - your day, planned before it
 starts.
