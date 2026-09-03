@@ -23,7 +23,7 @@
       "git": "https://github.com/RokctAI/Users",
       "ref": "main",
       "sha256": "da93bdfbb0265deda5f22f3199097a9af2c9f064aeca916c807c4cc429b045f9",
-      "_sha256_comment": "SHA-256 of auth/dart/install.py at Users@f0deb59; required by the composer's unpinned-installer gate. Update when upstream install.py changes."
+      "_sha256_comment": "SHA-256 of auth/dart/install.py at Users@55048d34; required by the composer's unpinned-installer gate. Update when upstream install.py changes."
     },
     {
       "name": "users_sdk",
@@ -33,7 +33,7 @@
       "git": "https://github.com/RokctAI/Users",
       "ref": "main",
       "sha256": "c45dc71de03c47c0930d1ea277469a4520988946336066f6328b85b8e6e43137",
-      "_sha256_comment": "SHA-256 of users/dart/install.py at Users@f0deb59; required by the composer's unpinned-installer gate. Update when upstream install.py changes."
+      "_sha256_comment": "SHA-256 of users/dart/install.py at Users@55048d34; required by the composer's unpinned-installer gate. Update when upstream install.py changes."
     },
     {
       "name": "launch_sdk",
@@ -74,7 +74,7 @@
       "path": "../productivity/processing/dart",
       "ref": "main",
       "sha256": "1514678d5c20d26c6653f630bbd77811f454263390980ced8c3b462089b399a5",
-      "_sha256_comment": "SHA-256 of processing/dart/install.py at productivity@312566c; required by the composer's unpinned-installer gate. Update when upstream install.py changes."
+      "_sha256_comment": "SHA-256 of processing/dart/install.py at productivity@84f6495c; required by the composer's unpinned-installer gate. Update when upstream install.py changes."
     },
     {
       "name": "productivity_sdk",
@@ -84,7 +84,7 @@
       "path": "../productivity/productivity/dart",
       "ref": "main",
       "sha256": "355a4149b7210391386f19cd078880c806c6e7a9ec15542ce623ed517b173238",
-      "_sha256_comment": "SHA-256 of productivity/dart/install.py at productivity@312566c; required by the composer's unpinned-installer gate. Update when upstream install.py changes.",
+      "_sha256_comment": "SHA-256 of productivity/dart/install.py at productivity@84f6495c; required by the composer's unpinned-installer gate. Update when upstream install.py changes.",
       "_comment": "Owns tasks (tasks_table, task_service, TasksRoute). The launcher's home is tasks-first, so this is the source for that screen and for productivity glance signals."
     },
     {
@@ -95,7 +95,7 @@
       "path": "../corporate/corporate/dart",
       "ref": "main",
       "sha256": "88ac3c9d07789e5e5e81d3090402e3a595c79d88f7924b79c15109dd5292988b",
-      "_sha256_comment": "SHA-256 of corporate/dart/install.py at corporate@123d1f5; required by the composer's unpinned-installer gate. Update when upstream install.py changes."
+      "_sha256_comment": "SHA-256 of corporate/dart/install.py at corporate@a3a9eb05; required by the composer's unpinned-installer gate. Update when upstream install.py changes."
     },
     {
       "name": "agent_sdk",
@@ -105,7 +105,7 @@
       "path": "../agent/agent/dart",
       "ref": "main",
       "sha256": "84f411fc0af984d1f1ca87da296d7fb112656dfcf039356c43d7b82b5e549fe1",
-      "_sha256_comment": "SHA-256 of agent/dart/install.py at agent@fd844ca; required by the composer's unpinned-installer gate. Update when upstream install.py changes.",
+      "_sha256_comment": "SHA-256 of agent/dart/install.py at agent@798de2da; required by the composer's unpinned-installer gate. Update when upstream install.py changes.",
       "_comment": "Disabled as per requirements"
     },
     {
@@ -116,7 +116,7 @@
       "path": "../hardware/desktop/dart",
       "ref": "main",
       "sha256": "d9adf68c4c9da75ad3e7b8164253f09acb82ed3a68595687d5f138f99caf1057",
-      "_comment": "TEMPORARY (desktop testing convenience, revert candidate): added to every app profile so all composed apps pull desktop support and can be viewed/tested on desktop. Pin = sha256 of hardware desktop/dart/install.py at main head 4359056, same value as supacharge.json's entry."
+      "_comment": "TEMPORARY (desktop testing convenience, revert candidate): added to every app profile so all composed apps pull desktop support and can be viewed/tested on desktop. Pin = sha256 of hardware desktop/dart/install.py at main head 84aa6ed, same value as supacharge.json's entry."
     },
     {
       "name": "hms_sdk",
