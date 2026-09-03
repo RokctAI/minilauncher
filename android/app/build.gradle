@@ -127,6 +127,17 @@ flutter {
 }
 
 dependencies {
+    // Restore Credentials (Zero-Tap Sign-In), which Play requires from
+    // April 2027. Declared explicitly rather than left to the transitive
+    // 1.2.0-rc01 that play-services-auth 21.2.0 drags in: the RestoreCredential
+    // APIs (CreateRestoreCredentialRequest, GetRestoreCredentialOption,
+    // ClearCredentialStateRequest.TYPE_CLEAR_RESTORE_CREDENTIAL) only exist
+    // from 1.5.0. Both artifacts must stay on the same version. Runtime needs
+    // Android 9+ and Play services core 24220000+, which
+    // RestoreCredentialBridge gates on.
+    implementation 'androidx.credentials:credentials:1.5.0'
+    implementation 'androidx.credentials:credentials-play-services-auth:1.5.0'
+
     // Java 8+ API desugaring (required by flutter_local_notifications)
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.1.4'
 }
