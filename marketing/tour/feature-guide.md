@@ -42,29 +42,22 @@ Everything you need and nothing you don't - your apps on one calm screen.
 
 Flip the whole launcher between light and dark with a single tap.
 
-## 7. Your account at a glance
+## 7. Every app, one swipe up
 
-![Your account at a glance](screenshots/07-base_profile.png)
+![Every app, one swipe up](screenshots/07-launch_drawer.png)
+
+Home stays short. Every installed app lives in the drawer, one swipe up, with
+search.
+
+## 8. Your account at a glance
+
+![Your account at a glance](screenshots/08-base_profile.png)
 
 Your name, role and details - your account in one clean card.
 
-## 8. Honest about connection
+## 9. Plan your day in seconds
 
-![Honest about connection](screenshots/08-base_no_connection.png)
-
-Signal drops happen - Minilauncher says so clearly and gets you back with one
-tap.
-
-## 9. Honest about downtime
-
-![Honest about downtime](screenshots/09-base_maintenance.png)
-
-When we're improving things behind the scenes, you get a clear, friendly heads-
-up - never a blank screen.
-
-## 10. Plan your day in seconds
-
-![Plan your day in seconds](screenshots/10-productivity_tasks.png)
+![Plan your day in seconds](screenshots/09-productivity_tasks.png)
 
 Capture to-dos with subtasks and categories - your day, planned before it
 starts.
