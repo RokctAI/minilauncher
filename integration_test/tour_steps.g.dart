@@ -162,11 +162,22 @@ final List<TourStep> tourSteps = <TourStep>[
   }),
   TourStep('launch_drawer', 5000, true, (WidgetTester tester, StackRouter router) async {
     // Open the app drawer from the handle strip at the foot of the home
-    // surface. Tolerant: on a wide capture window the drawer is already
-    // a plane beside home and there is no handle to tap.
+    // surface. On a wide capture window (>= AppBreakpoints.medium, the
+    // tour's tablet leg) there is no handle: the drawer is already a
+    // plane beside home (LauncherWideMode.planes), so the previous still
+    // shows it. Doing nothing there re-captured that still, which the
+    // assembler rejects as a duplicate. Instead, show the drawer's own
+    // feature on that leg: type into its search field, so the still
+    // carries the query and the narrowed list.
     final Finder handle = find.byKey(const ValueKey<String>('launcher-drawer-handle'));
+    final Finder search = find.byKey(const ValueKey<String>('launcher-drawer-search'));
     if (handle.evaluate().isNotEmpty) {
       await tester.tap(handle.first, warnIfMissed: false);
+    } else if (search.evaluate().isNotEmpty) {
+      // "set" finds Settings, which every Android image installs; the
+      // no-match state is still its own screen should an image lack it.
+      await tester.enterText(search.first, 'set');
+      await tester.pump();
     }
   }),
   TourStep('launch_drawer_close', 3000, false, (WidgetTester tester, StackRouter router) async {
@@ -174,6 +185,12 @@ final List<TourStep> tourSteps = <TourStep>[
     if (sheet.evaluate().isNotEmpty) {
       final Size size = tester.view.physicalSize / tester.view.devicePixelRatio;
       await tester.tapAt(Offset(size.width / 2, 12));
+    } else {
+      final Finder search = find.byKey(const ValueKey<String>('launcher-drawer-search'));
+      if (search.evaluate().isNotEmpty) {
+        await tester.enterText(search.first, '');
+        await tester.pump();
+      }
     }
   }),
   TourStep('launch_reset', 4000, false, (WidgetTester tester, StackRouter router) async {
