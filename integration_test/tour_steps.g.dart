@@ -46,7 +46,7 @@ Future<void> tourSetup() async {
   await LocalStorage.init();
   if (LocalStorage.getLanguage() == null) {
     await LocalStorage.setLanguageData(LanguageData(
-      id: 1,
+      id: '1',
       title: 'English',
       locale: 'en',
       backward: false,
@@ -128,9 +128,14 @@ final List<TourStep> tourSteps = <TourStep>[
       final login = container.read(loginProvider.notifier);
       login.setEmail('demo.student@example.com');
       login.setPassword('demo-learners-2026');
-      // MockAuthRepository accepts any credentials. The timeout guards the
-      // post-session FCM sync, which can stall on an emulator - navigation
-      // to the demo landing happens before it, so a timeout is harmless.
+      // MockAuthRepository accepts any password, but the ADDRESS decides the
+      // role it hands back (MockAuthRepository._demoRolesByEmail), and the
+      // role decides whether this app's session_policy admits the session at
+      // all. So each shell picks its own account with setup.demo_email in its
+      // tour/app.tour.yaml; shells that leave it unset get the 'customer'
+      // default. The timeout guards the post-session FCM sync, which can
+      // stall on an emulator - navigation to the demo landing happens before
+      // it, so a timeout is harmless.
       await login
           .login(element)
           .timeout(const Duration(seconds: 45), onTimeout: () {});
@@ -155,19 +160,23 @@ final List<TourStep> tourSteps = <TourStep>[
       await tester.tap(sun.first, warnIfMissed: false);
     }
   }),
-  TourStep('launch_search', 6000, true, (WidgetTester tester, StackRouter router) async {
-    // Filter the app grid through the real search field. 'a' matches
-    // broadly, so the filtered grid stays visibly stocked.
-    final Finder searchField = find.byType(TextField);
-    if (searchField.evaluate().isNotEmpty) {
-      await tester.enterText(searchField.first, 'a');
+  TourStep('launch_drawer', 5000, true, (WidgetTester tester, StackRouter router) async {
+    // Open the app drawer from the handle strip at the foot of the home
+    // surface. Tolerant: on a wide capture window the drawer is already
+    // a plane beside home and there is no handle to tap.
+    final Finder handle = find.byKey(const ValueKey<String>('launcher-drawer-handle'));
+    if (handle.evaluate().isNotEmpty) {
+      await tester.tap(handle.first, warnIfMissed: false);
+    }
+  }),
+  TourStep('launch_drawer_close', 3000, false, (WidgetTester tester, StackRouter router) async {
+    final Finder sheet = find.byKey(const ValueKey<String>('launcher-drawer-sheet'));
+    if (sheet.evaluate().isNotEmpty) {
+      final Size size = tester.view.physicalSize / tester.view.devicePixelRatio;
+      await tester.tapAt(Offset(size.width / 2, 12));
     }
   }),
   TourStep('launch_reset', 4000, false, (WidgetTester tester, StackRouter router) async {
-    final Finder searchField = find.byType(TextField);
-    if (searchField.evaluate().isNotEmpty) {
-      await tester.enterText(searchField.first, '');
-    }
     final Finder sun = find.byIcon(RemixIcons.sun_line);
     if (sun.evaluate().isNotEmpty) {
       await tester.tap(sun.first, warnIfMissed: false);
@@ -175,15 +184,6 @@ final List<TourStep> tourSteps = <TourStep>[
   }),
   TourStep('base_profile', 7000, true, (WidgetTester tester, StackRouter router) async {
     router.replaceNamed('/generic-profile');
-  }),
-  TourStep('base_ui_type', 6000, true, (WidgetTester tester, StackRouter router) async {
-    router.replaceNamed('/ui-type');
-  }),
-  TourStep('base_no_connection', 6000, true, (WidgetTester tester, StackRouter router) async {
-    router.replaceNamed('/no-connection');
-  }),
-  TourStep('base_maintenance', 6000, true, (WidgetTester tester, StackRouter router) async {
-    router.replaceNamed('/maintenance');
   }),
   TourStep('productivity_tasks', 7000, true, (WidgetTester tester, StackRouter router) async {
     router.replaceNamed('/tasks');
