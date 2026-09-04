@@ -173,7 +173,7 @@ final List<TourStep> tourSteps = <TourStep>[
     final Finder sheet = find.byKey(const ValueKey<String>('launcher-drawer-sheet'));
     if (sheet.evaluate().isNotEmpty) {
       final Size size = tester.view.physicalSize / tester.view.devicePixelRatio;
-      await tester.tapAt(Offset(size.width / 2, 12), warnIfMissed: false);
+      await tester.tapAt(Offset(size.width / 2, 12));
     }
   }),
   TourStep('launch_reset', 4000, false, (WidgetTester tester, StackRouter router) async {
