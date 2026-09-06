@@ -1,0 +1,42 @@
+name: Render Strip
+
+# Renders the app's REAL screens headlessly and publishes a review strip.
+#
+# The pipeline lives in RokctAI/shared-workflows
+# (.github/workflows/universal-render-strip.yml + scripts/render/); this
+# file is only the caller. Format, numbering conventions and the status
+# vocabulary are documented in that repo's scripts/render/README.md.
+#
+# What this shell contributes:
+#   test/render/render_screen_test.dart  - the widget-test harness
+#   test/render/strip.json               - the strip config (numbering map)
+#
+# Manual only, deliberately. Rendering on every commit is not wanted: a
+# shell adopts this by CHOOSING to run it. There is no `push:` trigger here
+# and there should not be one.
+
+on:
+  workflow_dispatch:
+    inputs:
+      render-suffix:
+        description: "Suffix for this run's outputs (e.g. _draft)"
+        required: false
+        default: ''
+
+# Must grant at least what the reusable workflow declares
+# (universal-render-strip.yml sets `permissions: write-all`). A narrower
+# block here makes GitHub refuse the run at startup with zero jobs - the
+# same trap guided-tour.yml and play-deploy.yml document.
+permissions: write-all
+
+jobs:
+  render:
+    uses: RokctAI/shared-workflows/.github/workflows/universal-render-strip.yml@main
+    secrets: inherit
+    with:
+      render-suffix: ${{ inputs.render-suffix }}
+      # Defaults are taken for everything else: the render test and strip
+      # config sit at the workflow's default paths
+      # (test/render/render_screen_test.dart + test/render/strip.json), and
+      # this is a composed shell app, so run-compose stays on - the render
+      # has to be of the code a real build composes, not of an empty lib/.
