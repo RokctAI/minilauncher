@@ -15,6 +15,8 @@ tour run, so new screens appear here automatically.
 | ![Reset Password][s04] | ![Launcher Home][s05] | ![Launch Dark Mode][s06] |
 | **Launch Drawer** | **Base Profile** | **Productivity Tasks** |
 | ![Launch Drawer][s07] | ![Base Profile][s08] | ![Productivity Tasks][s09] |
+| **Task Compose** | **Maintenance Readings** | **Maintenance Photo** |
+| ![Task Compose][s10] | ![Readings][s11] | ![Maintenance Photo][s12] |
 
 The full tour lives in the [feature guide](marketing/tour/feature-guide.md),
 with walkthrough videos alongside it in [`marketing/tour/`](marketing/tour).
@@ -28,6 +30,9 @@ with walkthrough videos alongside it in [`marketing/tour/`](marketing/tour).
 [s07]: marketing/tour/store/07-launch_drawer.png
 [s08]: marketing/tour/store/08-base_profile.png
 [s09]: marketing/tour/store/09-productivity_tasks.png
+[s10]: marketing/tour/store/10-productivity_task_compose.png
+[s11]: marketing/tour/store/11-productivity_maintenance_readings.png
+[s12]: marketing/tour/store/12-productivity_maintenance_photo.png
 <!-- @generated-tour-gallery-end -->
 
 ## Getting Started

@@ -61,3 +61,24 @@ Your name, role and details - your account in one clean card.
 
 Capture to-dos with subtasks and categories - your day, planned before it
 starts.
+
+## 10. A service run from a template
+
+![A service run from a template](screenshots/10-productivity_task_compose.png)
+
+Softener, megaChar, filters and membranes - one tap fills the task with every
+step and its timing.
+
+## 11. Readings before it goes back to service
+
+![Readings before it goes back to service](screenshots/11-productivity_maintenance_readings.png)
+
+TDS and pressure, checked against the plant's limits - out of spec is named and
+holds the finish until it is re-tested or explained.
+
+## 12. A photo and a note, if you want them
+
+![A photo and a note, if you want them](screenshots/12-productivity_maintenance_photo.png)
+
+The last step is optional - Skip is live beside Finish, and nothing here can
+trap you mid-run.
