@@ -1,0 +1,81 @@
+{
+  "title": "Launcher home - Minilauncher",
+  "kicker": "render-strip adoption - real render",
+  "lede": "Not hand-drawn. Both frames below are the actual LauncherHomePage widget tree - launch_sdk's home_page template as the composer installs it into this shell, inside the same wrapping lib/presentation/app_widget.dart gives it - rendered headlessly to PNG by test/render/render_screen_test.dart at 390 logical px / dpr 3, with the numbered points placed automatically from each widget's measured rect.",
+  "fonts": "system",
+  "chips_default": true,
+  "frames": [
+    {
+      "section": "Shipped - what main renders today",
+      "caption": "launcher home - light",
+      "status": "SHIPPED",
+      "png": "launcher_home_light.png",
+      "rects": "launcher_home_light.json",
+      "note": "minilauncher main, composed against core / Users / productivity main"
+    },
+    {
+      "section": "Shipped - what main renders today",
+      "caption": "launcher home - dark",
+      "status": "SHIPPED",
+      "png": "launcher_home_dark.png",
+      "rects": "launcher_home_dark.json",
+      "note": "minilauncher main, composed against core / Users / productivity main"
+    }
+  ],
+  "labels": {
+    "launch.home.theme_toggle": "theme toggle - sun/moon, writes the stored app theme mode",
+    "launch.home.auth_control": "account control - launch_sdk LauncherAuthControl",
+    "launch.home.glance": "glance card - the rows productivity_sdk injects at @launcher-glance",
+    "launch.home.app_row.com.example.calculator": "app row - Calculator",
+    "launch.home.app_row.com.example.camera": "app row - Camera",
+    "launch.home.app_row.com.example.clock": "app row - Clock",
+    "launch.home.app_row.com.example.maps": "app row - Maps",
+    "launch.home.app_row.com.example.messaging": "app row - Messages",
+    "launch.home.app_row.com.example.dialer": "app row - Phone",
+    "launch.home.app_row.com.example.photos": "app row - Photos",
+    "launch.home.app_row.com.example.settings": "app row - Settings"
+  },
+  "numbering": {
+    "map": {
+      "launch.home.theme_toggle": 1,
+      "launch.home.auth_control": 2,
+      "launch.home.glance": 3,
+      "launch.home.app_row.com.example.calculator": 4,
+      "launch.home.app_row.com.example.camera": 5,
+      "launch.home.app_row.com.example.clock": 6,
+      "launch.home.app_row.com.example.maps": 7,
+      "launch.home.app_row.com.example.messaging": 8,
+      "launch.home.app_row.com.example.dialer": 9,
+      "launch.home.app_row.com.example.photos": 10,
+      "launch.home.app_row.com.example.settings": 11
+    },
+    "retired": {}
+  },
+  "notes": [
+    {
+      "kicker": "note - how these renders were produced",
+      "body": [
+        "A widget-test harness (test/render/render_screen_test.dart); zero app code touched. It pumps the real LauncherHomePage inside the same wrapping this shell's app_widget.dart gives it on a phone-shaped window - ProviderScope, ScreenUtilInit at the 375x812 design size, MaterialApp with the app's own theme AND darkTheme - renders it at 390 logical px (dpr 3) at the page's full content height, and captures the RepaintBoundary to PNG.",
+        "Light and dark are the app's own path, not a harness switch: the harness writes the app theme mode through LocalStorage exactly as a tap on control 1 does, and the page reads it back through base_sdk's appProvider, which is also what syncs AppStyle's mode-resolving tokens.",
+        "Text is rendered with real font faces registered from files under the family names google_fonts asks for, plus the real remixicon and MaterialIcons faces. This shell bundles no font assets - base_sdk styles the app through google_fonts, which fetches Inter and Montserrat over the network at runtime and cannot in a widget test - so when real Inter faces are not present the harness falls back to the runner's system sans and prints which face it used. Glyphs, colour, contrast and layout are honest either way; text metrics are exact only when real Inter is supplied at test/render/fonts/. The frames above were produced with DejaVu Sans."
+      ]
+    },
+    {
+      "kicker": "exception - the app list is a channel mock, and why",
+      "body": [
+        "launch_sdk has no demo path. AppConstants.isDemo switches the repositories of lms, auth and users; launch_sdk has no equivalent, and its launchProvider news up LaunchRepository directly rather than resolving one from GetIt, so IS_DEMO=true changes nothing about what this screen shows. The list it shows comes from the installed_apps platform channel - a real device inventory that no CI runner has.",
+        "So this is the render kit's documented stub exception (harness marker 4/8), taken at the lowest seam available: the harness mocks the installed_apps MethodChannel and answers getInstalledApps with a fixed eight-app inventory. Everything above the channel is the shipped code path - LaunchRepository, the plugin's own AppInfo decoding, LaunchNotifier's mode ranking and sort, the widget tree. The row order on the frames is the app's own ranking of a deliberately unsorted fixture, not the order the fixture is written in.",
+        "The eight app names are placeholders, not a claim about any real device, and none of them is a Rokct app - so the list is the plain alphabetical tail of the ranking and no mode is active. Read the frames for layout, typography, contrast and row rhythm; do not read them for what a user's phone contains."
+      ]
+    },
+    {
+      "kicker": "found by rendering (a drawing could not have caught these)",
+      "items": [
+        "This home is not the app grid with a search field that the older launch_sdk template and the tour manifest's 'launcher_home' caption describe. Search has moved to a separate app drawer, and the home now carries a glance card, an account control, a window host and a drawer handle. The first render is what settled that.",
+        "The app tile's 44px leading icon slot is empty in both frames - visible as the wide left gutter on every row. That is not a missing asset: LaunchNotifier.loadApps asks for the app list without icons, so no tile ever has bytes to draw. It is the open question in design frame 53h, and this is what the 'no' answer looks like.",
+        "Two slots render zero pixels here and so carry no number: the second GlanceCard (the GetIt LaunchGlanceSource seam) and LauncherWindowHost. Nothing composed into this shell registers a source for either. The visible glance rows are not from that seam at all - they are injected into the page source at the @launcher-glance marker by productivity_sdk's manifest at compose time.",
+        "The frame height reserves the drawer handle explicitly (harness bottomChromeHeight). Without it the shrink pass shrank the app list too and clipped the last row behind the handle - a viewport-bound page has no content height the way a scrolling profile does."
+      ]
+    }
+  ]
+}
