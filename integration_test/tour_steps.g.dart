@@ -16,11 +16,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:auth_sdk/src/common/application/auth/auth.dart';
+import 'package:base_sdk/src/database/app_database.dart';
 import 'package:base_sdk/src/models/response/languages_response.dart';
 import 'package:base_sdk/src/services/app_helpers.dart';
 import 'package:base_sdk/src/services/local_storage.dart';
 import 'package:base_sdk/src/services/tr_keys.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:productivity_sdk/src/common/application/run/maintenance_plant.dart';
+import 'package:productivity_sdk/src/common/application/run/maintenance_templates.dart';
+import 'package:productivity_sdk/src/common/application/run/task_run.dart';
+import 'package:productivity_sdk/src/common/infrastructure/repositories/todo_repository_impl.dart';
+import 'package:productivity_sdk/src/common/presentation/run/task_run_view.dart';
 import 'package:remixicon/remixicon.dart';
 
 typedef TourAction = Future<void> Function(
@@ -204,5 +210,81 @@ final List<TourStep> tourSteps = <TourStep>[
   }),
   TourStep('productivity_tasks', 7000, true, (WidgetTester tester, StackRouter router) async {
     router.replaceNamed('/tasks');
+  }),
+  TourStep('productivity_task_compose', 6000, true, (WidgetTester tester, StackRouter router) async {
+    await MaintenancePlantStore.local.save(
+      PlantRecord(
+        megaCharVessels: 1,
+        softenerVessels: 1,
+        vesselsInstalledOn: DateTime(2026, 3, 14),
+        preFilterInstalledOn: DateTime(2026, 8, 20),
+        roFilterInstalledOn: DateTime(2026, 6, 1),
+        postFilterInstalledOn: DateTime(2026, 6, 1),
+        membranes: 2,
+        membranesInstalledOn: DateTime(2026, 1, 10),
+        recordedAt: DateTime.now(),
+      ),
+    );
+    router.replaceNamed('/tasks');
+    await Future<void>.delayed(const Duration(seconds: 3));
+    final Finder compose = find.byKey(const ValueKey<String>('tasks-compose'));
+    if (compose.evaluate().isNotEmpty) {
+      await tester.tap(compose.first, warnIfMissed: false);
+      await Future<void>.delayed(const Duration(seconds: 2));
+    }
+    final Finder softener = find.byKey(
+      const ValueKey<String>('template-softener_maintenance'),
+    );
+    if (softener.evaluate().isNotEmpty) {
+      await tester.tap(softener.first, warnIfMissed: false);
+    }
+  }),
+  TourStep('productivity_maintenance_readings', 6000, true, (WidgetTester tester, StackRouter router) async {
+    final DateTime now = DateTime.now();
+    final Map<String, dynamic> task = MaintenanceTemplates.build(
+      MaintenanceTemplate.softenerMaintenance,
+      now: now,
+    );
+    task['id'] = 'tour-softener-sft-02';
+    task['notifId'] = 47021;
+    task['title'] = 'Softener SFT-02 · Polokwane plant';
+    task['category'] = 'Plant';
+    task['createdAt'] = now.toIso8601String();
+    TaskRun run = TaskRun.fromTask(task);
+    DateTime at = now.subtract(const Duration(hours: 1, minutes: 5));
+    for (int i = 0; i < 9; i++) {
+      run = run.start(i, at);
+      at = at.add(Duration(seconds: run.steps[i].durationSeconds));
+      run = run.complete(i, at);
+    }
+    await TodoRepositoryImpl(AppDatabase()).saveTodos(
+      <Map<String, dynamic>>[run.applyTo(task)],
+    );
+    router.replaceNamed('/tasks/run?task=tour-softener-sft-02');
+    await Future<void>.delayed(const Duration(seconds: 3));
+    final Finder resume = find.byKey(TaskRunView.resumeKey);
+    if (resume.evaluate().isNotEmpty) {
+      await tester.tap(resume.first, warnIfMissed: false);
+      await Future<void>.delayed(const Duration(seconds: 1));
+    }
+    const List<String> readings = <String>['175', '212', '8.4', '1.9'];
+    for (int i = 0; i < readings.length; i++) {
+      final Finder field = find.byKey(TaskRunView.readingKey(i));
+      if (field.evaluate().isNotEmpty) {
+        await tester.enterText(field.first, readings[i]);
+        await tester.pump();
+      }
+    }
+  }),
+  TourStep('productivity_maintenance_photo', 6000, true, (WidgetTester tester, StackRouter router) async {
+    final Finder permeate = find.byKey(TaskRunView.readingKey(1));
+    if (permeate.evaluate().isNotEmpty) {
+      await tester.enterText(permeate.first, '40');
+      await tester.pump();
+    }
+    final Finder forward = find.byKey(TaskRunView.continueKey);
+    if (forward.evaluate().isNotEmpty) {
+      await tester.tap(forward.first, warnIfMissed: false);
+    }
   }),
 ];
