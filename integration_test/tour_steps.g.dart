@@ -27,6 +27,7 @@ import 'package:productivity_sdk/src/common/application/run/maintenance_template
 import 'package:productivity_sdk/src/common/application/run/task_run.dart';
 import 'package:productivity_sdk/src/common/infrastructure/repositories/todo_repository_impl.dart';
 import 'package:productivity_sdk/src/common/presentation/run/task_run_view.dart';
+import 'package:productivity_sdk/src/common/presentation/tasks/task_card.dart';
 import 'package:remixicon/remixicon.dart';
 
 typedef TourAction = Future<void> Function(
@@ -50,6 +51,10 @@ Future<void> tourSetup() async {
   // advertise several languages). LocalStorage.init() is idempotent -
   // app.main() calls it again.
   await LocalStorage.init();
+  // Capture in dark mode: persist the same flag the in-app theme toggle
+  // writes. AppNotifier reads it synchronously in its constructor (before
+  // the first frame), so every still and reel starts dark.
+  await LocalStorage.setAppThemeMode(true);
   if (LocalStorage.getLanguage() == null) {
     await LocalStorage.setLanguageData(LanguageData(
       id: '1',
@@ -200,16 +205,104 @@ final List<TourStep> tourSteps = <TourStep>[
     }
   }),
   TourStep('launch_reset', 4000, false, (WidgetTester tester, StackRouter router) async {
-    final Finder sun = find.byIcon(RemixIcons.sun_line);
-    if (sun.evaluate().isNotEmpty) {
-      await tester.tap(sun.first, warnIfMissed: false);
+    final Finder moon = find.byIcon(RemixIcons.moon_line);
+    if (moon.evaluate().isNotEmpty) {
+      await tester.tap(moon.first, warnIfMissed: false);
+    }
+  }),
+  TourStep('launch_restore_dark', 4000, false, (WidgetTester tester, StackRouter router) async {
+    final Finder moon = find.byIcon(RemixIcons.moon_line);
+    if (moon.evaluate().isNotEmpty) {
+      await tester.tap(moon.first, warnIfMissed: false);
     }
   }),
   TourStep('base_profile', 7000, true, (WidgetTester tester, StackRouter router) async {
     router.replaceNamed('/generic-profile');
   }),
   TourStep('productivity_tasks', 7000, true, (WidgetTester tester, StackRouter router) async {
+    final DateTime today = DateTime.now();
+    DateTime at(int days, int hour) =>
+        DateTime(today.year, today.month, today.day + days, hour);
+    String ago(int hours) =>
+        today.subtract(Duration(hours: hours)).toIso8601String();
+    await TodoRepositoryImpl(AppDatabase()).saveTodos(
+      <Map<String, dynamic>>[
+        <String, dynamic>{
+          'id': 'tour-task-depot-01',
+          'notifId': 47101,
+          'title': 'Deliver 40 × 20 L to the Mokopane depot',
+          'isDone': false,
+          'deadline': at(1, 9).toIso8601String(),
+          'reminder': true,
+          'priority': 'High',
+          'category': 'Deliveries',
+          'recurrence': 'Weekly',
+          'createdAt': ago(2),
+          'subtasks': <Map<String, dynamic>>[
+            <String, dynamic>{'title': 'Load the bakkie', 'isDone': true},
+            <String, dynamic>{
+              'title': 'Collect the signed delivery note',
+              'isDone': false,
+            },
+            <String, dynamic>{'title': 'Bring back the empties', 'isDone': false},
+          ],
+        },
+        <String, dynamic>{
+          'id': 'tour-task-brine-02',
+          'notifId': 47102,
+          'title': 'Order brine salt · 25 kg bags',
+          'isDone': false,
+          'deadline': at(2, 10).toIso8601String(),
+          'reminder': false,
+          'priority': 'Medium',
+          'category': 'Plant',
+          'recurrence': 'Monthly',
+          'createdAt': ago(5),
+          'subtasks': <Map<String, dynamic>>[
+            <String, dynamic>{'title': 'Count the bags left', 'isDone': true},
+            <String, dynamic>{'title': 'Send the order to the co-op', 'isDone': false},
+          ],
+        },
+        <String, dynamic>{
+          'id': 'tour-task-invoice-03',
+          'notifId': 47103,
+          'title': 'Chase the Polokwane Spar invoice',
+          'isDone': false,
+          'deadline': at(5, 12).toIso8601String(),
+          'reminder': true,
+          'priority': 'Low',
+          'category': 'Admin',
+          'recurrence': 'None',
+          'createdAt': ago(9),
+          'subtasks': <Map<String, dynamic>>[],
+        },
+        <String, dynamic>{
+          'id': 'tour-task-borehole-04',
+          'notifId': 47104,
+          'title': 'Second borehole · quotes and water-use licence',
+          'isDone': false,
+          'reminder': false,
+          'priority': 'Medium',
+          'category': 'Plant',
+          'recurrence': 'None',
+          'isLongTerm': true,
+          'createdAt': ago(30),
+          'subtasks': <Map<String, dynamic>>[
+            <String, dynamic>{'title': 'Three drilling quotes', 'isDone': true},
+            <String, dynamic>{'title': 'Water-use licence application', 'isDone': false},
+            <String, dynamic>{'title': 'Pump and tank sizing', 'isDone': false},
+          ],
+        },
+      ],
+    );
     router.replaceNamed('/tasks');
+    await Future<void>.delayed(const Duration(seconds: 3));
+    final Finder card = find.byKey(
+      const ValueKey<String>('task-card-tour-task-depot-01'),
+    );
+    if (card.evaluate().isNotEmpty) {
+      await tester.tap(card.first, warnIfMissed: false);
+    }
   }),
   TourStep('productivity_task_compose', 6000, true, (WidgetTester tester, StackRouter router) async {
     await MaintenancePlantStore.local.save(
@@ -240,6 +333,15 @@ final List<TourStep> tourSteps = <TourStep>[
     }
   }),
   TourStep('productivity_maintenance_readings', 6000, true, (WidgetTester tester, StackRouter router) async {
+    Future<bool> appears(Finder finder, {int seconds = 10}) async {
+      final DateTime deadline =
+          DateTime.now().add(Duration(seconds: seconds));
+      while (finder.evaluate().isEmpty &&
+          DateTime.now().isBefore(deadline)) {
+        await Future<void>.delayed(const Duration(milliseconds: 250));
+      }
+      return finder.evaluate().isNotEmpty;
+    }
     final DateTime now = DateTime.now();
     final Map<String, dynamic> task = MaintenanceTemplates.build(
       MaintenanceTemplate.softenerMaintenance,
@@ -261,30 +363,51 @@ final List<TourStep> tourSteps = <TourStep>[
       <Map<String, dynamic>>[run.applyTo(task)],
     );
     router.replaceNamed('/tasks/run?task=tour-softener-sft-02');
-    await Future<void>.delayed(const Duration(seconds: 3));
+    // 860: a run found mid-way opens on its resume card. Pick it up.
     final Finder resume = find.byKey(TaskRunView.resumeKey);
-    if (resume.evaluate().isNotEmpty) {
+    if (await appears(resume)) {
       await tester.tap(resume.first, warnIfMissed: false);
-      await Future<void>.delayed(const Duration(seconds: 1));
+      await tester.pump();
     }
+    // 47h: the four readings, the permeate TDS (212 ppm against a 50 ppm
+    // limit) out of spec so the amber block and its wording are drawn.
     const List<String> readings = <String>['175', '212', '8.4', '1.9'];
-    for (int i = 0; i < readings.length; i++) {
-      final Finder field = find.byKey(TaskRunView.readingKey(i));
-      if (field.evaluate().isNotEmpty) {
-        await tester.enterText(field.first, readings[i]);
-        await tester.pump();
+    if (await appears(find.byKey(TaskRunView.readingKey(0)))) {
+      for (int i = 0; i < readings.length; i++) {
+        final Finder field = find.byKey(TaskRunView.readingKey(i));
+        if (field.evaluate().isNotEmpty) {
+          await tester.enterText(field.first, readings[i]);
+          await tester.pump();
+        }
       }
     }
   }),
   TourStep('productivity_maintenance_photo', 6000, true, (WidgetTester tester, StackRouter router) async {
+    Future<bool> appears(Finder finder, {int seconds = 10}) async {
+      final DateTime deadline =
+          DateTime.now().add(Duration(seconds: seconds));
+      while (finder.evaluate().isEmpty &&
+          DateTime.now().isBefore(deadline)) {
+        await Future<void>.delayed(const Duration(milliseconds: 250));
+      }
+      return finder.evaluate().isNotEmpty;
+    }
+    // 47h's route out, taken: the permeate re-tested in spec. The view
+    // hands the reading straight back through onChanged, so Continue
+    // is live on the next frame.
     final Finder permeate = find.byKey(TaskRunView.readingKey(1));
     if (permeate.evaluate().isNotEmpty) {
       await tester.enterText(permeate.first, '40');
       await tester.pump();
+      await Future<void>.delayed(const Duration(milliseconds: 500));
     }
     final Finder forward = find.byKey(TaskRunView.continueKey);
     if (forward.evaluate().isNotEmpty) {
       await tester.tap(forward.first, warnIfMissed: false);
+      await tester.pump();
     }
+    // 47i: the readings step finished, the photo step's own slot is on
+    // screen — the still is this card, never the readings card again.
+    await appears(find.byKey(TaskRunView.photoKey));
   }),
 ];
