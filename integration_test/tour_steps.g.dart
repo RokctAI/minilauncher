@@ -27,6 +27,7 @@ import 'package:productivity_sdk/src/common/application/run/maintenance_template
 import 'package:productivity_sdk/src/common/application/run/task_run.dart';
 import 'package:productivity_sdk/src/common/infrastructure/repositories/todo_repository_impl.dart';
 import 'package:productivity_sdk/src/common/presentation/run/task_run_view.dart';
+import 'package:productivity_sdk/src/common/presentation/tasks/task_card.dart';
 import 'package:remixicon/remixicon.dart';
 
 typedef TourAction = Future<void> Function(
@@ -50,6 +51,10 @@ Future<void> tourSetup() async {
   // advertise several languages). LocalStorage.init() is idempotent -
   // app.main() calls it again.
   await LocalStorage.init();
+  // Capture in dark mode: persist the same flag the in-app theme toggle
+  // writes. AppNotifier reads it synchronously in its constructor (before
+  // the first frame), so every still and reel starts dark.
+  await LocalStorage.setAppThemeMode(true);
   if (LocalStorage.getLanguage() == null) {
     await LocalStorage.setLanguageData(LanguageData(
       id: '1',
@@ -200,16 +205,104 @@ final List<TourStep> tourSteps = <TourStep>[
     }
   }),
   TourStep('launch_reset', 4000, false, (WidgetTester tester, StackRouter router) async {
-    final Finder sun = find.byIcon(RemixIcons.sun_line);
-    if (sun.evaluate().isNotEmpty) {
-      await tester.tap(sun.first, warnIfMissed: false);
+    final Finder moon = find.byIcon(RemixIcons.moon_line);
+    if (moon.evaluate().isNotEmpty) {
+      await tester.tap(moon.first, warnIfMissed: false);
+    }
+  }),
+  TourStep('launch_restore_dark', 4000, false, (WidgetTester tester, StackRouter router) async {
+    final Finder moon = find.byIcon(RemixIcons.moon_line);
+    if (moon.evaluate().isNotEmpty) {
+      await tester.tap(moon.first, warnIfMissed: false);
     }
   }),
   TourStep('base_profile', 7000, true, (WidgetTester tester, StackRouter router) async {
     router.replaceNamed('/generic-profile');
   }),
   TourStep('productivity_tasks', 7000, true, (WidgetTester tester, StackRouter router) async {
+    final DateTime today = DateTime.now();
+    DateTime at(int days, int hour) =>
+        DateTime(today.year, today.month, today.day + days, hour);
+    String ago(int hours) =>
+        today.subtract(Duration(hours: hours)).toIso8601String();
+    await TodoRepositoryImpl(AppDatabase()).saveTodos(
+      <Map<String, dynamic>>[
+        <String, dynamic>{
+          'id': 'tour-task-depot-01',
+          'notifId': 47101,
+          'title': 'Deliver 40 × 20 L to the Mokopane depot',
+          'isDone': false,
+          'deadline': at(1, 9).toIso8601String(),
+          'reminder': true,
+          'priority': 'High',
+          'category': 'Deliveries',
+          'recurrence': 'Weekly',
+          'createdAt': ago(2),
+          'subtasks': <Map<String, dynamic>>[
+            <String, dynamic>{'title': 'Load the bakkie', 'isDone': true},
+            <String, dynamic>{
+              'title': 'Collect the signed delivery note',
+              'isDone': false,
+            },
+            <String, dynamic>{'title': 'Bring back the empties', 'isDone': false},
+          ],
+        },
+        <String, dynamic>{
+          'id': 'tour-task-brine-02',
+          'notifId': 47102,
+          'title': 'Order brine salt · 25 kg bags',
+          'isDone': false,
+          'deadline': at(2, 10).toIso8601String(),
+          'reminder': false,
+          'priority': 'Medium',
+          'category': 'Plant',
+          'recurrence': 'Monthly',
+          'createdAt': ago(5),
+          'subtasks': <Map<String, dynamic>>[
+            <String, dynamic>{'title': 'Count the bags left', 'isDone': true},
+            <String, dynamic>{'title': 'Send the order to the co-op', 'isDone': false},
+          ],
+        },
+        <String, dynamic>{
+          'id': 'tour-task-invoice-03',
+          'notifId': 47103,
+          'title': 'Chase the Polokwane Spar invoice',
+          'isDone': false,
+          'deadline': at(5, 12).toIso8601String(),
+          'reminder': true,
+          'priority': 'Low',
+          'category': 'Admin',
+          'recurrence': 'None',
+          'createdAt': ago(9),
+          'subtasks': <Map<String, dynamic>>[],
+        },
+        <String, dynamic>{
+          'id': 'tour-task-borehole-04',
+          'notifId': 47104,
+          'title': 'Second borehole · quotes and water-use licence',
+          'isDone': false,
+          'reminder': false,
+          'priority': 'Medium',
+          'category': 'Plant',
+          'recurrence': 'None',
+          'isLongTerm': true,
+          'createdAt': ago(30),
+          'subtasks': <Map<String, dynamic>>[
+            <String, dynamic>{'title': 'Three drilling quotes', 'isDone': true},
+            <String, dynamic>{'title': 'Water-use licence application', 'isDone': false},
+            <String, dynamic>{'title': 'Pump and tank sizing', 'isDone': false},
+          ],
+        },
+      ],
+    );
     router.replaceNamed('/tasks');
+    await Future<void>.delayed(const Duration(seconds: 3));
+    final Finder card = find.byKey(
+      const ValueKey<String>('task-card-tour-task-depot-01'),
+    );
+    if (card.evaluate().isNotEmpty) {
+      await tester.tap(card.first, warnIfMissed: false);
+    }
   }),
   TourStep('productivity_task_compose', 6000, true, (WidgetTester tester, StackRouter router) async {
     await MaintenancePlantStore.local.save(
@@ -260,8 +353,16 @@ final List<TourStep> tourSteps = <TourStep>[
     await TodoRepositoryImpl(AppDatabase()).saveTodos(
       <Map<String, dynamic>>[run.applyTo(task)],
     );
-    router.replaceNamed('/tasks/run?task=tour-softener-sft-02');
+    router.replaceNamed('/tasks');
     await Future<void>.delayed(const Duration(seconds: 3));
+    final Finder runPill = find.descendant(
+      of: find.byKey(const ValueKey<String>('task-card-tour-softener-sft-02')),
+      matching: find.byKey(TaskCard.runKey),
+    );
+    if (runPill.evaluate().isNotEmpty) {
+      await tester.tap(runPill.first, warnIfMissed: false);
+      await Future<void>.delayed(const Duration(seconds: 3));
+    }
     final Finder resume = find.byKey(TaskRunView.resumeKey);
     if (resume.evaluate().isNotEmpty) {
       await tester.tap(resume.first, warnIfMissed: false);
