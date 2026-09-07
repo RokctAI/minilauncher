@@ -55,12 +55,17 @@ setup:
   imports:
     - "import 'package:base_sdk/src/models/response/languages_response.dart';"
     - "import 'package:base_sdk/src/services/local_storage.dart';"
+    - "import 'package:remixicon/remixicon.dart';"
   dart: |
     // Pre-seed the language so the first-run language picker can never
     // block the tour behind a non-dismissible modal (the backend may
     // advertise several languages). LocalStorage.init() is idempotent -
     // app.main() calls it again.
     await LocalStorage.init();
+    // Capture in dark mode: persist the same flag the in-app theme toggle
+    // writes. AppNotifier reads it synchronously in its constructor (before
+    // the first frame), so every still and reel starts dark.
+    await LocalStorage.setAppThemeMode(true);
     if (LocalStorage.getLanguage() == null) {
       await LocalStorage.setLanguageData(LanguageData(
         id: '1',
@@ -99,6 +104,22 @@ tour:
   # launcher's real controls (theme flip, type-to-filter search) and ends
   # by restoring the default look.
   - fragment: launch
+  # The tour captures in dark mode (setup.dart above), so the fragment's
+  # launch_dark_mode step flips the launcher dark -> light for its still,
+  # and its launch_reset (which only taps the dark-mode sun icon) then
+  # finds nothing to reset. Tap the light-mode moon icon here, action-only,
+  # so the base and productivity chapters capture dark like the rest.
+  - step:
+      key: launch_restore_dark
+      title: "Back to dark"
+      action: dart
+      screenshot: false
+      settle: 4
+      dart: |
+        final Finder moon = find.byIcon(RemixIcons.moon_line);
+        if (moon.evaluate().isNotEmpty) {
+          await tester.tap(moon.first, warnIfMissed: false);
+        }
   # base_sdk's fragment: the generic profile (/generic-profile, rendered
   # from the demo session), the UI-type picker and the two honest status
   # screens (/no-connection, /maintenance).
