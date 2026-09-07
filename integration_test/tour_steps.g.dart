@@ -21,6 +21,7 @@ import 'package:base_sdk/src/models/response/languages_response.dart';
 import 'package:base_sdk/src/services/app_helpers.dart';
 import 'package:base_sdk/src/services/local_storage.dart';
 import 'package:base_sdk/src/services/tr_keys.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:productivity_sdk/src/common/application/run/maintenance_plant.dart';
 import 'package:productivity_sdk/src/common/application/run/maintenance_templates.dart';
@@ -157,19 +158,30 @@ final List<TourStep> tourSteps = <TourStep>[
   TourStep('launcher_home', 8000, true, (WidgetTester tester, StackRouter router) async {
     router.replaceNamed('/launcher');
   }),
-  TourStep('launch_dark_mode', 6000, true, (WidgetTester tester, StackRouter router) async {
+  TourStep('launch_dark_mode', 2000, false, (WidgetTester tester, StackRouter router) async {
     // Make sure the launcher is on screen, then tap the theme toggle in
-    // the header. The icon is moon_line in light mode and sun_line in
-    // dark mode - tap whichever is present, tolerantly.
+    // the header twice: the icon is sun_line in dark mode (the tour's
+    // start) and moon_line in light mode - tap whichever is present,
+    // tolerantly, let the theme change settle, then tap the other one
+    // to put the launcher back where it was.
     router.replaceNamed('/launcher');
     await Future<void>.delayed(const Duration(seconds: 3));
     final Finder moon = find.byIcon(RemixIcons.moon_line);
     final Finder sun = find.byIcon(RemixIcons.sun_line);
-    if (moon.evaluate().isNotEmpty) {
-      await tester.tap(moon.first, warnIfMissed: false);
-    } else if (sun.evaluate().isNotEmpty) {
+    final bool wasDark = sun.evaluate().isNotEmpty;
+    if (wasDark) {
       await tester.tap(sun.first, warnIfMissed: false);
+    } else if (moon.evaluate().isNotEmpty) {
+      await tester.tap(moon.first, warnIfMissed: false);
     }
+    await tester.pump();
+    await Future<void>.delayed(const Duration(seconds: 2));
+    final Finder back = wasDark ? moon : sun;
+    if (back.evaluate().isNotEmpty) {
+      await tester.tap(back.first, warnIfMissed: false);
+    }
+    await tester.pump();
+    await Future<void>.delayed(const Duration(seconds: 1));
   }),
   TourStep('launch_drawer', 5000, true, (WidgetTester tester, StackRouter router) async {
     // Open the app drawer from the handle strip at the foot of the home
@@ -184,12 +196,24 @@ final List<TourStep> tourSteps = <TourStep>[
     final Finder search = find.byKey(const ValueKey<String>('launcher-drawer-search'));
     if (handle.evaluate().isNotEmpty) {
       await tester.tap(handle.first, warnIfMissed: false);
+      // The sheet autofocuses its search field, which raises the
+      // keyboard; give the sheet time to open before dropping focus.
+      await tester.pump();
+      await Future<void>.delayed(const Duration(seconds: 2));
     } else if (search.evaluate().isNotEmpty) {
       // "set" finds Settings, which every Android image installs; the
       // no-match state is still its own screen should an image lack it.
       await tester.enterText(search.first, 'set');
       await tester.pump();
     }
+    // Either branch has left the device keyboard up over the list (note
+    // at the top). Drop focus, tell the platform to hide it, and let the
+    // drawer re-lay out before the frame is held.
+    FocusManager.instance.primaryFocus?.unfocus();
+    await tester.pump();
+    await SystemChannels.textInput.invokeMethod<void>('TextInput.hide');
+    await tester.pump();
+    await Future<void>.delayed(const Duration(milliseconds: 750));
   }),
   TourStep('launch_drawer_close', 3000, false, (WidgetTester tester, StackRouter router) async {
     final Finder sheet = find.byKey(const ValueKey<String>('launcher-drawer-sheet'));
@@ -381,6 +405,14 @@ final List<TourStep> tourSteps = <TourStep>[
         }
       }
     }
+    // The last enterText left the device keyboard up over the foot of
+    // the sheet (see the note at the top). Drop focus, tell the platform
+    // to hide it, and let the sheet re-lay out before the frame is held.
+    FocusManager.instance.primaryFocus?.unfocus();
+    await tester.pump();
+    await SystemChannels.textInput.invokeMethod<void>('TextInput.hide');
+    await tester.pump();
+    await Future<void>.delayed(const Duration(milliseconds: 750));
   }),
   TourStep('productivity_maintenance_photo', 6000, true, (WidgetTester tester, StackRouter router) async {
     Future<bool> appears(Finder finder, {int seconds = 10}) async {
@@ -409,5 +441,12 @@ final List<TourStep> tourSteps = <TourStep>[
     // 47i: the readings step finished, the photo step's own slot is on
     // screen — the still is this card, never the readings card again.
     await appears(find.byKey(TaskRunView.photoKey));
+    // This step typed too; make sure the keyboard is gone before the
+    // photo card is captured (note at the top).
+    FocusManager.instance.primaryFocus?.unfocus();
+    await tester.pump();
+    await SystemChannels.textInput.invokeMethod<void>('TextInput.hide');
+    await tester.pump();
+    await Future<void>.delayed(const Duration(milliseconds: 750));
   }),
 ];
