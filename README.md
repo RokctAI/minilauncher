@@ -11,12 +11,12 @@ tour run, so new screens appear here automatically.
 | Welcome | Auth Login | Auth Register |
 | :---: | :---: | :---: |
 | ![Welcome][s01] | ![Auth Login][s02] | ![Auth Register][s03] |
-| **Auth Reset Password** | **Launcher Home** | **Launch Dark Mode** |
-| ![Reset Password][s04] | ![Launcher Home][s05] | ![Launch Dark Mode][s06] |
-| **Launch Drawer** | **Base Profile** | **Productivity Tasks** |
-| ![Launch Drawer][s07] | ![Base Profile][s08] | ![Productivity Tasks][s09] |
-| **Task Compose** | **Maintenance Readings** | **Maintenance Photo** |
-| ![Task Compose][s10] | ![Readings][s11] | ![Maintenance Photo][s12] |
+| **Auth Reset Password** | **Launcher Home** | **Launch Drawer** |
+| ![Auth Reset Password][s04] | ![Launcher Home][s05] | ![Launch Drawer][s06] |
+| **Base Profile** | **Productivity Tasks** | **Productivity Task Compose** |
+| ![Base Profile][s07] | ![Productivity Tasks][s08] | ![Task Compose][s09] |
+| **Productivity Maintenance Readings** | **Productivity Maintenance Photo** | |
+| ![Maintenance Readings][s10] | ![Productivity Maintenance Photo][s11] | |
 
 The full tour lives in the [feature guide](marketing/tour/feature-guide.md),
 with walkthrough videos alongside it in [`marketing/tour/`](marketing/tour).
@@ -26,13 +26,12 @@ with walkthrough videos alongside it in [`marketing/tour/`](marketing/tour).
 [s03]: marketing/tour/store/03-auth_register.png
 [s04]: marketing/tour/store/04-auth_reset_password.png
 [s05]: marketing/tour/store/05-launcher_home.png
-[s06]: marketing/tour/store/06-launch_dark_mode.png
-[s07]: marketing/tour/store/07-launch_drawer.png
-[s08]: marketing/tour/store/08-base_profile.png
-[s09]: marketing/tour/store/09-productivity_tasks.png
-[s10]: marketing/tour/store/10-productivity_task_compose.png
-[s11]: marketing/tour/store/11-productivity_maintenance_readings.png
-[s12]: marketing/tour/store/12-productivity_maintenance_photo.png
+[s06]: marketing/tour/store/06-launch_drawer.png
+[s07]: marketing/tour/store/07-base_profile.png
+[s08]: marketing/tour/store/08-productivity_tasks.png
+[s09]: marketing/tour/store/09-productivity_task_compose.png
+[s10]: marketing/tour/store/10-productivity_maintenance_readings.png
+[s11]: marketing/tour/store/11-productivity_maintenance_photo.png
 <!-- @generated-tour-gallery-end -->
 
 <!-- @generated-render-strip-start -->
