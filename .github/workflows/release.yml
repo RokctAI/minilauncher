@@ -46,11 +46,11 @@ on:
 jobs:
   release:
     permissions: write-all
-    uses: RokctAI/shared-workflows/.github/workflows/universal-pipeline.yml@0062166da2a6a500e5fb780b398f6198cfcc9a7b # shared-workflows main (gateway envelope)
+    uses: RokctAI/shared-workflows/.github/workflows/universal-pipeline.yml@98feda9176a423a090f22e41633cf2f372de36de # shared-workflows main (Windows installer inputs)
     with:
       backfill_ai_notes_cutoff_version: ${{ inputs.backfill_ai_notes_cutoff_version }}
       project_type: 'flutter'
-      app-type: 'manager'
+      app-type: 'launcher'
       # Dogfooding: Use the new Weekly Strategy
       release_strategy: 'weekly'
 
@@ -67,6 +67,10 @@ jobs:
 
       # Build APK
       build_android: true
+      # Build the Windows desktop app and ship it as an Inno Setup installer (.exe)
+      build_windows: true
+      windows_installer: true
+      app_display_name: 'Launcher'
       # Environment configuration
       node-version: ${{ inputs.node-version || '24' }}
       python-version: ${{ inputs.python-version || '3.14' }}
