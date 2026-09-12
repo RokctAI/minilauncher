@@ -101,6 +101,9 @@ jobs:
       # TEMPORARY (desktop test wave for Ray) — build Windows desktop app from the
       # committed windows/ runner; revert candidate
       build_windows: true
+      # Ship the Windows release as an Inno Setup installer (.exe) instead of a zip
+      windows_installer: true
+      app_display_name: 'Minilauncher'
       # Environment configuration
       node-version: ${{ inputs.node-version || '24' }}
       python-version: ${{ inputs.python-version || '3.14' }}
