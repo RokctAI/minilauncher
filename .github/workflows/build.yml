@@ -103,7 +103,7 @@ jobs:
       build_windows: true
       # Ship the Windows release as an Inno Setup installer (.exe) instead of a zip
       windows_installer: true
-      app_display_name: 'Minilauncher'
+      app_display_name: 'Launcher'
       # Environment configuration
       node-version: ${{ inputs.node-version || '24' }}
       python-version: ${{ inputs.python-version || '3.14' }}
@@ -115,5 +115,5 @@ jobs:
       flutter-version: ${{ inputs.flutter-version || '3.38.5' }}
       java-version: ${{ inputs.java-version || '17' }}
       version_format: ${{ inputs.version_format || '##.##.##' }}
-      app-type: 'manager'
+      app-type: 'launcher'
     secrets: inherit
