@@ -52,7 +52,7 @@ jobs:
       project_type: 'flutter'
       app-type: 'launcher'
       # Dogfooding: Use the new Weekly Strategy
-      release_strategy: 'Immediate'
+      release_strategy: 'immediate'
 
       # RC Cleanup: Delete RC releases/tags after promotion to stable
       cleanup_rc_releases: true

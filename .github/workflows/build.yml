@@ -96,7 +96,7 @@ jobs:
       run_lint: true
       run_ci: true
       # Deployment Configuration (Immediate release on Main)
-      release_strategy: 'Immediate'
+      release_strategy: 'immediate'
       build_android: true
       # TEMPORARY (desktop test wave for Ray) — build Windows desktop app from the
       # committed windows/ runner; revert candidate
