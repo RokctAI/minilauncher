@@ -150,7 +150,7 @@ packages:
       path: ".rokct/cache/base"
       relative: true
     source: path
-    version: "1.65.1"
+    version: "1.65.2"
   battery_plus:
     dependency: transitive
     description:
