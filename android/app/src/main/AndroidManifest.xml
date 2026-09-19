@@ -40,10 +40,23 @@
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         tools:replace="android:allowBackup,android:dataExtractionRules,android:fullBackupContent">
+        <!-- Home-activity shell flags. A HOME activity is relaunched by the
+             system in states a normal activity never sees: cold start with no
+             saved instance state after the process is killed for memory, and
+             repeated MAIN/HOME intents while it is already resumed.
+             stateNotNeeded lets the system restart it without restoring a
+             saved bundle instead of tearing it down; excludeFromRecents
+             keeps the home surface itself out of the recents list.
+             launchMode stays singleTop: re-delivering MAIN/HOME to the
+             existing instance is what a launcher needs, and singleTask's
+             extra task-reparenting behaviour is a separate call nobody has
+             asked for. -->
         <activity
             android:name=".MainActivity"
             android:exported="true"
             android:launchMode="singleTop"
+            android:stateNotNeeded="true"
+            android:excludeFromRecents="true"
             android:taskAffinity=""
             android:theme="@style/LaunchTheme"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
