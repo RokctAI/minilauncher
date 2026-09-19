@@ -48,6 +48,7 @@ object DefaultHomeBridge {
             when (call.method) {
                 "isDefaultHome" -> result.success(isDefaultHome(activity))
                 "requestDefaultHome" -> result.success(requestDefaultHome(activity))
+                "defaultDialPackage" -> result.success(defaultDialPackage(activity))
                 else -> result.notImplemented()
             }
         }
@@ -105,6 +106,43 @@ object DefaultHomeBridge {
             // A device with no home settings screen and no home role is a
             // device that cannot be asked. Nothing was shown; say so.
             false
+        }
+    }
+
+    /**
+     * The package name of the app this device dials with, or null.
+     *
+     * ASKED, NEVER GUESSED (Ray, 2026-09-19: "two, ask android as giving you
+     * package will mean hardcoding and this will be installed n many
+     * phones"). A list of well-known dialer package names would be wrong on
+     * the first phone whose skin ships its own, so the question goes where
+     * the answer actually lives: resolving ACTION_DIAL with
+     * MATCH_DEFAULT_ONLY is the same call, on the same PackageManager, that
+     * isDefaultHome above makes for the HOME intent.
+     *
+     * Null rather than a package for every case that is not an app the user
+     * dials with: nothing resolvable at all, the system's own resolver
+     * activity standing in because no choice has been made ("android"), and
+     * this launcher itself. The Dart side reads null as "no phone entry on
+     * the nav" and shows none, which is the honest answer on a device with
+     * no telephony.
+     */
+    private fun defaultDialPackage(activity: Activity): String? {
+        return try {
+            val dial = Intent(Intent.ACTION_DIAL)
+            val resolved = activity.packageManager.resolveActivity(
+                dial,
+                PackageManager.MATCH_DEFAULT_ONLY,
+            )
+            val packageName = resolved?.activityInfo?.packageName
+            when (packageName) {
+                null, "", "android", activity.packageName -> null
+                else -> packageName
+            }
+        } catch (e: Exception) {
+            // A device with no dialler is a device with no answer. Say so
+            // rather than throwing across the channel.
+            null
         }
     }
 }
