@@ -36,3 +36,9 @@
 
 # Reflective lookups above need their metadata intact.
 -keepattributes *Annotation*,Signature,InnerClasses,EnclosingMethod
+
+# Flutter deferred components reference Play Core; this app ships none of them.
+# The -keep on io.flutter.embedding.** above retains
+# FlutterPlayStoreSplitApplication and PlayStoreDeferredComponentManager, whose
+# Play Core references R8 would otherwise have shrunk away unreferenced.
+-dontwarn com.google.android.play.core.**
