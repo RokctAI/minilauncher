@@ -45,8 +45,10 @@
              saved instance state after the process is killed for memory, and
              repeated MAIN/HOME intents while it is already resumed.
              stateNotNeeded lets the system restart it without restoring a
-             saved bundle instead of tearing it down; excludeFromRecents
-             keeps the home surface itself out of the recents list.
+             saved bundle instead of tearing it down. The task is
+             deliberately left in recents: a home task excluded from it is
+             the one the system is most willing to tear down, which cost
+             the launcher its state on every return from another app.
              launchMode stays singleTop: re-delivering MAIN/HOME to the
              existing instance is what a launcher needs, and singleTask's
              extra task-reparenting behaviour is a separate call nobody has
@@ -56,7 +58,6 @@
             android:exported="true"
             android:launchMode="singleTop"
             android:stateNotNeeded="true"
-            android:excludeFromRecents="true"
             android:taskAffinity=""
             android:theme="@style/LaunchTheme"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
