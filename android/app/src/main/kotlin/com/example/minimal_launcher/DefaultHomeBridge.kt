@@ -4,15 +4,17 @@ import android.app.Activity
 import android.app.role.RoleManager
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Build
 import android.provider.Settings
+import android.telecom.TelecomManager
 import io.flutter.plugin.common.BinaryMessenger
 import io.flutter.plugin.common.MethodChannel
 
 /**
- * Platform plumbing for the launcher's one question the framework cannot
- * answer: is this app the device's home screen, and if not, ask the user to
- * make it one.
+ * Platform plumbing for the launcher's questions the framework cannot
+ * answer: is this app the device's home screen, if not ask the user to make
+ * it one, and which app actually handles dialling a number.
  *
  * Transport only. WHEN the ask happens is launch_sdk's DefaultHomePrompt (at
  * most once per install, never when already the default, never on a platform
@@ -115,34 +117,102 @@ object DefaultHomeBridge {
      * ASKED, NEVER GUESSED (Ray, 2026-09-19: "two, ask android as giving you
      * package will mean hardcoding and this will be installed n many
      * phones"). A list of well-known dialer package names would be wrong on
-     * the first phone whose skin ships its own, so the question goes where
-     * the answer actually lives: resolving ACTION_DIAL with
-     * MATCH_DEFAULT_ONLY is the same call, on the same PackageManager, that
-     * isDefaultHome above makes for the HOME intent.
+     * the first phone whose skin ships its own, so every branch below is a
+     * QUESTION put to the platform and not one of them names a dialler.
+     *
+     * TWO SOURCES, IN THIS ORDER. The first is where the answer actually
+     * lives; the second is the resolve this bridge used to ask ALONE, which
+     * is why it could not find a default (Ray: "cant auto find default"):
+     *
+     *  1. TelecomManager.getDefaultDialerPackage() - the DEFAULT-APP answer.
+     *     The dialler is a ROLE the user grants under Default apps
+     *     (RoleManager.ROLE_DIALER on API 29+, the same registry below it),
+     *     and granting a role does NOT set an intent default. So the role
+     *     holder has to be read from the role registry, which is what this
+     *     call does: no permission, and no API 30 package-visibility
+     *     filtering to fall foul of, because it answers with a package name
+     *     rather than with a ResolveInfo.
+     *  2. Resolving ACTION_DIAL, for a device that answers nothing at (1) -
+     *     no telecom service at all, which is a device with no telephony.
+     *     MATCH_DEFAULT_ONLY answers with the system's own RESOLVER activity
+     *     ("android") whenever several activities match and no intent
+     *     default has been set, and on a phone whose dialler was chosen as a
+     *     role that is the ordinary case - so the resolve alone reported "no
+     *     phone app" on a phone that plainly has one. A resolver answer now
+     *     falls through to queryIntentActivities, and is taken ONLY when
+     *     every match agrees on one package: several candidates with no
+     *     default is a question this bridge cannot answer, and it says null
+     *     rather than pick one.
+     *
+     * The intent carries the bare "tel:" scheme and no number - a scheme,
+     * not a phone number, and not a package name. A dialler declares its
+     * ACTION_DIAL filter with that data scheme, so the bare action on its
+     * own matched fewer activities than the intent a launcher actually
+     * fires.
      *
      * Null rather than a package for every case that is not an app the user
-     * dials with: nothing resolvable at all, the system's own resolver
-     * activity standing in because no choice has been made ("android"), and
-     * this launcher itself. The Dart side reads null as "no phone entry on
-     * the nav" and shows none, which is the honest answer on a device with
-     * no telephony.
+     * dials with. The Dart side reads null as "no phone entry on the nav"
+     * beyond whatever the user has already chosen, which is the honest
+     * answer on a device with no telephony.
      */
     private fun defaultDialPackage(activity: Activity): String? {
+        return roleDialPackage(activity) ?: resolvedDialPackage(activity)
+    }
+
+    /**
+     * Source 1 - the default-app registry, read through telecom.
+     */
+    private fun roleDialPackage(activity: Activity): String? {
         return try {
-            val dial = Intent(Intent.ACTION_DIAL)
-            val resolved = activity.packageManager.resolveActivity(
-                dial,
-                PackageManager.MATCH_DEFAULT_ONLY,
+            val telecom = activity.getSystemService(TelecomManager::class.java)
+            dialPackageOrNull(activity, telecom?.defaultDialerPackage)
+        } catch (e: Exception) {
+            // A device with no telecom service is a device with no answer
+            // here. Say so rather than throwing across the channel.
+            null
+        }
+    }
+
+    /**
+     * Source 2 - the ACTION_DIAL resolve, for a device the role registry
+     * cannot answer for.
+     */
+    private fun resolvedDialPackage(activity: Activity): String? {
+        return try {
+            val dial = Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", "", null))
+            val packageManager = activity.packageManager
+            // An intent default the user HAS set resolves straight to it.
+            val resolved = dialPackageOrNull(
+                activity,
+                packageManager.resolveActivity(
+                    dial,
+                    PackageManager.MATCH_DEFAULT_ONLY,
+                )?.activityInfo?.packageName,
             )
-            val packageName = resolved?.activityInfo?.packageName
-            when (packageName) {
-                null, "", "android", activity.packageName -> null
-                else -> packageName
-            }
+            resolved ?: packageManager
+                .queryIntentActivities(dial, PackageManager.MATCH_DEFAULT_ONLY)
+                .mapNotNull { dialPackageOrNull(activity, it.activityInfo?.packageName) }
+                .toSet()
+                .singleOrNull()
         } catch (e: Exception) {
             // A device with no dialler is a device with no answer. Say so
             // rather than throwing across the channel.
             null
+        }
+    }
+
+    /**
+     * [packageName] when it names an app this device dials with, else null.
+     *
+     * The three rejections are all cases that are not a dialler the user
+     * chose: nothing at all, the system's own resolver activity standing in
+     * because no choice has been made ("android" is the platform's own
+     * package, not an app), and this launcher itself.
+     */
+    private fun dialPackageOrNull(activity: Activity, packageName: String?): String? {
+        return when (packageName) {
+            null, "", "android", activity.packageName -> null
+            else -> packageName
         }
     }
 }
