@@ -88,6 +88,17 @@
       "_comment": "Owns tasks (tasks_table, task_service, TasksRoute). The launcher's home is tasks-first, so this is the source for that screen and for productivity glance signals."
     },
     {
+      "name": "calc_sdk",
+      "enabled": true,
+      "source": "git",
+      "git": "https://github.com/RokctAI/productivity",
+      "path": "../productivity/calc/dart",
+      "ref": "main",
+      "sha256": "605eff5b0a07630317ae0d0bb1f7edb7905f3de80fef34a9f486eaef95efca92",
+      "_sha256_comment": "SHA-256 of calc/dart/install.py at productivity@84f6495c; required by the composer's unpinned-installer gate. Update when upstream install.py changes.",
+      "_comment": "Standalone calculator; un-gated /calc route. Added 2026-09-21 (Ray: \"give laucher calc sdk\") so launch_sdk's floating-nav Calculator entry has a route to reach - it is gated on RoutePresence of CalculatorRoute, so without this entry the launcher simply shows no calculator. Mirrors manager.json, which carries the same entry."
+    },
+    {
       "name": "corporate_sdk",
       "enabled": true,
       "source": "git",
