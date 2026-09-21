@@ -45,6 +45,8 @@ dependencies:
     path: .rokct/cache/processing
   productivity_sdk:
     path: .rokct/cache/productivity
+  calc_sdk:
+    path: .rokct/cache/calc
   corporate_sdk:
     path: .rokct/cache/corporate
   desktop_sdk:
