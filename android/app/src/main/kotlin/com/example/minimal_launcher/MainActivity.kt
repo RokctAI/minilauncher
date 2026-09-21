@@ -12,5 +12,10 @@ class MainActivity : FlutterActivity() {
         // Activity wires the channel up. Needs an Activity, not the
         // application context - both arms of the ask start system UI.
         DefaultHomeBridge.register(flutterEngine.dartExecutor.binaryMessenger, this)
+        // Same reason, and the reason the launcher does not have to enumerate
+        // every installed package to notice an install: this one reports app
+        // changes as they happen. It keeps its own callback on the
+        // application context, so a background install is not missed.
+        AppChangesBridge.register(flutterEngine.dartExecutor.binaryMessenger, this)
     }
 }
