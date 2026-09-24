@@ -77,7 +77,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.example.minimal_launcher"
+        applicationId "com.app.demo"
         minSdkVersion 24
         multiDexEnabled true
         targetSdkVersion 36
