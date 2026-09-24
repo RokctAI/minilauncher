@@ -77,7 +77,7 @@ android {
     }
 
     defaultConfig {
-        applicationId dartDefines.CUSTOMER_ANDROID_PACKAGE_NAME
+        applicationId dartDefines.LAUNCHER_ANDROID_PACKAGE_NAME
         minSdkVersion 24
         multiDexEnabled true
         targetSdkVersion 36
