@@ -127,7 +127,7 @@ packages:
       path: ".rokct/cache/auth"
       relative: true
     source: path
-    version: "1.13.5"
+    version: "1.14.0"
   auto_route:
     dependency: "direct overridden"
     description:
@@ -150,7 +150,7 @@ packages:
       path: ".rokct/cache/base"
       relative: true
     source: path
-    version: "1.72.1"
+    version: "1.74.0"
   battery_plus:
     dependency: transitive
     description:
@@ -253,7 +253,7 @@ packages:
       path: ".rokct/cache/calc"
       relative: true
     source: path
-    version: "1.1.0"
+    version: "1.1.2"
   calendar_date_picker2:
     dependency: transitive
     description:
@@ -340,7 +340,7 @@ packages:
       path: ".rokct/cache/comms"
       relative: true
     source: path
-    version: "1.0.0"
+    version: "1.17.0"
   connectivity_plus:
     dependency: transitive
     description:
@@ -1334,7 +1334,7 @@ packages:
       path: ".rokct/cache/launch"
       relative: true
     source: path
-    version: "1.0.0"
+    version: "1.0.1"
   leak_tracker:
     dependency: transitive
     description:
@@ -1660,7 +1660,7 @@ packages:
       path: ".rokct/cache/productivity"
       relative: true
     source: path
-    version: "1.7.1"
+    version: "1.7.2"
   pub_semver:
     dependency: transitive
     description:
@@ -2103,7 +2103,7 @@ packages:
       path: ".rokct/cache/users"
       relative: true
     source: path
-    version: "1.0.2"
+    version: "1.5.0"
   uuid:
     dependency: transitive
     description:
