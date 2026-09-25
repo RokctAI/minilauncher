@@ -33,9 +33,9 @@
 //     a real launch does.
 //   * The app list is NOT demo data from an SDK, because launch_sdk has no
 //     demo path: `launchProvider` constructs `LaunchRepository` directly and
-//     that repository talks to the `installed_apps` platform channel. There
-//     is no `AppConstants.isDemo` branch to switch, and nothing in this
-//     shell's composed SDKs registers one. So this harness takes the
+//     that repository talks to the `installed_apps` platform channel, not
+//     the platform gateway, so base_sdk's DemoGatewayInterceptor has no cmd
+//     to answer and no `<cmd>.json` fixture can supply it. So this harness takes the
 //     documented exception (template marker 4/8) at the LOWEST seam
 //     available: it mocks the `installed_apps` MethodChannel and returns a
 //     small fixed device inventory. Everything above the channel -
@@ -44,9 +44,8 @@
 //     code path. The strip config says so in its notes.
 //
 // Run:
-//   flutter test --dart-define=IS_DEMO=true test/render/render_screen_test.dart
-//   RENDER_SUFFIX=_draft flutter test --dart-define=IS_DEMO=true \
-//       test/render/render_screen_test.dart
+//   flutter test test/render/render_screen_test.dart
+//   RENDER_SUFFIX=_draft flutter test test/render/render_screen_test.dart
 
 // ignore_for_file: implementation_imports, depend_on_referenced_packages
 
@@ -223,8 +222,8 @@ void registerExceptionStubs() {
 /// injected into the page source at the `@launcher-glance` marker by
 /// productivity_sdk's manifest at compose time, so they are part of the
 /// composed code rather than data.) The app list comes from `launchProvider`,
-/// which news up `LaunchRepository` directly and never consults GetIt or
-/// `AppConstants.isDemo`.
+/// which news up `LaunchRepository` directly and never consults GetIt or the
+/// demo session.
 ///
 /// `BaseSdkDependencies.register` is deliberately NOT called: this screen
 /// reads none of the kernel facades, and the registration starts
