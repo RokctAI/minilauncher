@@ -127,7 +127,7 @@ packages:
       path: ".rokct/cache/auth"
       relative: true
     source: path
-    version: "1.14.0"
+    version: "1.16.1"
   auto_route:
     dependency: "direct overridden"
     description:
@@ -150,7 +150,7 @@ packages:
       path: ".rokct/cache/base"
       relative: true
     source: path
-    version: "1.74.0"
+    version: "1.82.1"
   battery_plus:
     dependency: transitive
     description:
@@ -340,7 +340,7 @@ packages:
       path: ".rokct/cache/comms"
       relative: true
     source: path
-    version: "1.17.0"
+    version: "1.22.0"
   connectivity_plus:
     dependency: transitive
     description:
@@ -656,6 +656,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.1.0"
+  flutter_app_group_directory:
+    dependency: transitive
+    description:
+      name: flutter_app_group_directory
+      sha256: "680ef9b2dee84c237cd7bb7fc78bc45867b32556a8a5f0de61278078b9fefd05"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.0"
   flutter_cache_manager:
     dependency: transitive
     description:
@@ -1383,6 +1391,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.2"
+  live_activities:
+    dependency: transitive
+    description:
+      name: live_activities
+      sha256: "30a77e91918585d904c73ce9b96e6553e2d2d958b6059c23a0957277c95522bf"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.4.3"
   logging:
     dependency: transitive
     description:
@@ -2103,7 +2119,7 @@ packages:
       path: ".rokct/cache/users"
       relative: true
     source: path
-    version: "1.5.0"
+    version: "1.5.1"
   uuid:
     dependency: transitive
     description:
