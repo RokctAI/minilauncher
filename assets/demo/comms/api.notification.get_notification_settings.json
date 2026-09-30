@@ -1,0 +1,11 @@
+{
+  "data": [
+    {
+      "id": "order",
+      "type": "order",
+      "created_at": "$now_iso",
+      "updated_at": "$now_iso",
+      "payload": ["Order Update", "Your order has been placed."]
+    }
+  ]
+}

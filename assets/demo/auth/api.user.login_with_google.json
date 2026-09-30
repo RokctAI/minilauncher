@@ -1,0 +1,32 @@
+{
+  "data": {
+    "access_token": "demo_google_token",
+    "token_type": "Bearer",
+    "user": {
+      "id": "1",
+      "uuid": "demo_uuid",
+      "firstname": "Thandi",
+      "lastname": "Mokoena",
+      "email": "thandi.mokoena@outlook.com",
+      "phone": "+27 82 456 7890",
+      "active": true,
+      "is_demo_account": true,
+      "img": "data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"160\" height=\"160\" viewBox=\"0 0 160 160\"><defs><linearGradient id=\"a\" x1=\"0\" y1=\"0\" x2=\"1\" y2=\"1\"><stop offset=\"0\" stop-color=\"#F7A93B\"/><stop offset=\"1\" stop-color=\"#E1620C\"/></linearGradient></defs><circle cx=\"80\" cy=\"80\" r=\"80\" fill=\"url(#a)\"/><text x=\"80\" y=\"101\" text-anchor=\"middle\" font-family=\"Helvetica, Arial, sans-serif\" font-size=\"60\" font-weight=\"600\" fill=\"#FFFFFF\">TM</text></svg>",
+      "addresses": [
+        {
+          "id": "1",
+          "title": "Home",
+          "address": {
+            "address": "42 Marula Avenue, Sandton"
+          },
+          "active": true,
+          "location": [
+            -26.1076,
+            28.0567
+          ]
+        }
+      ],
+      "role": "customer"
+    }
+  }
+}
