@@ -1,0 +1,10 @@
+{
+  "data": [
+    {
+      "id": 1,
+      "created_at": "$now_iso",
+      "updated_at": "$now_iso",
+      "translation": {"question": "How to order?", "answer": "Select items and checkout", "locale": "en"}
+    }
+  ]
+}

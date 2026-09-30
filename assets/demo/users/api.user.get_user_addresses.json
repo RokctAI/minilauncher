@@ -1,0 +1,30 @@
+{
+  "data": [
+    {
+      "id": "1",
+      "title": "Home",
+      "address": {
+        "address": "42 Marula Avenue, Sandton",
+        "house": "42",
+        "floor": "1"
+      },
+      "active": true,
+      "location": [
+        -26.1076,
+        28.0567
+      ]
+    },
+    {
+      "id": "2",
+      "title": "Work",
+      "address": {
+        "address": "15 Alice Lane, Sandton"
+      },
+      "active": true,
+      "location": [
+        -26.1076,
+        28.0567
+      ]
+    }
+  ]
+}

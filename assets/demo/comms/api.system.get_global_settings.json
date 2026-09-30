@@ -1,0 +1,9 @@
+{
+  "data": [
+    {"key": "app_name", "value": "Juvo Demo"},
+    {"key": "default_currency", "value": "USD"},
+    {"key": "default_tax", "value": "10"},
+    {"key": "deliveryman_order_acceptance_time", "value": "30"},
+    {"key": "google_maps_key", "value": "DEMO_KEY"}
+  ]
+}

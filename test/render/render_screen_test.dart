@@ -210,6 +210,20 @@ void registerExceptionStubs() {
           'but the screen called ${call.method}',
         );
       });
+
+  // launch_sdk's LaunchNotifier also listens to the app_changes EventChannel
+  // (fed on Android by AppChangesBridge) so installs/uninstalls refresh the
+  // list live. A render runner has no native side and a still frame has no
+  // install events, so the stream is mocked as open-and-silent: listen and
+  // cancel succeed, no events are emitted, and the list stays exactly what
+  // getInstalledApps returned.
+  TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+      .setMockStreamHandler(
+        const EventChannel('rokct.launch_sdk/app_changes'),
+        MockStreamHandler.inline(
+          onListen: (Object? _, MockStreamHandlerEventSink __) {},
+        ),
+      );
 }
 
 /// Template marker 2/8 - the SDKs' own demo data.
