@@ -127,7 +127,7 @@ packages:
       path: ".rokct/cache/auth"
       relative: true
     source: path
-    version: "1.16.1"
+    version: "1.16.3"
   auto_route:
     dependency: "direct overridden"
     description:
@@ -150,7 +150,7 @@ packages:
       path: ".rokct/cache/base"
       relative: true
     source: path
-    version: "1.82.1"
+    version: "1.83.2"
   battery_plus:
     dependency: transitive
     description:
@@ -1676,7 +1676,7 @@ packages:
       path: ".rokct/cache/productivity"
       relative: true
     source: path
-    version: "1.7.2"
+    version: "1.7.3"
   pub_semver:
     dependency: transitive
     description:
