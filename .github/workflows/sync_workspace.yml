@@ -24,7 +24,10 @@ jobs:
           parent_branch="main"
           working_files=""
 
-          if [ -f .rokct/active_session.txt ]; then
+          # active_session.txt is committed in every repo and holds the
+          # placeholder [NO_SESSION_ACTIVE] when idle, so existence alone is
+          # not a signal - only a real session marker should skip the sync.
+          if [ -f .rokct/active_session.txt ] && ! grep -q 'NO_SESSION_ACTIVE' .rokct/active_session.txt; then
             echo "Active session in progress, skipping sync."
             skip="true"
           elif [ ! -f .rokct/.workspace_config.json ]; then
@@ -57,10 +60,16 @@ jobs:
 
       - name: Sync working files to parent (append-only)
         if: ${{ !contains(steps.guard.outputs.skip, 'true') }}
+        env:
+          WORKING_FILES: ${{ steps.guard.outputs.working_files }}
+          # sync_workspace.py clones the private parent workspace repo itself;
+          # the ambient GITHUB_TOKEN cannot reach it, so pass the same org
+          # secret the parent checkout above uses.
+          PARENT_REPO_TOKEN: ${{ secrets.MONOREPO_PAT }}
         run: |
           PARENT_DIR="parent-repo"
           cd "$GITHUB_WORKSPACE"
-          for f in $(echo '${{ steps.guard.outputs.working_files }}' | jq -r '.[]'); do
+          for f in $(printf '%s' "$WORKING_FILES" | jq -r '.[]'); do
             if [ -f ".rokct/$f" ] && [ -f "$PARENT_DIR/.rokct/$f" ]; then
               python3 .rokct/sync_workspace.py --file ".rokct/$f" --parent "$PARENT_DIR/.rokct/$f" --repo "${{ github.repository }}" --session "${{ github.run_id }}"
               echo "Synced .rokct/$f -> parent [append-only]"
