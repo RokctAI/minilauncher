@@ -2,6 +2,7 @@ package com.example.minimal_launcher
 
 import android.app.Activity
 import android.app.role.RoleManager
+import android.content.ComponentName
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -31,6 +32,12 @@ import io.flutter.plugin.common.MethodChannel
  * away and the channel would answer nothing. Keep it byte-identical to
  * launch_sdk's (launch/dart/templates/android/.../DefaultHomeBridge.kt) apart
  * from the package declaration.
+ *
+ * It also answers WHERE the calculator is when this app does not carry one
+ * itself (Ray, 2026-10-08: "remove calc from launcher and only have a window
+ * to it"): one of the fleet's own apps that composes calc_sdk, opened straight
+ * on its /calc screen, else the device's own calculator app. Both are
+ * QUESTIONS put to the package manager; no package name is written down.
  */
 object DefaultHomeBridge {
 
@@ -51,6 +58,11 @@ object DefaultHomeBridge {
                 "isDefaultHome" -> result.success(isDefaultHome(activity))
                 "requestDefaultHome" -> result.success(requestDefaultHome(activity))
                 "defaultDialPackage" -> result.success(defaultDialPackage(activity))
+                "fleetCalculatorPackages" -> result.success(fleetCalculatorPackages(activity))
+                "deviceCalculatorPackage" -> result.success(deviceCalculatorPackage(activity))
+                "openFleetCalculator" -> result.success(
+                    openFleetCalculator(activity, call.argument<String>("package")),
+                )
                 else -> result.notImplemented()
             }
         }
@@ -210,6 +222,122 @@ object DefaultHomeBridge {
      * package, not an app), and this launcher itself.
      */
     private fun dialPackageOrNull(activity: Activity, packageName: String?): String? {
+        return when (packageName) {
+            null, "", "android", activity.packageName -> null
+            else -> packageName
+        }
+    }
+
+    /**
+     * The action calc_sdk's manifest declares on an activity-alias of every
+     * app that composes it (host_integration.android_application_xml), with
+     * the data scheme below. A custom action and not CATEGORY_APP_CALCULATOR
+     * on purpose: the device's own calculator answers that category, and the
+     * fleet apps must not show up in somebody else's "pick a calculator".
+     */
+    private const val FLEET_CALCULATOR_ACTION = "rokct.intent.action.CALCULATOR"
+
+    /**
+     * What the intent carries: Flutter's embedding hands an intent's data to
+     * the router as the route (cold start: the initial route; warm start:
+     * pushRouteInformation from onNewIntent), and auto_route matches on the
+     * URI's PATH - so "rokct:/calc" lands on /calc, not on the app's home.
+     */
+    private val FLEET_CALCULATOR_URI: Uri = Uri.parse("rokct:/calc")
+
+    private fun fleetCalculatorIntent(): Intent =
+        Intent(FLEET_CALCULATOR_ACTION, FLEET_CALCULATOR_URI)
+            .addCategory(Intent.CATEGORY_DEFAULT)
+
+    /**
+     * Every OTHER installed app that declares the fleet calculator entry,
+     * as package names, distinct and sorted so the order is stable from one
+     * call to the next. Empty, never null, when there are none. This app is
+     * left out: a compose that mounts /calc itself opens it in-app, and one
+     * that does not has no entry to declare.
+     */
+    private fun fleetCalculatorPackages(activity: Activity): List<String> {
+        return try {
+            activity.packageManager
+                .queryIntentActivities(fleetCalculatorIntent(), 0)
+                .mapNotNull { it.activityInfo?.packageName }
+                .filter { it.isNotEmpty() && it != activity.packageName }
+                .distinct()
+                .sorted()
+        } catch (e: Exception) {
+            emptyList()
+        }
+    }
+
+    /**
+     * The device's own calculator app, as a package name, or null.
+     *
+     * Asked of the platform through CATEGORY_APP_CALCULATOR - the category
+     * Intent.makeMainSelectorActivity(ACTION_MAIN, CATEGORY_APP_CALCULATOR)
+     * selects on. A default the user has set resolves straight to it;
+     * otherwise every match is listed and the first package in a stable
+     * order is taken, so the launcher starts ONE app by package and never
+     * shows a chooser. Null when the device ships no calculator.
+     */
+    private fun deviceCalculatorPackage(activity: Activity): String? {
+        return try {
+            val calculator = Intent(Intent.ACTION_MAIN)
+                .addCategory(Intent.CATEGORY_APP_CALCULATOR)
+            val packageManager = activity.packageManager
+            val resolved = calculatorPackageOrNull(
+                activity,
+                packageManager.resolveActivity(
+                    calculator,
+                    PackageManager.MATCH_DEFAULT_ONLY,
+                )?.activityInfo?.packageName,
+            )
+            resolved ?: packageManager
+                .queryIntentActivities(calculator, 0)
+                .mapNotNull { calculatorPackageOrNull(activity, it.activityInfo?.packageName) }
+                .distinct()
+                .sorted()
+                .firstOrNull()
+        } catch (e: Exception) {
+            null
+        }
+    }
+
+    /**
+     * Open [packageName]'s calculator entry EXPLICITLY - its own component,
+     * never an implicit intent - so two fleet apps carrying calc_sdk never
+     * put a chooser in front of the user. CLEAR_TOP with SINGLE_TOP hands an
+     * app that is already running the intent through onNewIntent, which is
+     * where Flutter pushes the route; a cold one starts on it. False when the
+     * package declares no such entry or the start failed.
+     */
+    private fun openFleetCalculator(activity: Activity, packageName: String?): Boolean {
+        if (packageName.isNullOrEmpty()) return false
+        return try {
+            val probe = fleetCalculatorIntent().setPackage(packageName)
+            val target = activity.packageManager
+                .queryIntentActivities(probe, 0)
+                .firstOrNull()
+                ?.activityInfo
+                ?: return false
+            val open = fleetCalculatorIntent()
+                .setComponent(ComponentName(target.packageName, target.name))
+                .addFlags(
+                    Intent.FLAG_ACTIVITY_NEW_TASK or
+                        Intent.FLAG_ACTIVITY_CLEAR_TOP or
+                        Intent.FLAG_ACTIVITY_SINGLE_TOP,
+                )
+            activity.startActivity(open)
+            true
+        } catch (e: Exception) {
+            false
+        }
+    }
+
+    /**
+     * [packageName] when it names a calculator app, else null: nothing, the
+     * system resolver standing in ("android"), or this launcher itself.
+     */
+    private fun calculatorPackageOrNull(activity: Activity, packageName: String?): String? {
         return when (packageName) {
             null, "", "android", activity.packageName -> null
             else -> packageName

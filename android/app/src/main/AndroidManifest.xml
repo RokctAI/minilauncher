@@ -22,6 +22,19 @@
         <intent>
             <action android:name="android.intent.action.MAIN" />
         </intent>
+        <!-- The floating nav's Calculator (launch_sdk 1.20.0): this shell no
+             longer composes calc_sdk, so the entry opens a fleet app that
+             does (it declares this action and scheme) or the device's own
+             calculator (the APP_CALCULATOR category). Android 11+ hides both
+             from the package manager's answer without these entries. -->
+        <intent>
+            <action android:name="rokct.intent.action.CALCULATOR" />
+            <data android:scheme="rokct" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.APP_CALCULATOR" />
+        </intent>
     </queries>
 
     <!-- Backup / device-transfer policy. allowBackup stays true so the app
