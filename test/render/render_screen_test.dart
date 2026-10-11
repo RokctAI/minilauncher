@@ -178,6 +178,21 @@ const List<Map<String, Object?>> kDeviceApps = <Map<String, Object?>>[
     'is_launchable_app': true,
     'category': 6,
   },
+  // The YouVersion Bible app, so the render carries launch_sdk's "Verse of
+  // the day" card (launch_sdk >= 1.24.0), which the home draws above "On
+  // this screen" only when this package is installed. Its real package id
+  // is the point: the card looks for exactly this one.
+  <String, Object?>{
+    'name': 'Bible',
+    'package_name': 'com.sirma.mobile.bible.android',
+    'version_name': '10.12.0',
+    'version_code': 1012000,
+    'platform_type': 'native_or_others',
+    'installed_timestamp': 1735689600000,
+    'is_system_app': false,
+    'is_launchable_app': true,
+    'category': -1,
+  },
   <String, Object?>{
     'name': 'Phone',
     'package_name': 'com.example.dialer',
