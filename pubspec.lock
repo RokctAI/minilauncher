@@ -127,7 +127,7 @@ packages:
       path: ".rokct/cache/auth"
       relative: true
     source: path
-    version: "1.16.7"
+    version: "1.17.0"
   auto_route:
     dependency: "direct overridden"
     description:
@@ -150,7 +150,7 @@ packages:
       path: ".rokct/cache/base"
       relative: true
     source: path
-    version: "1.85.0"
+    version: "1.86.0"
   battery_plus:
     dependency: transitive
     description:
@@ -1342,7 +1342,7 @@ packages:
       path: ".rokct/cache/launch"
       relative: true
     source: path
-    version: "1.0.2"
+    version: "1.0.3"
   leak_tracker:
     dependency: transitive
     description:
