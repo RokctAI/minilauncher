@@ -38,6 +38,14 @@ import io.flutter.plugin.common.MethodChannel
  * to it"): one of the fleet's own apps that composes calc_sdk, opened straight
  * on its /calc screen, else the device's own calculator app. Both are
  * QUESTIONS put to the package manager; no package name is written down.
+ *
+ * And the same for productivity (Ray, 2026-10-12: productivity works like
+ * the calculator, and the button does not show when no app that has it is
+ * installed): one of the fleet's apps that composes productivity_sdk, opened
+ * straight on its /tasks screen. There is no device fallback.
+ *
+ * Both open with `?from=launcher` on the route, so back on that page returns
+ * here (base_sdk's ReturnToLauncherScope).
  */
 object DefaultHomeBridge {
 
@@ -62,6 +70,17 @@ object DefaultHomeBridge {
                 "deviceCalculatorPackage" -> result.success(deviceCalculatorPackage(activity))
                 "openFleetCalculator" -> result.success(
                     openFleetCalculator(activity, call.argument<String>("package")),
+                )
+                "fleetProductivityPackages" -> result.success(
+                    fleetPackages(activity, fleetProductivityIntent()),
+                )
+                "openFleetProductivity" -> result.success(
+                    openFleetEntry(
+                        activity,
+                        call.argument<String>("package"),
+                        fleetProductivityIntent(),
+                        FLEET_PRODUCTIVITY_OPEN_URI,
+                    ),
                 )
                 else -> result.notImplemented()
             }
@@ -245,8 +264,27 @@ object DefaultHomeBridge {
      */
     private val FLEET_CALCULATOR_URI: Uri = Uri.parse("rokct:/calc")
 
+    /**
+     * What the OPEN carries: the same route with `?from=launcher`, which the
+     * calculator page reads to send back to this launcher (calc_sdk 1.4.0).
+     * An older calc_sdk ignores the query and opens /calc as before.
+     */
+    private val FLEET_CALCULATOR_OPEN_URI: Uri = Uri.parse("rokct:/calc?from=launcher")
+
     private fun fleetCalculatorIntent(): Intent =
         Intent(FLEET_CALCULATOR_ACTION, FLEET_CALCULATOR_URI)
+            .addCategory(Intent.CATEGORY_DEFAULT)
+
+    /**
+     * productivity_sdk's entry (1.8.0): the same shape as the calculator's,
+     * its own action, landing on /tasks.
+     */
+    private const val FLEET_PRODUCTIVITY_ACTION = "rokct.intent.action.PRODUCTIVITY"
+    private val FLEET_PRODUCTIVITY_URI: Uri = Uri.parse("rokct:/tasks")
+    private val FLEET_PRODUCTIVITY_OPEN_URI: Uri = Uri.parse("rokct:/tasks?from=launcher")
+
+    private fun fleetProductivityIntent(): Intent =
+        Intent(FLEET_PRODUCTIVITY_ACTION, FLEET_PRODUCTIVITY_URI)
             .addCategory(Intent.CATEGORY_DEFAULT)
 
     /**
@@ -256,10 +294,14 @@ object DefaultHomeBridge {
      * left out: a compose that mounts /calc itself opens it in-app, and one
      * that does not has no entry to declare.
      */
-    private fun fleetCalculatorPackages(activity: Activity): List<String> {
+    private fun fleetCalculatorPackages(activity: Activity): List<String> =
+        fleetPackages(activity, fleetCalculatorIntent())
+
+    /** Every OTHER installed app answering [entry], as above. */
+    private fun fleetPackages(activity: Activity, entry: Intent): List<String> {
         return try {
             activity.packageManager
-                .queryIntentActivities(fleetCalculatorIntent(), 0)
+                .queryIntentActivities(entry, 0)
                 .mapNotNull { it.activityInfo?.packageName }
                 .filter { it.isNotEmpty() && it != activity.packageName }
                 .distinct()
@@ -310,16 +352,34 @@ object DefaultHomeBridge {
      * where Flutter pushes the route; a cold one starts on it. False when the
      * package declares no such entry or the start failed.
      */
-    private fun openFleetCalculator(activity: Activity, packageName: String?): Boolean {
+    private fun openFleetCalculator(activity: Activity, packageName: String?): Boolean =
+        openFleetEntry(
+            activity,
+            packageName,
+            fleetCalculatorIntent(),
+            FLEET_CALCULATOR_OPEN_URI,
+        )
+
+    /**
+     * Open [packageName]'s [entry] by its own component with [openUri] as the
+     * data, as above.
+     */
+    private fun openFleetEntry(
+        activity: Activity,
+        packageName: String?,
+        entry: Intent,
+        openUri: Uri,
+    ): Boolean {
         if (packageName.isNullOrEmpty()) return false
         return try {
-            val probe = fleetCalculatorIntent().setPackage(packageName)
+            val probe = Intent(entry).setPackage(packageName)
             val target = activity.packageManager
                 .queryIntentActivities(probe, 0)
                 .firstOrNull()
                 ?.activityInfo
                 ?: return false
-            val open = fleetCalculatorIntent()
+            val open = Intent(entry)
+                .setData(openUri)
                 .setComponent(ComponentName(target.packageName, target.name))
                 .addFlags(
                     Intent.FLAG_ACTIVITY_NEW_TASK or
