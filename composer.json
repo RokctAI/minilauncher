@@ -77,17 +77,6 @@
       "_sha256_comment": "SHA-256 of processing/dart/install.py at productivity@84f6495c; required by the composer's unpinned-installer gate. Update when upstream install.py changes."
     },
     {
-      "name": "productivity_sdk",
-      "enabled": true,
-      "source": "git",
-      "git": "https://github.com/RokctAI/productivity",
-      "path": "../productivity/productivity/dart",
-      "ref": "main",
-      "sha256": "355a4149b7210391386f19cd078880c806c6e7a9ec15542ce623ed517b173238",
-      "_sha256_comment": "SHA-256 of productivity/dart/install.py at productivity@84f6495c; required by the composer's unpinned-installer gate. Update when upstream install.py changes.",
-      "_comment": "Owns tasks (tasks_table, task_service, TasksRoute). The launcher's home is tasks-first, so this is the source for that screen and for productivity glance signals."
-    },
-    {
       "name": "corporate_sdk",
       "enabled": true,
       "source": "git",

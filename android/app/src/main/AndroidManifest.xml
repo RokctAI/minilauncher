@@ -35,6 +35,14 @@
             <action android:name="android.intent.action.MAIN" />
             <category android:name="android.intent.category.APP_CALCULATOR" />
         </intent>
+        <!-- The floating nav's Productivity (launch_sdk 1.25.0): this shell no
+             longer composes productivity_sdk, so the entry opens a fleet app
+             that does (productivity_sdk >= 1.8.0 declares this action and
+             scheme), or shows nothing. -->
+        <intent>
+            <action android:name="rokct.intent.action.PRODUCTIVITY" />
+            <data android:scheme="rokct" />
+        </intent>
     </queries>
 
     <!-- Backup / device-transfer policy. allowBackup stays true so the app
