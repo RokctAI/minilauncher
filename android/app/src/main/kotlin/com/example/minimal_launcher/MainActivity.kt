@@ -17,5 +17,9 @@ class MainActivity : FlutterActivity() {
         // changes as they happen. It keeps its own callback on the
         // application context, so a background install is not missed.
         AppChangesBridge.register(flutterEngine.dartExecutor.binaryMessenger, this)
+        // Hosts the Bible app's verse-of-the-day widget on the launcher home
+        // (launch_sdk 1.28.0). The platform view factory has to be registered
+        // on the engine itself, so this takes the engine, not the messenger.
+        LauncherVerseWidgetBridge.register(flutterEngine, this)
     }
 }

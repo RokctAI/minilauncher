@@ -43,6 +43,17 @@
             <action android:name="rokct.intent.action.PRODUCTIVITY" />
             <data android:scheme="rokct" />
         </intent>
+        <!-- The launcher's driver and manager modes (launch_sdk 1.27.0): the
+             installed Rokct driver and manager apps declare these actions. -->
+        <intent>
+            <action android:name="rokct.intent.action.DRIVER" />
+        </intent>
+        <intent>
+            <action android:name="rokct.intent.action.MANAGER" />
+        </intent>
+        <!-- The verse-of-the-day widget of the YouVersion Bible app, hosted
+             on the home (launch_sdk 1.28.0). -->
+        <package android:name="com.sirma.mobile.bible.android" />
     </queries>
 
     <!-- Backup / device-transfer policy. allowBackup stays true so the app
