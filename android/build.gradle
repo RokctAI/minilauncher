@@ -1,7 +1,48 @@
+// HMS wave (hms_sdk): AGConnect buildscript wiring, active ONLY when the
+// build environment exports BUILD_HMS=true - the fixed contract with the CI
+// workflow (`flutter build` forwards the environment to Gradle). With
+// BUILD_HMS unset every conditional below is inert and the build behaves
+// exactly as before. System.getenv is read inline (not via a script-level
+// def) because Gradle evaluates buildscript {} blocks before script-level
+// statements.
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+        if (System.getenv("BUILD_HMS") == "true") {
+            // Huawei maven repo - resolves the AGConnect Gradle plugin.
+            maven { url 'https://developer.huawei.com/repo/' }
+        }
+    }
+    dependencies {
+        if (System.getenv("BUILD_HMS") == "true") {
+            // Version rail: the agcp release huawei_push 6.15.0+300 builds
+            // against. app/build.gradle applies the plugin (conditionally,
+            // imperative form - the plugins{} DSL cannot be gated).
+            classpath 'com.huawei.agconnect:agcp:1.9.1.304'
+            // agcp detects the AGP version by inspecting THIS buildscript
+            // classpath and hard-fails when it finds no
+            // com.android.tools.build:gradle entry - modern Flutter projects
+            // declare AGP only via the settings.gradle plugins{} DSL, which
+            // agcp cannot see. MUST stay in lockstep with the
+            // com.android.application version in settings.gradle.
+            classpath 'com.android.tools.build:gradle:8.11.1'
+        }
+    }
+}
+
 allprojects {
     repositories {
         google()
         mavenCentral()
+        if (System.getenv("BUILD_HMS") == "true") {
+            // Huawei maven repo for HMS runtime artifacts pulled in by the
+            // AGConnect plugin. The huawei_push/huawei_hmsavailability
+            // Flutter plugins inject this repo into all projects themselves,
+            // so plain (BUILD_HMS unset) builds of a composed app resolve
+            // without it.
+            maven { url 'https://developer.huawei.com/repo/' }
+        }
     }
 }
 
