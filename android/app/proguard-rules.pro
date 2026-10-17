@@ -17,6 +17,20 @@
 -dontwarn com.huawei.libcore.io.**
 -dontwarn org.bouncycastle.**
 
+# launch_sdk's platform bridges, resolved by name in base_sdk's MainActivity
+# (registerOptionalBridges). R8 sees no reference to them, so without a keep
+# they are shrunk out of the release build and the launcher's
+# rokct.launch_sdk/default_home and app_changes channels have no handler:
+# every installed-app check comes back empty, hiding Calculator,
+# Productivity and the manager (Ray, 2026-10-17: "it doesnt show
+# calculator, productivity even though manager is installed"). Same rules
+# as core's base/dart template, which the installer does not apply because
+# this app tracks its own copy of this file. The class name must survive
+# obfuscation, and `public *` keeps both the Kotlin `object` INSTANCE and a
+# @JvmStatic register.
+-keep,allowoptimization class **.DefaultHomeBridge { public *; }
+-keep,allowoptimization class **.AppChangesBridge { public *; }
+
 # Flutter embedding entry points. The embedding is reached reflectively (the
 # Activity/Application classes named in AndroidManifest.xml, the generated
 # plugin registrant, and the JNI bridge), so R8 cannot see the references and
