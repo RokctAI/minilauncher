@@ -31,6 +31,11 @@ app.*.map.json
 android/app/debug
 android/app/profile
 android/app/release
+# Composed by base_sdk / launch_sdk on every build (the app's own copy of
+# app/build.gradle was dropped for the template on 2026-10-15); tracking
+# none of it keeps the clean-HEAD gate green.
+android/app/build.gradle
+android/app/src/main/kotlin/com/app/demo/
 *.freezed.dart
 *.g.dart
 *.gr.dart
