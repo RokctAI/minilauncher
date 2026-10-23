@@ -43,36 +43,15 @@ Everything you need and nothing you don't - your apps on one calm screen.
 Home stays short. Every installed app lives in the drawer, one swipe up, with
 search.
 
-## 7. Your account at a glance
+## 7. Choose what sits on home
 
-![Your account at a glance](screenshots/07-base_profile.png)
+![Choose what sits on home](screenshots/07-launch_setup.png)
+
+First run asks three small things: make this your home screen, pick the apps for
+home, and sign in. Every one can be skipped.
+
+## 8. Your account at a glance
+
+![Your account at a glance](screenshots/08-base_profile.png)
 
 Your name, role and details - your account in one clean card.
-
-## 8. Plan your day in seconds
-
-![Plan your day in seconds](screenshots/08-productivity_tasks.png)
-
-Capture to-dos with subtasks and categories - your day, planned before it
-starts.
-
-## 9. A service run from a template
-
-![A service run from a template](screenshots/09-productivity_task_compose.png)
-
-Softener, megaChar, filters and membranes - one tap fills the task with every
-step and its timing.
-
-## 10. Readings before it goes back to service
-
-![Readings before it goes back to service](screenshots/10-productivity_maintenance_readings.png)
-
-TDS and pressure against the plant's limits - out of spec is named and holds the
-finish until re-tested or explained.
-
-## 11. A photo and a note, if you want them
-
-![A photo and a note, if you want them](screenshots/11-productivity_maintenance_photo.png)
-
-The last step is optional - Skip is live beside Finish, and nothing here can
-trap you mid-run.
