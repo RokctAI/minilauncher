@@ -50,6 +50,15 @@ video:
 store:
   # Play feature graphic hero: the searchable app drawer - the launcher's whole point, fully populated.
   feature_step: launch_drawer
+  feature_style:
+    bg: "#101418"
+    bg2: "#1F2A33"
+    ink: "#FFFFFF"
+    accent: "#4FD1C5"
+    shape: "stripes"
+    layout: "left"
+    tilt: 7
+    headline: "Your phone, simplified."
 setup:
   imports:
     - "import 'package:base_sdk/src/models/response/languages_response.dart';"
