@@ -143,6 +143,13 @@ flutter:
     - assets/svgs/star.svg
     - assets/svgs/ticket.svg
     # END sdk-app-assets
+    # The real Inter/Montserrat faces AppStyle asks google_fonts for. The
+    # package checks the app's own assets before the network, so bundling
+    # them removes the runtime fetch and lets the render harness
+    # (test/render/render_screen_test.dart, which turns fetching off) render
+    # without a google_fonts exception. Provenance and licence:
+    # assets/google_fonts/README.md.
+    - assets/google_fonts/
 
   # To add assets to your application, add an assets section, like this:
   # assets:
