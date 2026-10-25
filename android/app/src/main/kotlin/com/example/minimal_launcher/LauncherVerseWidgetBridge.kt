@@ -6,6 +6,7 @@ import android.appwidget.AppWidgetHostView
 import android.appwidget.AppWidgetManager
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.view.View
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
@@ -15,21 +16,22 @@ import io.flutter.plugin.platform.PlatformViewFactory
 
 /**
  * Hosts another app's home-screen widget on the launcher home - the Bible
- * app's verse-of-the-day widget, in the place the launcher's verse card
- * draws its own verse when the widget is not available.
+ * app's verse-of-the-day widget. When the Bible app is installed the home
+ * shows this widget and nothing else; the launcher draws no verse of its own.
  *
- * Android lets a launcher host any widget the user places through its
- * AppWidgetHost. The widget is discovered by PACKAGE (its installed
- * providers), never by a class name written here. The user approves the
- * binding once through the system's bind screen; after that the launcher
- * keeps the widget id and shows it on every start.
+ * Android lets a launcher host any widget through its AppWidgetHost. The
+ * widget is discovered by PACKAGE (its installed providers), never by a
+ * class name written here. The bind is tried silently first
+ * (bindAppWidgetIdIfAllowed); only when Android refuses does it open the
+ * system's own bind screen, once. After that the launcher keeps the widget
+ * id and shows it on every start.
  *
  * Channel [CHANNEL]:
  *  - status({package}) -> {state: "bound" | "needs_consent" | "unavailable",
  *    appWidgetId?, height?}
- *  - requestConsent({package}) -> bool: opens the system bind screen. The
- *    widget is bound when the user accepts; the launcher re-reads status
- *    when it resumes, so no activity result has to come back here.
+ *  - requestConsent({package}) -> bool: binds silently when Android allows
+ *    it, otherwise opens the system bind screen. The launcher re-reads
+ *    status when it resumes, so no activity result has to come back here.
  *
  * View type [VIEW_TYPE]: a PlatformView that renders the bound widget. The
  * creation params carry {appWidgetId}.
@@ -37,6 +39,8 @@ import io.flutter.plugin.platform.PlatformViewFactory
 object LauncherVerseWidgetBridge {
     const val CHANNEL = "rokct.launch_sdk/verse_widget"
     const val VIEW_TYPE = "rokct.launch_sdk/verse_widget_view"
+
+    private const val TAG = "LauncherVerseWidget"
 
     /** The host id this launcher uses for its AppWidgetHost. */
     private const val HOST_ID = 0x524F4B54
@@ -73,7 +77,12 @@ object LauncherVerseWidgetBridge {
     private fun savedKey(pkg: String) = "widget_id_$pkg"
 
     private fun status(activity: Activity, pkg: String?): Map<String, Any?> {
-        val provider = providerOf(activity, pkg) ?: return mapOf("state" to "unavailable")
+        val provider = providerOf(activity, pkg)
+        if (provider == null) {
+            // The only way the home shows nothing for an installed Bible app.
+            Log.w(TAG, "no widget provider found for package '$pkg'")
+            return mapOf("state" to "unavailable")
+        }
         val manager = AppWidgetManager.getInstance(activity)
         val prefs = activity.getSharedPreferences(PREFS, Context.MODE_PRIVATE)
         val saved = prefs.getInt(savedKey(pkg!!), -1)
@@ -96,6 +105,11 @@ object LauncherVerseWidgetBridge {
         if (previous != -1) widgetHost.deleteAppWidgetId(previous)
         val id = widgetHost.allocateAppWidgetId()
         prefs.edit().putInt(savedKey(pkg), id).apply()
+        // Silent bind first: succeeds with no screen when Android allows this
+        // launcher to bind (e.g. it is the home app with the permission).
+        if (AppWidgetManager.getInstance(activity).bindAppWidgetIdIfAllowed(id, provider.provider)) {
+            return true
+        }
         val bind = Intent(AppWidgetManager.ACTION_APPWIDGET_BIND)
             .putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, id)
             .putExtra(AppWidgetManager.EXTRA_APPWIDGET_PROVIDER, provider.provider)
@@ -103,6 +117,7 @@ object LauncherVerseWidgetBridge {
             activity.startActivity(bind)
             true
         } catch (e: Exception) {
+            Log.w(TAG, "could not open the bind screen for '$pkg': $e")
             widgetHost.deleteAppWidgetId(id)
             prefs.edit().remove(savedKey(pkg)).apply()
             false
