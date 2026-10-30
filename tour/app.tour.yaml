@@ -34,7 +34,7 @@
 # Outputs land in marketing/tour/ (screenshots + feature-guide.md required,
 # per-chapter videos best-effort).
 app:
-  name: Minilauncher
+  name: Launcher
   tagline: A minimal launcher that keeps your phone simple
   # Committed app logo (transparent background), shown on the video end card.
   logo: assets/images/logo.png
@@ -90,7 +90,7 @@ tour:
   # Splash settles onto the sign-in screen (demo builds show the demo hint).
   - step:
       key: welcome
-      title: "Welcome to Minilauncher"
+      title: "Welcome to Launcher"
       caption: "{app_name} is your *phone, simplified* - sign in to get started."
       action: wait
       settle: 12
