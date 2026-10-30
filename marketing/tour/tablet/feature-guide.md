@@ -1,4 +1,4 @@
-# Minilauncher — Feature Guide
+# Launcher — Feature Guide
 
 A minimal launcher that keeps your phone simple
 
@@ -6,29 +6,29 @@ A minimal launcher that keeps your phone simple
 > app, walks the guided tour on an Android emulator, and captures
 > each screen below.
 
-## 1. Welcome to Minilauncher
+## 1. Welcome to Launcher
 
-![Welcome to Minilauncher](screenshots/01-welcome.png)
+![Welcome to Launcher](screenshots/01-welcome.png)
 
-Minilauncher is your phone, simplified - sign in to get started.
+Launcher is your phone, simplified - sign in to get started.
 
 ## 2. Sign in
 
 ![Sign in](screenshots/02-auth_login.png)
 
-Signing in to Minilauncher is quick and simple.
+Signing in to Launcher is quick and simple.
 
 ## 3. Create an account
 
 ![Create an account](screenshots/03-auth_register.png)
 
-New to Minilauncher? Create your account in a few easy steps.
+New to Launcher? Create your account in a few easy steps.
 
 ## 4. Reset your password
 
 ![Reset your password](screenshots/04-auth_reset_password.png)
 
-Forgot your password? Minilauncher gets you back in with a secure reset.
+Forgot your password? Launcher gets you back in with a secure reset.
 
 ## 5. Your apps, one clean screen
 
