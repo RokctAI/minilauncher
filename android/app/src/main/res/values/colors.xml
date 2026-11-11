@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="custom_notification_color">#000000</color>
+    <!-- Android 12+ system splash background (light mode); pairs with values-night/colors.xml. -->
+    <color name="splash_background">#DB3700</color>
 </resources>
