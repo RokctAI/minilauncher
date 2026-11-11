@@ -36,8 +36,11 @@
 app:
   name: Launcher
   tagline: A minimal launcher that keeps your phone simple
-  # Committed app logo (transparent background), shown on the video end card.
-  logo: assets/images/logo.png
+  # The Launcher's own mark (its app icon: four tiles, one yellow, on orange),
+  # transparent outside the rounded square. Used for the video end card, the
+  # feature graphic and store/icon-512.png. assets/images/logo.png is the
+  # Juvo logo the shell inherited and must not brand this app.
+  logo: assets/images/launcher_logo.png
 video:
   hook: "Your phone, without the noise."
   offer: "Keep it simple."
@@ -48,8 +51,9 @@ video:
   chapter_frame_anchor:
     auth: top
 store:
-  # Play feature graphic hero: the searchable app drawer - the launcher's whole point, fully populated.
-  feature_step: launch_drawer
+  # Play feature graphic hero: the home screen with its apps (the step waits
+  # for the app list, so the still is never the loading spinner).
+  feature_step: launcher_home
   feature_style:
     bg: "#101418"
     bg2: "#1F2A33"
@@ -100,13 +104,35 @@ tour:
   - fragment: auth
   # The launcher itself: launch_sdk's home screen (manifest route
   # /launcher), the app grid this shell exists for.
+  # The route step only lands on the home; the still is taken by the dart
+  # step after it, once the app list has loaded. On a cold CI emulator the
+  # first enumeration of installed apps (with icons) outlasts any fixed
+  # settle: run 43030671037 captured the home as a bare spinner and the
+  # drawer as "No search results", and the feature graphic was built from
+  # that. Waiting here also leaves the list loaded for the launch fragment's
+  # drawer still.
+  - step:
+      key: launcher_home_open
+      title: "Your apps, one clean screen"
+      action: route
+      route: /launcher
+      screenshot: false
+      settle: 2
   - step:
       key: launcher_home
       title: "Your apps, one clean screen"
       caption: "Everything you need and *nothing you don't* - your apps on one calm screen."
-      action: route
-      route: /launcher
-      settle: 8
+      action: dart
+      screenshot: true
+      settle: 2
+      dart: |
+        // Up to 120s for the spinner to clear, polled every half second.
+        final Finder spinner = find.byType(CircularProgressIndicator);
+        for (int i = 0; i < 240 && spinner.evaluate().isNotEmpty; i++) {
+          await tester.pump();
+          await Future<void>.delayed(const Duration(milliseconds: 500));
+        }
+        await tester.pump();
   # launch_sdk's fragment (templates/tour/launch.tour.yaml) - written to
   # complement the launcher_home still above, not repeat it: it drives the
   # launcher's real controls (theme flip, type-to-filter search) and ends
