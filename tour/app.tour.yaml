@@ -36,11 +36,11 @@
 app:
   name: Launcher
   tagline: A minimal launcher that keeps your phone simple
-  # The Launcher's own mark (its app icon: four tiles, one yellow, on orange),
-  # transparent outside the rounded square. Used for the video end card, the
-  # feature graphic and store/icon-512.png. assets/images/logo.png is the
-  # Juvo logo the shell inherited and must not brand this app.
-  logo: assets/images/launcher_logo.png
+  # The app's real launcher icon, straight from the Android resources. Used
+  # for the video end card, the feature graphic and store/icon-512.png.
+  # assets/images/logo.png is the Juvo logo the shell inherited from the app
+  # template; it is not this app's icon and must not brand its store art.
+  logo: android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png
 video:
   hook: "Your phone, without the noise."
   offer: "Keep it simple."
