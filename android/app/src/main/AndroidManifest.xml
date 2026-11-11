@@ -116,5 +116,8 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+        <!-- @sdk-android-application-start -->
+        <activity android:name=".SessionHandoffActivity" android:exported="true" android:excludeFromRecents="true" android:noHistory="true" android:permission="rokct.permission.SESSION_HANDOFF" android:taskAffinity="" android:theme="@android:style/Theme.Translucent.NoTitleBar"><intent-filter><action android:name="rokct.intent.action.SESSION_HANDOFF"/><category android:name="android.intent.category.DEFAULT"/></intent-filter></activity>
+        <!-- @sdk-android-application-end -->
     </application>
 </manifest>

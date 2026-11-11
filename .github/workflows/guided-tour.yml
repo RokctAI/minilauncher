@@ -6,8 +6,8 @@ name: Guided Tour
 # Edit the copy in The-Rokct-Protocol, not the deployed copy in a consumer
 # repo — local edits are overwritten on the next initiate run.
 #
-# On every merge to main, build the app with its built-in demo dataset,
-# walk the scripted guided tour on a headless Android emulator, and commit
+# After a release on main, walk the scripted guided tour on a headless
+# Android emulator using the release's tour APK (no app build here), and commit
 # fresh screenshots + feature guide (and a best-effort vertical video) to
 # marketing/tour/. Tour steps live in tour/app.tour.yaml plus the composed
 # SDKs' tour fragments - see RokctAI/shared-workflows scripts/tour/README.md.
@@ -19,13 +19,16 @@ name: Guided Tour
 permissions: write-all
 
 on:
-  push:
-    branches:
-      - main
-    paths-ignore:
-      # The tour commits its outputs here with [skip ci]; the paths-ignore is
-      # the second lock against self-retriggering.
-      - 'marketing/tour/**'
+  # Runs once a release workflow has finished on main, so the tour downloads
+  # the release that run just published. The tour commits its outputs back
+  # with [skip ci], and a skipped or failed release run never matches the
+  # success gate on guided-tour below, so the tour cannot retrigger itself.
+  workflow_run:
+    workflows:
+      - "Auto Release (Weekly)"
+      - "Build (Smart)"
+    types:
+      - completed
   workflow_dispatch:
 
 jobs:
@@ -59,6 +62,10 @@ jobs:
 
   guided-tour:
     needs: check-manifest
-    if: needs.check-manifest.outputs.has_tour == 'true'
+    if: >-
+      needs.check-manifest.outputs.has_tour == 'true' &&
+      (github.event_name == 'workflow_dispatch' ||
+       (github.event.workflow_run.conclusion == 'success' &&
+        github.event.workflow_run.head_branch == 'main'))
     uses: RokctAI/shared-workflows/.github/workflows/universal-guided-tour.yml@main
     secrets: inherit

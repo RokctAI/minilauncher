@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Android 12+ system splash background in dark mode: the main colour of
+         the dark-mode splash image (drawable-night). Shells set both this and
+         values/colors.xml. The template uses one image for both modes. -->
+    <color name="splash_background">#DB3700</color>
+</resources>
