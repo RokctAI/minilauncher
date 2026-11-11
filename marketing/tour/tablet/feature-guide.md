@@ -54,4 +54,5 @@ home, and sign in. Every one can be skipped.
 
 ![Your account at a glance](screenshots/08-base_profile.png)
 
-Your name, role and details - your account in one clean card.
+Your name, role and details - your account in one clean card, with a link to
+rate the app.
