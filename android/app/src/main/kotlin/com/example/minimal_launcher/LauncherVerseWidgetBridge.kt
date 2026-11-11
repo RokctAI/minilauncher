@@ -46,6 +46,9 @@ object LauncherVerseWidgetBridge {
     private const val HOST_ID = 0x524F4B54
     private const val PREFS = "launch_sdk_verse_widget"
 
+    /** Request code for the system bind screen; its result is not read. */
+    private const val BIND_REQUEST = 0x5645
+
     private var host: AppWidgetHost? = null
 
     fun register(engine: FlutterEngine, activity: Activity) {
@@ -114,7 +117,11 @@ object LauncherVerseWidgetBridge {
             .putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, id)
             .putExtra(AppWidgetManager.EXTRA_APPWIDGET_PROVIDER, provider.provider)
         return try {
-            activity.startActivity(bind)
+            // startActivityForResult, not startActivity: Android's bind screen
+            // reads getCallingPackage() to name the app asking, and that is
+            // null for a plain startActivity, so the screen closed at once
+            // and no prompt was ever shown.
+            activity.startActivityForResult(bind, BIND_REQUEST)
             true
         } catch (e: Exception) {
             Log.w(TAG, "could not open the bind screen for '$pkg': $e")
