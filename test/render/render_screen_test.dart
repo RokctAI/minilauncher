@@ -53,6 +53,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:ui' as ui;
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
@@ -580,6 +581,31 @@ Future<void> _drain(WidgetTester tester, {int rounds = 8}) async {
   }
 }
 
+/// Keeps draining while a loading spinner is still on screen, up to
+/// [maxRounds] extra rounds. base_sdk's `Loading` draws a Cupertino spinner
+/// off Android, so this test sees that one.
+///
+/// The first variant rendered in a run starts cold (drift isolate, demo
+/// registrations, fonts), so its fixed [_drain] can end before the home's
+/// data arrives and capture the spinner. The shared render strip refuses such
+/// a frame as blank, so wait it out rather than capture it.
+Future<void> _drainUntilLoaded(
+  WidgetTester tester, {
+  int maxRounds = 40,
+}) async {
+  for (int i = 0; i < maxRounds; i++) {
+    final bool spinning = find
+        .byWidgetPredicate(
+          (Widget w) =>
+              w is CircularProgressIndicator || w is CupertinoActivityIndicator,
+        )
+        .evaluate()
+        .isNotEmpty;
+    if (!spinning) return;
+    await _drain(tester, rounds: 1);
+  }
+}
+
 List<_Measured> _measure(WidgetTester tester, List<ElementSpec> specs) {
   final List<_Measured> measured = <_Measured>[];
   for (final ElementSpec spec in specs) {
@@ -673,6 +699,7 @@ Future<void> renderVariant(
     ),
   );
   await _drain(tester);
+  await _drainUntilLoaded(tester);
 
   // Pass 1 measures the real content height in the tall probe viewport; pass 2
   // re-renders at exactly that height so the PNG is a full-length strip with
@@ -705,6 +732,7 @@ Future<void> renderVariant(
   );
   await tester.pump(const Duration(milliseconds: 50));
   await _drain(tester, rounds: 4);
+  await _drainUntilLoaded(tester);
   measured = _measure(tester, elementSpecs());
 
   await tester.runAsync(() async {
