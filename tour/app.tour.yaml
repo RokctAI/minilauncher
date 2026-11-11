@@ -51,9 +51,11 @@ video:
   chapter_frame_anchor:
     auth: top
 store:
-  # Play feature graphic hero: the home screen with its apps (the step waits
-  # for the app list, so the still is never the loading spinner).
-  feature_step: launcher_home
+  # Play feature graphic hero: the app drawer, fully populated. The tour
+  # runs the latest release's debug APK, so the launcher_home wait above
+  # only takes effect after the next Build; until then the home still can
+  # be the spinner, while the drawer (later in the tour) has loaded.
+  feature_step: launch_drawer
   feature_style:
     bg: "#101418"
     bg2: "#1F2A33"
@@ -127,9 +129,12 @@ tour:
       settle: 2
       dart: |
         // Up to 120s for the spinner to clear, polled every half second.
+        // The first 3s always pass: right after the route the spinner may
+        // not be built yet, and an empty finder then must not end the wait.
         final Finder spinner = find.byType(CircularProgressIndicator);
-        for (int i = 0; i < 240 && spinner.evaluate().isNotEmpty; i++) {
+        for (int i = 0; i < 240; i++) {
           await tester.pump();
+          if (i >= 6 && spinner.evaluate().isEmpty) break;
           await Future<void>.delayed(const Duration(milliseconds: 500));
         }
         await tester.pump();
