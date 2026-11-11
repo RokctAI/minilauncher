@@ -19,14 +19,14 @@ tour run, so new screens appear here automatically.
 The full tour lives in the [feature guide](marketing/tour/feature-guide.md),
 with walkthrough videos alongside it in [`marketing/tour/`](marketing/tour).
 
-[s01]: marketing/tour/store/01-welcome.png
-[s02]: marketing/tour/store/02-auth_login.png
-[s03]: marketing/tour/store/03-auth_register.png
-[s04]: marketing/tour/store/04-auth_reset_password.png
-[s05]: marketing/tour/store/05-launcher_home.png
-[s06]: marketing/tour/store/06-launch_drawer.png
-[s07]: marketing/tour/store/07-launch_setup.png
-[s08]: marketing/tour/store/08-base_profile.png
+[s01]: marketing/tour/screenshots/01-welcome.png
+[s02]: marketing/tour/screenshots/02-auth_login.png
+[s03]: marketing/tour/screenshots/03-auth_register.png
+[s04]: marketing/tour/screenshots/04-auth_reset_password.png
+[s05]: marketing/tour/screenshots/05-launcher_home.png
+[s06]: marketing/tour/screenshots/06-launch_drawer.png
+[s07]: marketing/tour/screenshots/07-launch_setup.png
+[s08]: marketing/tour/screenshots/08-base_profile.png
 <!-- @generated-tour-gallery-end -->
 
 <!-- @generated-render-strip-start -->
