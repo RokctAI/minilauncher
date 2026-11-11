@@ -37,9 +37,12 @@ concurrency:
 
 jobs:
   agent:
-    uses: RokctAI/shared-workflows/.github/workflows/universal-agent.yml@09494edd4824cc6fca95ea96a2db4d238c4561b3 # shared-workflows main @ 2026-08-26
+    uses: RokctAI/shared-workflows/.github/workflows/universal-agent.yml@dd47cc588dd704ef76556921c491fbe69b45b04c # shared-workflows main @ 2026-10-16
     with:
       mode: 'auto'
+      # Since the factory split, the factory's Level 0/1 prompt queue and job
+      # cards live in the private RokctAI/books repo; the queue run checks it out.
+      content-repo: ${{ github.repository == 'RokctAI/factory' && 'RokctAI/books' || '' }}
       ledger_id: ${{ inputs.id }}
       ledger_type: ${{ inputs.type }}
       ledger_theme: ${{ inputs.theme }}
