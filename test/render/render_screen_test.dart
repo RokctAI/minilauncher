@@ -210,6 +210,29 @@ const List<Map<String, Object?>> kDeviceApps = <Map<String, Object?>>[
 /// Template marker 4/8 - the documented exception, taken at the platform
 /// channel rather than at a Dart seam.
 ///
+/// Real launchers draw each app's own icon, which the plugin sends as PNG
+/// bytes under `icon`. Without them the tiles fall back to a letter, so the
+/// render would not look like the shipped launcher. These are neutral
+/// stand-in icons committed under test/render/icons/ (no brand art).
+const Map<String, String> kAppIcons = <String, String>{
+  'com.example.messaging': 'messaging',
+  'com.example.calculator': 'calculator',
+  'com.example.camera': 'camera',
+  'com.example.photos': 'photos',
+  'com.example.clock': 'clock',
+  'com.example.settings': 'settings',
+  'com.example.maps': 'maps',
+  'com.sirma.mobile.bible.android': 'bible',
+  'com.example.dialer': 'phone',
+};
+
+Map<String, Object?> _withIcon(Map<String, Object?> app) {
+  final name = kAppIcons[app['package_name']];
+  final file = File('test/render/icons/$name.png');
+  if (name == null || !file.existsSync()) return app;
+  return <String, Object?>{...app, 'icon': file.readAsBytesSync()};
+}
+
 /// `installed_apps` is the only channel this screen reaches for. Mocking it
 /// keeps LaunchRepository, the plugin's own decoding and LaunchNotifier real;
 /// a Dart-level fake would have replaced all three. Unknown methods return
@@ -219,7 +242,7 @@ void registerExceptionStubs() {
   TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
       .setMockMethodCallHandler(channel, (MethodCall call) async {
         if (call.method == 'getInstalledApps') {
-          return kDeviceApps;
+          return kDeviceApps.map(_withIcon).toList();
         }
         throw UnimplementedError(
           'installed_apps: the render harness only answers getInstalledApps, '
