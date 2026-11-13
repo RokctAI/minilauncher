@@ -148,6 +148,21 @@ tour:
           }
           await Future<void>.delayed(const Duration(milliseconds: 500));
         }
+        // Then up to 30s more for the home tiles' icons. launch_sdk paints
+        // a name-only list first (letter tiles) and fills the icons after;
+        // the 2026-11-13 tour captured the letters. Done when any home tile
+        // holds an Image.
+        final Finder tileImage = find.descendant(
+          of: find.byWidgetPredicate(
+            (Widget w) => w.runtimeType.toString() == 'LauncherHomeAppTile',
+          ),
+          matching: find.byType(Image),
+        );
+        for (int i = 0; i < 60; i++) {
+          await tester.pump();
+          if (tileImage.evaluate().isNotEmpty) break;
+          await Future<void>.delayed(const Duration(milliseconds: 500));
+        }
         await tester.pump();
   # launch_sdk's fragment (templates/tour/launch.tour.yaml) - written to
   # complement the launcher_home still above, not repeat it: it drives the
