@@ -128,13 +128,24 @@ tour:
       screenshot: true
       settle: 2
       dart: |
-        // Up to 120s for the spinner to clear, polled every half second.
-        // The first 3s always pass: right after the route the spinner may
-        // not be built yet, and an empty finder then must not end the wait.
+        // Up to 120s for the loading state to clear, polled every half
+        // second. The first 3s always pass: right after the route the
+        // loading view may not be built yet, and an empty finder then must
+        // not end the wait. launch_sdk 1.29.6 replaced the home's spinner
+        // with LauncherHomeSkeleton shimmer rows, so waiting on a spinner
+        // alone ended after 3s and the 2026-11-13 tour captured skeleton
+        // rows. Matched by type name: the tour imports no launch_sdk file.
         final Finder spinner = find.byType(CircularProgressIndicator);
+        final Finder skeleton = find.byWidgetPredicate(
+          (Widget w) => w.runtimeType.toString() == 'LauncherHomeSkeleton',
+        );
         for (int i = 0; i < 240; i++) {
           await tester.pump();
-          if (i >= 6 && spinner.evaluate().isEmpty) break;
+          if (i >= 6 &&
+              spinner.evaluate().isEmpty &&
+              skeleton.evaluate().isEmpty) {
+            break;
+          }
           await Future<void>.delayed(const Duration(milliseconds: 500));
         }
         await tester.pump();
