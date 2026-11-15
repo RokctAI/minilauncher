@@ -30,6 +30,7 @@
 # @JvmStatic register.
 -keep,allowoptimization class **.DefaultHomeBridge { public *; }
 -keep,allowoptimization class **.AppChangesBridge { public *; }
+-keep,allowoptimization class **.LauncherVerseWidgetBridge { public *; }
 
 # Flutter embedding entry points. The embedding is reached reflectively (the
 # Activity/Application classes named in AndroidManifest.xml, the generated
