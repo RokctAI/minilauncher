@@ -604,14 +604,15 @@ Future<void> _drain(WidgetTester tester, {int rounds = 8}) async {
   }
 }
 
-/// Keeps draining while a loading spinner is still on screen, up to
-/// [maxRounds] extra rounds. base_sdk's `Loading` draws a Cupertino spinner
-/// off Android, so this test sees that one.
+/// Keeps draining while the home is still loading, up to [maxRounds] extra
+/// rounds. "Loading" is a spinner (base_sdk's `Loading` draws a Cupertino
+/// spinner off Android) or the launcher home's shimmer skeleton, which the
+/// home shows until the first app list is painted.
 ///
 /// The first variant rendered in a run starts cold (drift isolate, demo
 /// registrations, fonts), so its fixed [_drain] can end before the home's
-/// data arrives and capture the spinner. The shared render strip refuses such
-/// a frame as blank, so wait it out rather than capture it.
+/// data arrives and capture the loading state. The shared render strip
+/// refuses such a frame as blank, so wait it out rather than capture it.
 Future<void> _drainUntilLoaded(
   WidgetTester tester, {
   int maxRounds = 40,
@@ -620,7 +621,9 @@ Future<void> _drainUntilLoaded(
     final bool spinning = find
         .byWidgetPredicate(
           (Widget w) =>
-              w is CircularProgressIndicator || w is CupertinoActivityIndicator,
+              w is CircularProgressIndicator ||
+              w is CupertinoActivityIndicator ||
+              w is LauncherHomeSkeleton,
         )
         .evaluate()
         .isNotEmpty;
