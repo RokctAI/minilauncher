@@ -465,7 +465,9 @@ Future<void> loadRealFonts() async {
     await loader.load();
   }
 
-  final Directory fontsDir = Directory('${Directory.current.path}/test/render/fonts');
+  final Directory fontsDir = Directory(
+    '${Directory.current.path}/test/render/fonts',
+  );
   if (!fontsDir.existsSync()) {
     throw StateError(
       'no committed Google faces at ${fontsDir.path} - every glyph would fall '
@@ -490,7 +492,9 @@ Future<void> loadRealFonts() async {
   // committed Roboto 400.
   await load(
     'Roboto',
-    File('${fontsDir.path}/d1d7c5f4500eeb1a09e051781906c3642015a3f6c9b69046b905c8bf34c6ad60.ttf'),
+    File(
+      '${fontsDir.path}/d1d7c5f4500eeb1a09e051781906c3642015a3f6c9b69046b905c8bf34c6ad60.ttf',
+    ),
   );
 
   // Icon fonts. MaterialIcons ships inside the Flutter SDK cache; remixicon
