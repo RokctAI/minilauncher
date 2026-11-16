@@ -61,6 +61,8 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  # Render harness: the offline google_fonts client serves committed faces.
+  http: ^1.2.0
   # Guided-tour runner (integration_test/guided_tour_test.dart) - drives the
   # demo build on the CI emulator for the marketing/tour screenshot pipeline.
   integration_test:
