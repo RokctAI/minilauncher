@@ -61,6 +61,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:google_fonts/src/google_fonts_base.dart' as google_fonts_base;
+import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:base_sdk/base_sdk.dart';
@@ -424,18 +426,77 @@ double bottomChromeHeight(WidgetTester tester) {
 /// test/render/fonts/, then whatever real sans the runner has. A substitute
 /// face keeps glyphs, colour and layout honest but shifts text metrics, so
 /// the strip config's notes say which one the run used.
-Future<void> loadRealFonts() async {
-  final String root = Directory.current.path;
+/// Serves google_fonts' own font URLs from the committed faces in
+/// test/render/fonts/, named by the SHA-256 google_fonts checks each file
+/// against (the same seam sticks, supacharge and polaris use).
+class _OfflineGoogleFontsClient extends http.BaseClient {
+  _OfflineGoogleFontsClient(this.fontsDir);
 
-  Future<void> load(String family, List<String> files) async {
-    final FontLoader loader = FontLoader(family);
-    for (final String path in files) {
-      final bytes = File(path).readAsBytesSync();
-      loader.addFont(Future<ByteData>.value(ByteData.view(bytes.buffer)));
+  final Directory fontsDir;
+
+  @override
+  Future<http.StreamedResponse> send(http.BaseRequest request) async {
+    final file = File('${fontsDir.path}/${request.url.pathSegments.last}');
+    if (!file.existsSync()) {
+      return http.StreamedResponse(
+        const Stream<List<int>>.empty(),
+        404,
+        request: request,
+        reasonPhrase:
+            'not committed under test/render/fonts - see its README to add it',
+      );
     }
+    final bytes = file.readAsBytesSync();
+    return http.StreamedResponse(
+      Stream<List<int>>.value(bytes),
+      200,
+      contentLength: bytes.length,
+      request: request,
+    );
+  }
+}
+
+Future<void> loadRealFonts() async {
+  Future<void> load(String family, File file) async {
+    final FontLoader loader = FontLoader(family);
+    loader.addFont(
+      Future<ByteData>.value(ByteData.view(file.readAsBytesSync().buffer)),
+    );
     await loader.load();
   }
 
+  final Directory fontsDir = Directory('${Directory.current.path}/test/render/fonts');
+  if (!fontsDir.existsSync()) {
+    throw StateError(
+      'no committed Google faces at ${fontsDir.path} - every glyph would fall '
+      'back to the FlutterTest block font and the render would be worthless.',
+    );
+  }
+  google_fonts_base.httpClient = _OfflineGoogleFontsClient(fontsDir);
+
+  // Every face the app asks google_fonts for, resolved through the seam so
+  // it is the real Inter and Montserrat, checked by google_fonts itself.
+  await GoogleFonts.pendingFonts(<TextStyle>[
+    GoogleFonts.inter(fontWeight: FontWeight.w400),
+    GoogleFonts.inter(fontWeight: FontWeight.w500),
+    GoogleFonts.inter(fontWeight: FontWeight.w600),
+    GoogleFonts.inter(fontWeight: FontWeight.w700),
+    GoogleFonts.montserrat(fontWeight: FontWeight.w400),
+    GoogleFonts.montserrat(fontWeight: FontWeight.w700),
+    GoogleFonts.montserrat(fontWeight: FontWeight.w900),
+  ]);
+
+  // Bare TextStyles with no family fall back to the platform default: the
+  // committed Roboto 400.
+  await load(
+    'Roboto',
+    File('${fontsDir.path}/d1d7c5f4500eeb1a09e051781906c3642015a3f6c9b69046b905c8bf34c6ad60.ttf'),
+  );
+
+  // Icon fonts. MaterialIcons ships inside the Flutter SDK cache; remixicon
+  // (the launcher's sun/moon toggle and the search field's magnifier) lives in
+  // the pub cache under its package-scoped family name.
+  final String? flutterRoot = Platform.environment['FLUTTER_ROOT'];
   String? firstExisting(List<String> candidates) {
     for (final String path in candidates) {
       if (path.isNotEmpty && File(path).existsSync()) return path;
@@ -443,62 +504,6 @@ Future<void> loadRealFonts() async {
     return null;
   }
 
-  final String? regular = firstExisting(<String>[
-    '$root/test/render/fonts/Inter-Regular.ttf',
-    '/usr/share/fonts/truetype/inter/Inter-Regular.ttf',
-    '/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf',
-    '/usr/share/fonts/truetype/liberation/LiberationSans-Regular.ttf',
-    '/usr/share/fonts/truetype/liberation2/LiberationSans-Regular.ttf',
-    '/usr/share/fonts/truetype/noto/NotoSans-Regular.ttf',
-    '/usr/share/fonts/TTF/DejaVuSans.ttf',
-    '/System/Library/Fonts/Supplemental/Arial.ttf',
-  ]);
-  final String bold =
-      firstExisting(<String>[
-        '$root/test/render/fonts/Inter-Bold.ttf',
-        '/usr/share/fonts/truetype/inter/Inter-Bold.ttf',
-        '/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf',
-        '/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf',
-        '/usr/share/fonts/truetype/liberation2/LiberationSans-Bold.ttf',
-        '/usr/share/fonts/truetype/noto/NotoSans-Bold.ttf',
-        '/usr/share/fonts/TTF/DejaVuSans-Bold.ttf',
-        '/System/Library/Fonts/Supplemental/Arial Bold.ttf',
-      ]) ??
-      regular ??
-      '';
-
-  if (regular == null) {
-    throw StateError(
-      'render harness: no text face found. Every glyph would render as the '
-      'FlutterTest block font, which makes the PNG worthless. Drop real '
-      'Inter faces into test/render/fonts/ (Inter-Regular.ttf, '
-      'Inter-Bold.ttf) or install a system sans on the runner.',
-    );
-  }
-  // ignore: avoid_print
-  print('render harness: text face = $regular (bold: $bold)');
-
-  // AppStyle asks google_fonts for Inter at 400/500/600/700 and Montserrat at
-  // 400/700/900; `regular` is w400 in google_fonts' variant naming.
-  const List<String> lightVariants = <String>['regular', '500'];
-  const List<String> heavyVariants = <String>['600', '700', '900'];
-  for (final String family in <String>['Inter', 'Montserrat']) {
-    for (final String variant in lightVariants) {
-      await load('${family}_$variant', <String>[regular]);
-    }
-    for (final String variant in heavyVariants) {
-      await load('${family}_$variant', <String>[bold]);
-    }
-    // fontFamilyFallback lands on the plain family name.
-    await load(family, <String>[regular]);
-  }
-  // Bare TextStyles with no family fall back to the platform default.
-  await load('Roboto', <String>[regular]);
-
-  // Icon fonts. MaterialIcons ships inside the Flutter SDK cache; remixicon
-  // (the launcher's sun/moon toggle and the search field's magnifier) lives in
-  // the pub cache under its package-scoped family name.
-  final String? flutterRoot = Platform.environment['FLUTTER_ROOT'];
   final String? materialIcons = firstExisting(<String>[
     if (flutterRoot != null)
       '$flutterRoot/bin/cache/artifacts/material_fonts/'
