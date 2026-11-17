@@ -618,9 +618,9 @@ Future<void> _drain(WidgetTester tester, {int rounds = 8}) async {
 /// is stable across shimmer 2.x. They animate for as long as they are
 /// mounted, so any of them on screen means the data has not landed yet.
 Finder shimmerPlaceholders() => find.byWidgetPredicate(
-      (Widget w) => w.runtimeType.toString() == 'Shimmer',
-      description: 'shimmer placeholder',
-    );
+  (Widget w) => w.runtimeType.toString() == 'Shimmer',
+  description: 'shimmer placeholder',
+);
 
 /// Keeps draining while the screen is still loading, up to [maxRounds] extra
 /// rounds. "Loading" is a shimmer placeholder (retiring the spinner: loading
