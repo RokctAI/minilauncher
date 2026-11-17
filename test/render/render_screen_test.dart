@@ -613,15 +613,24 @@ Future<void> _drain(WidgetTester tester, {int rounds = 8}) async {
   }
 }
 
-/// Keeps draining while the home is still loading, up to [maxRounds] extra
-/// rounds. "Loading" is a spinner (base_sdk's `Loading` draws a Cupertino
-/// spinner off Android) or the launcher home's shimmer skeleton, which the
-/// home shows until the first app list is painted.
+/// Shimmer placeholders (base_sdk's AppShimmer / ImageShimmer, and skeletons
+/// such as LauncherHomeSkeleton built on them). Matched by type name, which
+/// is stable across shimmer 2.x. They animate for as long as they are
+/// mounted, so any of them on screen means the data has not landed yet.
+Finder shimmerPlaceholders() => find.byWidgetPredicate(
+      (Widget w) => w.runtimeType.toString() == 'Shimmer',
+      description: 'shimmer placeholder',
+    );
+
+/// Keeps draining while the screen is still loading, up to [maxRounds] extra
+/// rounds. "Loading" is a shimmer placeholder (retiring the spinner: loading
+/// states are shimmers now), a spinner left over from a route that has not
+/// been converted yet, or the launcher home's skeleton.
 ///
 /// The first variant rendered in a run starts cold (drift isolate, demo
 /// registrations, fonts), so its fixed [_drain] can end before the home's
-/// data arrives and capture the loading state. The shared render strip
-/// refuses such a frame as blank, so wait it out rather than capture it.
+/// data arrives. Previously this gave up silently and captured the loading
+/// state anyway; now it fails the test, so no loading frame is written.
 Future<void> _drainUntilLoaded(
   WidgetTester tester, {
   int maxRounds = 40,
@@ -636,9 +645,14 @@ Future<void> _drainUntilLoaded(
         )
         .evaluate()
         .isNotEmpty;
-    if (!spinning) return;
+    if (!spinning && shimmerPlaceholders().evaluate().isEmpty) return;
     await _drain(tester, rounds: 1);
   }
+  fail(
+    'screen still loading after $maxRounds rounds: '
+    '${shimmerPlaceholders().evaluate().length} shimmer placeholder(s) '
+    'on screen. Refusing to capture a loading frame.',
+  );
 }
 
 List<_Measured> _measure(WidgetTester tester, List<ElementSpec> specs) {
@@ -791,6 +805,12 @@ Future<void> renderVariant(
       'logicalWidth': kLogicalWidth,
       'logicalHeight': targetHeight,
       'devicePixelRatio': kDevicePixelRatio,
+      // Read by shared-workflows' frame quality gate, which refuses the frame
+      // if any count is non-zero.
+      'quality': <String, Object?>{
+        'spinners': find.byType(CircularProgressIndicator).evaluate().length,
+        'shimmers': shimmerPlaceholders().evaluate().length,
+      },
       'elements': <Object>[
         for (int i = 0; i < measured.length; i++)
           <String, Object?>{
