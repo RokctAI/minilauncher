@@ -1,0 +1,60 @@
+{
+  "launcher_home": [
+    {
+      "label": "theme toggle - sun/moon, writes the stored app theme mode",
+      "x": 1035.7,
+      "y": 76.8,
+      "w": 0,
+      "h": 0
+    },
+    {
+      "label": "glance card - the rows productivity_sdk injects at @launcher-glance",
+      "x": 540.0,
+      "y": 268.8,
+      "w": 0,
+      "h": 0
+    },
+    {
+      "label": "app row - Calculator",
+      "x": 534.5,
+      "y": 773.2,
+      "w": 0,
+      "h": 0
+    },
+    {
+      "label": "app row - Camera",
+      "x": 790.7,
+      "y": 773.2,
+      "w": 0,
+      "h": 0
+    },
+    {
+      "label": "app row - Clock",
+      "x": 1046.7,
+      "y": 773.2,
+      "w": 0,
+      "h": 0
+    },
+    {
+      "label": "app row - Maps",
+      "x": 278.3,
+      "y": 1225.0,
+      "w": 0,
+      "h": 0
+    },
+    {
+      "label": "app row - Messages",
+      "x": 534.5,
+      "y": 1225.0,
+      "w": 0,
+      "h": 0
+    },
+    {
+      "label": "App row - Bible",
+      "x": 278.3,
+      "y": 773.2,
+      "w": 0,
+      "h": 0
+    }
+  ]
+}
