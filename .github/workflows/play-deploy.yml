@@ -94,6 +94,6 @@ jobs:
     uses: RokctAI/shared-workflows/.github/workflows/universal-play-deploy.yml@main
     with:
       app-type: ${{ needs.resolve-package.outputs.app_type }}
-      track: internal
+      track: production
       package_name: ${{ needs.resolve-package.outputs.package_name }}
     secrets: inherit
