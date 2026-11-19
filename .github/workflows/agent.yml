@@ -37,7 +37,7 @@ concurrency:
 
 jobs:
   agent:
-    uses: RokctAI/shared-workflows/.github/workflows/universal-agent.yml@85173adfd739620dd4d74307697e467b3ddc2b29 # shared-workflows main @ 2026-11-18
+    uses: RokctAI/shared-workflows/.github/workflows/universal-agent.yml@657c0bf148ebc58c65adfd954020069589346548 # shared-workflows main @ 2026-11-19
     with:
       mode: 'auto'
       # Since the factory split, the factory's Level 0/1 prompt queue and job
