@@ -150,7 +150,7 @@ packages:
       path: ".rokct/cache/base"
       relative: true
     source: path
-    version: "1.113.7"
+    version: "1.113.8"
   battery_plus:
     dependency: transitive
     description:
@@ -1351,7 +1351,7 @@ packages:
       path: ".rokct/cache/launch"
       relative: true
     source: path
-    version: "1.29.22"
+    version: "1.29.23"
   leak_tracker:
     dependency: transitive
     description:
