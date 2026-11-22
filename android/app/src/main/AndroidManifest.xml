@@ -11,6 +11,7 @@
     <uses-sdk
         tools:overrideLibrary="com.huawei.hms.flutter.hmsavailability"/>
     <!-- @sdk-android-permissions-start -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.CALL_PHONE"/>
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
     <uses-permission android:name="android.permission.READ_CALL_LOG"/>
