@@ -21,5 +21,9 @@ class MainActivity : FlutterActivity() {
         // (launch_sdk 1.28.0). The platform view factory has to be registered
         // on the engine itself, so this takes the engine, not the messenger.
         LauncherVerseWidgetBridge.register(flutterEngine, this)
+        // The launcher's own phone (launch_sdk 1.29.23): dialer role, call
+        // log, contacts and the live call. Without this line Allow, Recents,
+        // Contacts and calling all did nothing (Ray, 2026-11-22).
+        LauncherPhoneBridge.register(flutterEngine.dartExecutor.binaryMessenger, this)
     }
 }

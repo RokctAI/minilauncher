@@ -121,6 +121,11 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+        <!-- launch_sdk phone (dialer role alias and call service). Written here by
+             hand because the CI compose does not apply launch_sdk's
+             host_integration block for this shell. -->
+        <activity-alias android:name=".LauncherDialAlias" android:targetActivity=".MainActivity" android:exported="true"><intent-filter><action android:name="android.intent.action.DIAL"/><category android:name="android.intent.category.DEFAULT"/></intent-filter><intent-filter><action android:name="android.intent.action.DIAL"/><category android:name="android.intent.category.DEFAULT"/><data android:scheme="tel"/></intent-filter></activity-alias>
+        <service android:name=".LauncherInCallService" android:permission="android.permission.BIND_INCALL_SERVICE" android:exported="true"><meta-data android:name="android.telecom.IN_CALL_SERVICE_UI" android:value="true"/><intent-filter><action android:name="android.telecom.InCallService"/></intent-filter></service>
         <!-- @sdk-android-application-start -->
         <activity android:name=".SessionHandoffActivity" android:exported="true" android:excludeFromRecents="true" android:noHistory="true" android:permission="rokct.permission.SESSION_HANDOFF" android:taskAffinity="" android:theme="@android:style/Theme.Translucent.NoTitleBar"><intent-filter><action android:name="rokct.intent.action.SESSION_HANDOFF"/><category android:name="android.intent.category.DEFAULT"/></intent-filter></activity>
         <!-- @sdk-android-application-end -->
