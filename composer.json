@@ -47,6 +47,17 @@
       "home_sdk": true
     },
     {
+      "name": "weather_sdk",
+      "enabled": true,
+      "source": "git",
+      "path": "../zones/weather/dart",
+      "git": "https://github.com/RokctAI/zones",
+      "ref": "main",
+      "sha256": "01c9a6473238f581f5286e3d0ab2be1acac6d9623201c67dfa7437a53c05c2ab",
+      "_sha256_comment": "SHA-256 of weather/dart/install.py at zones@6a05b61; required by the composer's unpinned-installer gate. Update when upstream install.py changes.",
+      "_comment": "Launcher weather (Ray, 2026-11-22: 'Launcher gains weather sdk'): the app_type.launcher block installs the launcher wiring (location ask, backend or Open-Meteo feed, saved answer offline) into launch_sdk's LaunchWeatherSource seam."
+    },
+    {
       "name": "comms_sdk",
       "enabled": true,
       "source": "git",
