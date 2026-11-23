@@ -413,13 +413,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.7.15"
-  desktop_sdk:
-    dependency: "direct main"
-    description:
-      path: ".rokct/cache/desktop"
-      relative: true
-    source: path
-    version: "1.2.2"
   dio:
     dependency: transitive
     description:
@@ -1351,7 +1344,7 @@ packages:
       path: ".rokct/cache/launch"
       relative: true
     source: path
-    version: "1.29.29"
+    version: "1.30.0"
   leak_tracker:
     dependency: transitive
     description:
@@ -2194,6 +2187,13 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.1.4"
+  weather_sdk:
+    dependency: "direct main"
+    description:
+      path: ".rokct/cache/weather"
+      relative: true
+    source: path
+    version: "1.8.1"
   web:
     dependency: transitive
     description:
