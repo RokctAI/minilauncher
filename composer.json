@@ -109,16 +109,6 @@
       "_comment": "Disabled as per requirements"
     },
     {
-      "name": "desktop_sdk",
-      "enabled": true,
-      "source": "git",
-      "git": "https://github.com/RokctAI/hardware",
-      "path": "../hardware/desktop/dart",
-      "ref": "main",
-      "sha256": "d9adf68c4c9da75ad3e7b8164253f09acb82ed3a68595687d5f138f99caf1057",
-      "_comment": "TEMPORARY (desktop testing convenience, revert candidate): added to every app profile so all composed apps pull desktop support and can be viewed/tested on desktop. Pin = sha256 of hardware desktop/dart/install.py at main head 84aa6ed, same value as supacharge.json's entry."
-    },
-    {
       "name": "hms_sdk",
       "enabled": true,
       "source": "git",
