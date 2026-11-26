@@ -1344,7 +1344,7 @@ packages:
       path: ".rokct/cache/launch"
       relative: true
     source: path
-    version: "1.30.0"
+    version: "1.32.0"
   leak_tracker:
     dependency: transitive
     description:
@@ -2193,7 +2193,7 @@ packages:
       path: ".rokct/cache/weather"
       relative: true
     source: path
-    version: "1.8.1"
+    version: "1.9.1"
   web:
     dependency: transitive
     description:
