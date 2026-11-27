@@ -30,7 +30,7 @@ CONFIG_PATH = os.path.join(ROKCT_DIR, ".workspace_config.json")
 # Pinned by tools/gen_protocol_lock.py - do not edit these constants by hand.
 # maintenance.yml is installed as a GitHub workflow (i.e. it is code), so the
 # fetch is pinned to a commit and SHA-256 verified before it is written.
-PROTOCOL_REF = "48bac4e33877de630148876f6f3e88c34ce208d7"
+PROTOCOL_REF = "ff611248f23eea620ef1f26676268302fcffae50"
 MAINTENANCE_PATH = "workflows/maintenance.yml"
 MAINTENANCE_SHA256 = "df37cf18061299ce6d413f3f9f5017882a7bd044e56e15bad24a13b03cff473d"
 MAINTENANCE_URL = f"https://raw.githubusercontent.com/RokctAI/The-Rokct-Protocol/{PROTOCOL_REF}/{MAINTENANCE_PATH}"
@@ -74,6 +74,36 @@ def load_config():
         return None
     with open(CONFIG_PATH, "r", encoding="utf-8") as f:
         return json.load(f)
+
+
+def parent_token(config):
+    """Credential for the private parent workspace repo.
+
+    Falls back to the PARENT_REPO_TOKEN environment variable, which CI sets
+    from the MONOREPO_PAT org secret. Returns None when no credential is
+    available."""
+    return config.get("parent_token") or os.environ.get("PARENT_REPO_TOKEN")
+
+
+def parent_remote_url(parent_repo, token):
+    """Authenticated https remote for the parent repo, or None without a token.
+
+    The parent workspace repo is private and the ambient GITHUB_TOKEN is scoped
+    to the child repo, so it cannot reach it. An unauthenticated URL makes git
+    prompt for a username, which cannot be answered on a tty-less runner, so we
+    never build one - callers fail loudly instead."""
+    if not parent_repo or not token:
+        return None
+    return f"https://x-access-token:{token}@github.com/{parent_repo}.git"
+
+
+def redact(text, token):
+    """Strip any embedded credential out of git output before printing it."""
+    if not text:
+        return text
+    if token:
+        text = text.replace(token, "***")
+    return re.sub(r"(https://)[^\s/@]+@", r"\1***@", text)
 
 
 def file_hash(path):
@@ -203,7 +233,27 @@ def sync_to_parent(config):
 
     parent_clone = os.path.join(ROKCT_DIR, ".parent_clone")
 
+    # The parent workspace repo is private, so every git call below needs a
+    # real credential. Resolve it once and bail out before any network call
+    # rather than letting git block on an interactive username prompt.
+    token = parent_token(config)
+    clone_url = parent_remote_url(parent_repo, token)
+    if not clone_url:
+        print(
+            f"[sync] No credential for private parent repo {parent_repo}: "
+            "PARENT_REPO_TOKEN is unset and .workspace_config.json has no "
+            "parent_token - aborting instead of attempting an anonymous clone.",
+            file=sys.stderr,
+        )
+        return False
+
     if os.path.isdir(parent_clone):
+        # Re-point an existing clone in case it was made before the credential
+        # was available (or with a token that has since been rotated).
+        subprocess.run(
+            ["git", "-C", parent_clone, "remote", "set-url", "origin", clone_url],
+            capture_output=True,
+        )
         subprocess.run(
             ["git", "-C", parent_clone, "fetch", "origin"], capture_output=True
         )
@@ -220,9 +270,6 @@ def sync_to_parent(config):
         )
     else:
         os.makedirs(parent_clone, exist_ok=True)
-        clone_url = f"https://github.com/{parent_repo}.git"
-        if config.get("parent_token"):
-            clone_url = f"https://{config['parent_token']}@github.com/{parent_repo}.git"
         result = subprocess.run(
             [
                 "git",
@@ -236,7 +283,7 @@ def sync_to_parent(config):
             text=True,
         )
         if result.returncode != 0:
-            print(f"[sync] Clone failed: {result.stderr}")
+            print(f"[sync] Clone failed: {redact(result.stderr, token)}")
             return False
 
     parent_rokct = os.path.join(parent_clone, ".rokct")
@@ -303,7 +350,7 @@ def sync_to_parent(config):
     if result.returncode == 0:
         print("[sync] Pushed to parent repo")
         return True
-    print(f"[sync] Push failed: {result.stderr}", file=sys.stderr)
+    print(f"[sync] Push failed: {redact(result.stderr, token)}", file=sys.stderr)
     return False
 
 
