@@ -10,6 +10,7 @@
          (huawei_push declares minSdk 21 and needs no override.) -->
     <uses-sdk
         tools:overrideLibrary="com.huawei.hms.flutter.hmsavailability"/>
+    <permission android:name="rokct.permission.SESSION_HANDOFF" android:protectionLevel="signature"/>
     <!-- @sdk-android-permissions-start -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.CALL_PHONE"/>
@@ -19,7 +20,6 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
     <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT"/>
     <uses-permission android:name="android.permission.VIBRATE"/>
-    <permission android:name="rokct.permission.SESSION_HANDOFF" android:protectionLevel="signature"/>
     <uses-permission android:name="rokct.permission.SESSION_HANDOFF"/>
     <!-- @sdk-android-permissions-end -->
     <uses-permission
